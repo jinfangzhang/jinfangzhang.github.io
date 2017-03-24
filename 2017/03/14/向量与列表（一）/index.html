@@ -1,0 +1,734 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据结构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="由一个爱写笔记的人写博客，总是喜欢在开头说点什么东西。这段时间真是什么都赶到一块了，Android初见成效，马上又参加比赛，同时博客还要更新，每天还要重新回炉并且加工一些之前学过的知识，时间简直让我喘不过气来，不过人一辈子总有那么特别赶的几年，但这正是自己突飞猛进的几年，在这个时候，作为一个无时不刻都在怼问题的程序员来说，二话不说就是“干”！
+再说一下上周写博客一个总体感受。身体上很累这个就不用说">
+<meta property="og:type" content="article">
+<meta property="og:title" content="向量与列表（一）">
+<meta property="og:url" content="http://yoursite.com/2017/03/14/向量与列表（一）/index.html">
+<meta property="og:site_name" content="JianRan">
+<meta property="og:description" content="由一个爱写笔记的人写博客，总是喜欢在开头说点什么东西。这段时间真是什么都赶到一块了，Android初见成效，马上又参加比赛，同时博客还要更新，每天还要重新回炉并且加工一些之前学过的知识，时间简直让我喘不过气来，不过人一辈子总有那么特别赶的几年，但这正是自己突飞猛进的几年，在这个时候，作为一个无时不刻都在怼问题的程序员来说，二话不说就是“干”！
+再说一下上周写博客一个总体感受。身体上很累这个就不用说">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdmuh8nkm8j30q30dndoe">
+<meta property="og:updated_time" content="2017-03-14T16:50:28.589Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="向量与列表（一）">
+<meta name="twitter:description" content="由一个爱写笔记的人写博客，总是喜欢在开头说点什么东西。这段时间真是什么都赶到一块了，Android初见成效，马上又参加比赛，同时博客还要更新，每天还要重新回炉并且加工一些之前学过的知识，时间简直让我喘不过气来，不过人一辈子总有那么特别赶的几年，但这正是自己突飞猛进的几年，在这个时候，作为一个无时不刻都在怼问题的程序员来说，二话不说就是“干”！
+再说一下上周写博客一个总体感受。身体上很累这个就不用说">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdmuh8nkm8j30q30dndoe">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/14/向量与列表（一）/"/>
+
+
+
+
+
+  <title> 向量与列表（一） | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JianRan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/14/向量与列表（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                向量与列表（一）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T23:34:18+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/14/向量与列表（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/14/向量与列表（一）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>由一个爱写笔记的人写博客，总是喜欢在开头说点什么东西。<br>这段时间真是什么都赶到一块了，Android初见成效，马上又参加比赛，同时博客还要更新，每天还要重新回炉并且加工一些之前学过的知识，时间简直让我喘不过气来，不过人一辈子总有那么特别赶的几年，但这正是自己突飞猛进的几年，在这个时候，作为一个无时不刻都在怼问题的程序员来说，二话不说就是“干”！</p>
+<p>再说一下上周写博客一个总体感受。身体上很累这个就不用说了，而且内容也很赶，是真的赶。刚开始写，总是想文章尽可能多的写，虽然都是自己学过的东西，但是很多时候，一篇文章为了速成基本是拿着书往上面抄，虽然也进行了选择，但终究这个目的太过于功利，对于自己的成长不好。这周我转变了思路，之前在“得到”里面订阅了万维钢老师的专刊，周一到周五一天一篇，每篇只讲一个道理。<br>我们不追求有多快，往往快就意味着质量低下，我不喜欢做这种没有一点意义，只是单纯一味记录而已。所以接下来，我会全程放慢速度，从每篇文章上的量转变为质，不求通过每篇文章学到什么可以让你一步成为及其牛逼的人，但是在每篇文章当中，我都会告诉你，这篇文章你看完之后会学到什么，并且力求解析清楚，同时知识点绝不会太多。<br>啰嗦到这里，我只能说光扯淡，我就消耗了这篇文章绝大部分体量~。</p>
+<hr>
+<p>之前在大一的时候陆陆续续学过一段时间数据结构，那个时候能力差的还很远，看的很吃力，直到这个学期才正式把它给拾了起来。之前第一篇是直接从栈开始的，之后我会逐个补全进行整理。</p>
+<p>我入门是跟着邓老师（邓俊辉）的书籍和视频来学习，对于一个东西的入门，视频自然很棒的，但是入门之后就要坚决摒弃了。</p>
+<p>今天我们来说向量，在数据结构中向量指的是什么？<br>向量 (vector ) 就是线性数组的一种抽象与泛化， 他也是有具有线性次序的一组元素构成的集合 V {V0, Vl , … Vn} 其中的元辈分别由秩区分和确定。这里所说的秩（Rank ) 也是与各元素一 一对应的非负整数，在这个线性的序列中， 各递归实例的秩反映了它们各自被创建的时间先后， 具体地， 每一 递归实例的秩等于早于它出现的实例总数。（其实也是顺序的一种高级的叫法）</p>
+<p>通过一个概念或许已经大概了解到了什么是向量，其实向量和列表都是很基本的结构，但是正是由于很基础我们才要更好的理解并且记忆，在之后会学习栈，对于栈来说，我们既可以使用向量也可以使用列表来实现，这个例子就很好的说明了，向量和列表的基础性。既然栈可以使用向量来实现，也就是说，会使用到向量的一些方法，来帮助达成目标。如果我们的方法，执行效率很低的话，就算栈的结构再怎么厉害，终究还是快不起来，上层建筑要牢靠，底层基础要打好。</p>
+<p>所以下一步我们会讲，如何来实现向量里面的方法。以下是我们将要实现的方法。<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdmuh8nkm8j30q30dndoe" alt=""></p>
+
+      
+    </div>
+
+	
+	<div>
+	
+	<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束 ------</div>
+	
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/13/汇编语言基础之寄存器（一）/" rel="next" title="汇编语言基础之寄存器（一）">
+                <i class="fa fa-chevron-left"></i> 汇编语言基础之寄存器（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/17/汇编语言基础之寄存器（二）/" rel="prev" title="汇编语言基础之寄存器（二）">
+                汇编语言基础之寄存器（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JianRan" />
+          <p class="site-author-name" itemprop="name">JianRan</p>
+           
+              <p class="site-description motion-element" itemprop="description">做好手里面的事情</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-https://avatars1.githubusercontent.com/u/32269?v=3&s=460"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JianRan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jianran';
+      var disqus_identifier = '2017/03/14/向量与列表（一）/';
+
+      var disqus_title = "向量与列表（一）";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

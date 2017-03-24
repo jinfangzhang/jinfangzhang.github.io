@@ -1,0 +1,769 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="数据结构," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="承接上文栈与队列（一），上文我们说了有四个方面的应用，还差几个，这篇给彻底补全
+
+栈混洗什么是栈混洗？有三个栈，分别是A、B、S, 栈A中有a1– an的若干元素，a1在栈顶，an在栈顶、B和S都是空栈。在这里我们只允许，将A的顶元素弹出并压入S,或将S的顶元素弹出压入B。若经过一系列以上操作，A中元素全部转入B中，则称之为A的一个栈混洗（stack permutation） 中间的栈为S。在这里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="栈与队列（二）">
+<meta property="og:url" content="http://yoursite.com/2017/03/10/栈与队列（二）/index.html">
+<meta property="og:site_name" content="JianRan">
+<meta property="og:description" content="承接上文栈与队列（一），上文我们说了有四个方面的应用，还差几个，这篇给彻底补全
+
+栈混洗什么是栈混洗？有三个栈，分别是A、B、S, 栈A中有a1– an的若干元素，a1在栈顶，an在栈顶、B和S都是空栈。在这里我们只允许，将A的顶元素弹出并压入S,或将S的顶元素弹出压入B。若经过一系列以上操作，A中元素全部转入B中，则称之为A的一个栈混洗（stack permutation） 中间的栈为S。在这里">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdi078c54ij30gs03bt98">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdi09c9csuj30yf0kvwz9">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdi0abrn0vj315w0mc1j1">
+<meta property="og:updated_time" content="2017-03-12T15:37:41.215Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="栈与队列（二）">
+<meta name="twitter:description" content="承接上文栈与队列（一），上文我们说了有四个方面的应用，还差几个，这篇给彻底补全
+
+栈混洗什么是栈混洗？有三个栈，分别是A、B、S, 栈A中有a1– an的若干元素，a1在栈顶，an在栈顶、B和S都是空栈。在这里我们只允许，将A的顶元素弹出并压入S,或将S的顶元素弹出压入B。若经过一系列以上操作，A中元素全部转入B中，则称之为A的一个栈混洗（stack permutation） 中间的栈为S。在这里">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdi078c54ij30gs03bt98">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/10/栈与队列（二）/"/>
+
+
+
+
+
+  <title> 栈与队列（二） | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JianRan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/10/栈与队列（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                栈与队列（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T19:47:55+08:00">
+                2017-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/10/栈与队列（二）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/10/栈与队列（二）/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>承接上文<a href="https://jinfangzhang.github.io/2017/03/08/栈与队列（一）/" target="_blank" rel="external">栈与队列（一）</a>，上文我们说了有四个方面的应用，还差几个，这篇给彻底补全</p>
+<hr>
+<h2 id="栈混洗"><a href="#栈混洗" class="headerlink" title="栈混洗"></a>栈混洗</h2><p>什么是栈混洗？<br>有三个栈，分别是A、B、S, 栈A中有a1– an的若干元素，a1在栈顶，an在栈顶、B和S都是空栈。<br>在这里我们只允许，将A的顶元素弹出并压入S,或将S的顶元素弹出压入B。<br>若经过一系列以上操作，A中元素全部转入B中，则称之为A的一个栈混洗（stack permutation）<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdi078c54ij30gs03bt98" alt=""> 中间的栈为S。<br>在这里我们把<strong>[</strong>an ,a(n-1)….,a1<strong>&gt;</strong>,看做一个栈内的所有元素，其中”<strong>[</strong>“代表栈顶，”<strong>&gt;</strong>“代表栈顶。<br>同一个输入序列，可以有多种栈混洗。就拿上图来说。<strong>&lt;</strong>1，2，3<strong>]</strong>的输入列可以有<strong>[</strong> 1，2，3<strong>&gt;</strong>,<br><strong>[</strong> 3，2，1<strong>&gt;</strong>等多种栈混洗，只要遵循上述规则。</p>
+<p>那么问题就来了，一个长度为n的序列可以有多少种栈混洗？最多不可能多于$n!$,好吧,我看了一些资料，知道最后的结果是为<br>$$\frac {2n!} {(n+1)!n!}$$<br>这个数也叫做卡特兰数。感觉分析如何得出的没有什么意义，在此我们先忽略导出步骤。我们把 “先前的栈” 的$3$带入公式，发现我们共有5种栈混洗，而 $3!$ 为6,我们在这三个数的全排列中有一种栈混洗是无法获得的那就<strong>[</strong>3，1，2<strong>&gt;</strong></p>
+<p>那么问题又来了，既然一个长度为n的序列的栈混洗数量不是$n!$，那么我们如何来鉴别这个栈混洗是否由之早先的栈序列获得的呢？<br>答案在其实上面我们已经给出。只要当前的栈混洗不存在<strong>[···</strong>J，···I，···K，···<strong>&gt;</strong>(之前的序列是···I,···J,···K···)，这样的序列那么我们的的栈混洗就是存在的</p>
+<p>与我们之前说的括号匹配问题，其实实属同一种东西。在括号匹配的时候，对于我们可见的只有中间的栈S而已，我们有多少push操作，对应的就有多少pop操作，我们的栈中只存左括号，当栈外有右括号的时候我们就弹栈。换句话说我们有多少种该情况下的栈混洗我们就有多少种括号匹配的数量。</p>
+<h2 id="中缀表达式（延迟缓冲）"><a href="#中缀表达式（延迟缓冲）" class="headerlink" title="中缀表达式（延迟缓冲）"></a>中缀表达式（延迟缓冲）</h2><p>重新提一下延迟缓冲的概念：线性扫描算法中，在预读足够长之后，方能确定可处理的前缀</p>
+<p>中缀表达式就是咱们平时算术式，举一个例子：3<em>32+9</em>（3+1），这个就是所谓的中缀表达式。那么我们的目的就是用算法的形式来计算这样的式子。对于如此的简单的算式对于咱们人类来说只能说不要太简单了，我们知道”+，-，*，/“的优先级，我们知道括号有强制运算的作用。当看到一个算式的时候，我们可以随意以各种方式来计算，对于死板的计算机来说就有些复杂了。</p>
+<p>初次看到如此算式，我们都不清楚如何来计算，计算机不像人类，对于它来讲，从左到右顺序扫描，慢慢求解，对于它是简单的，也是我们容易思考得到的。读取的方式有了，我们还欠缺的是，不知道此时看到的加号是否应该执行，可能它后面就有个“*”号或者“/’。那么我们只有在依次扫描过程中，先将不确定的留着，等着我们后面扫描，知道我们认为这个地方肯定是这么计算之后，我们才计算。</p>
+<p>拿这个例子来说3<em>32+9</em>（3+1）<br>从左到右依次扫描，扫描到“3”，发现是数字，我们存起来，因为一个数字不可以单独计算（除非这个算式只有一个数字的）；接下来我们发现是“<em>”，没有条件运算；“3” ，不满足条件运算；“2”，还是数字！应该存入的是32而不是单独的3和2了，依然不满足条件运算；“+”，这个比之前“ \</em> ”的优先级低，说明可以运算，将运算结果96存入，把运算过的数据撤销；“+”，不可运算，存入；“9”，不可运算，存入；“（”，不满足条件，存入；“3”，不满足条件，存入；“+”，不满足条件，存入；”1“，不满足条件，存入；”）“，满足条件，计算$ 3+1$，将参加运算的数据撤销，将4存入，到现在为止，我们处理到”）“，这个地方的数据还没有处理，接下来正要处理的右括号和已经存入的左括号匹配，这两个撤销，我们到现在存入的数据为$96+9<em>4$,我们现在算式已经处理完成了，可以确保“ \</em> ”可以运算，计算$9*4$，将处理过的数据撤销，将36存入；好吧现在里面只有两个数的加法$96+36$，将运算结果132存入。到此我们计算完毕。</p>
+<p>在这个过程当中我们发现，可能我在上面判断是否有条件计算的过程没有说，这个过程其实就是比较两个算符的优先级，当是后者的优先级高时，我们进行存入操作，当小于后者时，我们认为可以计算了，所以我们欠缺的其实是一张优先级表而已。大部分运算符只能处理两个数据，“！”等是个特例，不过我们都是可以确认我们的计算数据个数的。而且我们发现，在处理过程当中符号和数据应该分开存储更加清爽，同时也方便了很多。当然存储数据的地方是栈，我们细想起来，我们的操作不就是<strong>压栈</strong>和<strong>弹栈</strong>两种操作吗？存入操作就是在栈顶push，要取的数据也在栈顶。我们算法思路已经清晰。接下来就是算法具体思路如下：<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdi09c9csuj30yf0kvwz9" alt=""><br>这是运算符优先级表。<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdi0abrn0vj315w0mc1j1" alt=""></p>
+<h2 id="栈式运算"><a href="#栈式运算" class="headerlink" title="栈式运算"></a>栈式运算</h2><p><em>其实这个标题和中缀表达式是连着的。</em></p>
+<p>我们对于上面计算方式，其实也是可以改进的，为什么我们要识别符号的优先级呢？为什么不能见到算符算就好了，对于这样的需求，我们伟大的科学家已经解决！ 解决方案就是先把算式转换成逆波兰表达式。<br>具体步骤，我们依然以上面的算式为例。<br><strong>起始（1）:</strong>3*32+9*（3+1）<br><strong>（2）:</strong>((3*32)+(9*(3+1)))—&gt;能加多少括号就加多少括号<br><strong>（3）:</strong>((3,32)*(9 (3,1)+)*)+   —&gt;把符号移到对应括号的右边<br><strong>（4）完成：</strong>$3,32,*9,3,1+*+<br>然后使用中缀表达式的解法来解，即可</p>
+
+      
+    </div>
+
+	
+	<div>
+	
+	<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束 ------</div>
+	
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/09/汇编语言基础（一）/" rel="next" title="汇编语言基础（一）">
+                <i class="fa fa-chevron-left"></i> 汇编语言基础（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/11/随笔（2）/" rel="prev" title="随笔（2）">
+                随笔（2） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JianRan" />
+          <p class="site-author-name" itemprop="name">JianRan</p>
+           
+              <p class="site-description motion-element" itemprop="description">做好手里面的事情</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈混洗"><span class="nav-number">1.</span> <span class="nav-text">栈混洗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中缀表达式（延迟缓冲）"><span class="nav-number">2.</span> <span class="nav-text">中缀表达式（延迟缓冲）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈式运算"><span class="nav-number">3.</span> <span class="nav-text">栈式运算</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-https://avatars1.githubusercontent.com/u/32269?v=3&s=460"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JianRan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jianran';
+      var disqus_identifier = '2017/03/10/栈与队列（二）/';
+
+      var disqus_title = "栈与队列（二）";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

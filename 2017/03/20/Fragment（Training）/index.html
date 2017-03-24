@@ -1,0 +1,762 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="这回我要踏踏实实的跟着官网走
+
+对于Fragment来说，使用它可以降低和Activity的耦合，让Activity的代码块更加的简洁。
+创建一个Fragment如果要创建一个fragment类， 你需要必须复写的方法是 $onCreateView()$,这个方法的返回值是View，这个View就是与当前Fragment类绑定的View。 是不是很像ACtivity的 「setContentVie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fragment（Training）">
+<meta property="og:url" content="http://yoursite.com/2017/03/20/Fragment（Training）/index.html">
+<meta property="og:site_name" content="JianRan">
+<meta property="og:description" content="这回我要踏踏实实的跟着官网走
+
+对于Fragment来说，使用它可以降低和Activity的耦合，让Activity的代码块更加的简洁。
+创建一个Fragment如果要创建一个fragment类， 你需要必须复写的方法是 $onCreateView()$,这个方法的返回值是View，这个View就是与当前Fragment类绑定的View。 是不是很像ACtivity的 「setContentVie">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdt97jrnslj30kt058js4.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdta5801rfj30a00gf74f.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdta6cc5ndj30gk0a474e.jpg">
+<meta property="og:updated_time" content="2017-03-22T07:11:59.412Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fragment（Training）">
+<meta name="twitter:description" content="这回我要踏踏实实的跟着官网走
+
+对于Fragment来说，使用它可以降低和Activity的耦合，让Activity的代码块更加的简洁。
+创建一个Fragment如果要创建一个fragment类， 你需要必须复写的方法是 $onCreateView()$,这个方法的返回值是View，这个View就是与当前Fragment类绑定的View。 是不是很像ACtivity的 「setContentVie">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdt97jrnslj30kt058js4.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/20/Fragment（Training）/"/>
+
+
+
+
+
+  <title> Fragment（Training） | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JianRan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/Fragment（Training）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Fragment（Training）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T15:02:35+08:00">
+                2017-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>这回我要踏踏实实的跟着官网走</em></p>
+<hr>
+<p>对于Fragment来说，使用它可以降低和Activity的耦合，让Activity的代码块更加的简洁。</p>
+<h2 id="创建一个Fragment"><a href="#创建一个Fragment" class="headerlink" title="创建一个Fragment"></a>创建一个Fragment</h2><p>如果要创建一个fragment类， 你需要必须复写的方法是 $onCreateView()$,这个方法的返回值是View，这个View就是与当前Fragment类绑定的View。 是不是很像ACtivity的 「setContentView( )」方法。</p>
+<p>fragment_item_1.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span> <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/colorPrimary"</span>&gt;</div><div class="line"></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>布局很简单，就是纯的一个LinearLayout</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fragment_First</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        View view = inflater.inflate(R.layout.fragment_item_1,container,<span class="keyword">false</span>);</div><div class="line">        <span class="keyword">return</span> view;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建一个继承于Fragment的类然后绑定相关的View。</p>
+<p>到目前为止，我们的Fragment就创建完了，接下来如何使用就要看使用者的事情了，大家已经发现了，对于fragment来说，他不像其他控件一样，如Button， TextView<br>他可以更假自由的拥有自己的逻辑。</p>
+<p>我们使用「静态」的方式绑定到fragment这个控件上面</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">fragment</span></span></div><div class="line">        <span class="attr">android:name</span> = <span class="string">"io.github.jianran.workespace.fragment.Fragment_First"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>/&gt;</div></pre></td></tr></table></figure>
+<p>解释：android:name 这个属性后面接着的是 我们之前创建那个fragment类的全称。<br>（第一部分告一段落）</p>
+<h2 id="动态的处理Fragment"><a href="#动态的处理Fragment" class="headerlink" title="动态的处理Fragment"></a>动态的处理Fragment</h2><p>我们要在运行时为Activity处理（添加、 替换）Fragment。为此，我们需要一个可以放置fragment的一个空容器——FragmentLayout<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">FrameLayout</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/fragmentLayout_1"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span>/&gt;</div></pre></td></tr></table></figure></p>
+<p>我们仅仅是把之前的 fragment 换成了FragmentLayout。并加了id属性，这个是为了之后更好的获取。我们通过「FragmentTransaction」事务 的方式对Activity进行管理（添加， 替换， 移除），通过<strong>getSupportFragmentManager()</strong>获取FragmentManager， 然后调用<strong>beginTransaction()</strong>来开启一个事务，进而我们就可以对其进行相关管理操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</div><div class="line"></div><div class="line">    Fragment_First f_1;</div><div class="line">    <span class="keyword">private</span> FragmentTransaction fragmentTransaction;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">        f_1 = <span class="keyword">new</span> Fragment_First();</div><div class="line">        getSupportFragmentManager().beginTransaction().add(R.id.fragmentLayout_1,f_1).commit();</div><div class="line">        fragmentTransaction = getSupportFragmentManager().beginTransaction();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如此我们就基本完成了fragment的添加，但是我们我们的代码出现了很大的问题。对于上述代码切实不会出现太大的问题，主要是因为他们太过于简单了。接下来我们尝试着加入一些东西，暴露一些问题出来</p>
+<h2 id="Fragment的一些问题"><a href="#Fragment的一些问题" class="headerlink" title="Fragment的一些问题"></a>Fragment的一些问题</h2><p>###重复创建fragment</p>
+<p>首先我们让屏幕翻转两次， 发现每翻转一次就会就会再执行一次「事务」的 add 操作。 </p>
+<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdt97jrnslj30kt058js4.jpg" alt=""></p>
+<p>这是为什么呢？因为当屏幕发生旋转，Activity将会发生重新启动，原来Activity中的fragment也会跟着Activity重新创建；这样就造成了当旋转的时候，本身存在的fragment会重新启动，然后会重新执行$onCreate（）$方法，又再次实例化了一个fragment<br>其实通过检查onCreate的参数Bundle savedInstanceState就可以判断，当前是否发生Activity的重新创建<br>接下来我们的代码进行了如下修改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onCreate(savedInstanceState);</div><div class="line">    Log.i(TAG,<span class="string">"onCreate"</span>);</div><div class="line">    setContentView(R.layout.activity_main);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(savedInstanceState == <span class="keyword">null</span>)&#123;</div><div class="line">        f_1 = <span class="keyword">new</span> Fragment_First();</div><div class="line">        fragmentTransaction = getSupportFragmentManager().beginTransaction();</div><div class="line">        fragmentTransaction.add(R.id.fragmentLayout_1,f_1).commit();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样就不会发生多次重建 fragment 了</p>
+<p>###Fragment.setArguments(Bundle bundle)</p>
+<p>大家看官方文档的时候会发现，他们不是构造函数的方式进行传入参数，非要使用<strong>Fragment.setArguments(Bundle bundle)</strong>这个方式来，我们在上一层代码的前提下，我们进行一下修改。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fragment_First</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> String mArg = <span class="string">"没有参数"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String TAG = <span class="string">"Fragment_First"</span>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Fragment_First</span><span class="params">()</span> </span>&#123;</div><div class="line">        Log.i(<span class="string">"INFO"</span>, <span class="string">"TestFragment non-parameter constructor"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Fragment_First</span><span class="params">(String mArg)</span> </span>&#123;</div><div class="line">        Log.i(<span class="string">"INFO"</span>, <span class="string">"TestFragment construct with parameter"</span>);</div><div class="line">        <span class="keyword">this</span>.mArg = mArg;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        Log.i(TAG,<span class="string">"onCreateView"</span>);</div><div class="line">        View view = inflater.inflate(R.layout.fragment_item_1,container,<span class="keyword">false</span>);</div><div class="line">        TextView textView = (TextView) view.findViewById(R.id.textView);</div><div class="line">        textView.setText(mArg);</div><div class="line">        <span class="keyword">return</span> view;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdta5801rfj30a00gf74f.jpg" alt=""><br>当我们翻转屏幕之后<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdta6cc5ndj30gk0a474e.jpg" alt=""></p>
+<p>先别谈我们的明明传入的参数去哪里了， 我们来看看setArguments(Bundle bundle)的情况<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fragment_First</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String ARG = <span class="string">"arg"</span>;</div><div class="line">    <span class="keyword">private</span> String mArg = <span class="string">"没有参数"</span>;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String TAG = <span class="string">"Fragment_First"</span>;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Fragment_First</span><span class="params">()</span> </span>&#123;</div><div class="line">        Log.i(<span class="string">"INFO"</span>, <span class="string">"TestFragment non-parameter constructor"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Fragment <span class="title">newInstance</span><span class="params">(String arg)</span></span>&#123;</div><div class="line">        Fragment_First fragment = <span class="keyword">new</span> Fragment_First();</div><div class="line">        Bundle bundle = <span class="keyword">new</span> Bundle();</div><div class="line">        bundle.putString( ARG, arg);</div><div class="line">        fragment.setArguments(bundle);</div><div class="line">        <span class="keyword">return</span> fragment;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@Nullable</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        Log.i(TAG,<span class="string">"onCreateView"</span>);</div><div class="line">        View view = inflater.inflate(R.layout.fragment_item_1,container,<span class="keyword">false</span>);</div><div class="line">        TextView textView = (TextView) view.findViewById(R.id.textView);</div><div class="line">        textView.setText(getArguments().getString( ARG));</div><div class="line">        <span class="keyword">return</span> view;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这样的话，就没有出现刚才数据丢失的情况，我们的数据很好的被保留了下来。那么这到底是怎么回事呢，我们知道设备横竖屏切换的话，当前展示给用户的 Activity 默认情况下会重新创建并展现给用户，那依附于 Activity 的 Fragment 会进行如何处理呢，我们可以通过源码来查看<br>先来看看Activity的$onCreate(Bundle saveInstance)$方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(@Nullable Bundle savedInstanceState)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (DEBUG_LIFECYCLE) Slog.v(TAG, <span class="string">"onCreate "</span> + <span class="keyword">this</span> + <span class="string">": "</span> + savedInstanceState);</div><div class="line">        <span class="keyword">if</span> (mLastNonConfigurationInstances != <span class="keyword">null</span>) &#123;</div><div class="line">            mFragments.restoreLoaderNonConfig(mLastNonConfigurationInstances.loaders);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (mActivityInfo.parentActivityName != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">if</span> (mActionBar == <span class="keyword">null</span>) &#123;</div><div class="line">                mEnableDefaultActionBarUp = <span class="keyword">true</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                mActionBar.setDefaultDisplayHomeAsUpEnabled(<span class="keyword">true</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (savedInstanceState != <span class="keyword">null</span>) &#123;</div><div class="line">            Parcelable p = savedInstanceState.getParcelable(FRAGMENTS_TAG);</div><div class="line">            mFragments.restoreAllState(p, mLastNonConfigurationInstances != <span class="keyword">null</span></div><div class="line">                    ? mLastNonConfigurationInstances.fragments : <span class="keyword">null</span>);</div><div class="line">        &#125;</div><div class="line">        mFragments.dispatchCreate();</div><div class="line">        getApplication().dispatchActivityCreated(<span class="keyword">this</span>, savedInstanceState);</div><div class="line">        <span class="keyword">if</span> (mVoiceInteractor != <span class="keyword">null</span>) &#123;</div><div class="line">            mVoiceInteractor.attachActivity(<span class="keyword">this</span>);</div><div class="line">        &#125;</div><div class="line">        mCalled = <span class="keyword">true</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>在代码第13行，如果 <strong>savedInstanceState</strong> 不为空，那么就调用 $mFragments.restoreAllState();$<br>                    这个方法中 mFragments 是 FragmentController，从名字就可以看出一些东西，我们深入进去。同时在这个类的注释中，我们知道，这个类管理fragment的生命周期。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * Restores the saved state for all Fragments. The given FragmentManagerNonConfig are Fragment</div><div class="line">     * instances retained across configuration changes, including nested fragments</div><div class="line">     *</div><div class="line">     * <span class="doctag">@see</span> #retainNestedNonConfig()</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">restoreAllState</span><span class="params">(Parcelable state, FragmentManagerNonConfig nonConfig)</span> </span>&#123;</div><div class="line">        mHost.mFragmentManager.restoreAllState(state, nonConfig);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>恢复所有fragment被保存的状态。我们在 restoreAllState（）方法中找到如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;fms.mActive.length; i++) &#123;</div><div class="line">            FragmentState fs = fms.mActive[i];</div><div class="line">            <span class="keyword">if</span> (fs != <span class="keyword">null</span>) &#123;</div><div class="line">                FragmentManagerNonConfig childNonConfig = <span class="keyword">null</span>;</div><div class="line">                <span class="keyword">if</span> (childNonConfigs != <span class="keyword">null</span> &amp;&amp; i &lt; childNonConfigs.size()) &#123;</div><div class="line">                    childNonConfig = childNonConfigs.get(i);</div><div class="line">                &#125;</div><div class="line">                Fragment f = fs.instantiate(mHost, mParent, childNonConfig);</div><div class="line">                <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"restoreAllState: active #"</span> + i + <span class="string">": "</span> + f);</div><div class="line">                mActive.add(f);</div><div class="line">                <span class="comment">// Now that the fragment is instantiated (or came from being</span></div><div class="line">                <span class="comment">// retained above), clear mInstance in case we end up re-restoring</span></div><div class="line">                <span class="comment">// from this FragmentState again.</span></div><div class="line">                fs.mInstance = <span class="keyword">null</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                mActive.add(<span class="keyword">null</span>);</div><div class="line">                <span class="keyword">if</span> (mAvailIndices == <span class="keyword">null</span>) &#123;</div><div class="line">                    mAvailIndices = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"restoreAllState: avail #"</span> + i);</div><div class="line">                mAvailIndices.add(i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
+<p>我们跟进第八行，调用的$instantiate()$，并且我们一直深入，我们找到了最终的代码，同时，根据注释和相应代码的理解，我们终于明白了为什么fragment必须要有默认构造函数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * Create a new instance of a Fragment with the given class name.  This is</div><div class="line">     * the same as calling its empty constructor.</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> context The calling context being used to instantiate the fragment.</div><div class="line">     * This is currently just used to get its ClassLoader.</div><div class="line">     * <span class="doctag">@param</span> fname The class name of the fragment to instantiate.</div><div class="line">     * <span class="doctag">@param</span> args Bundle of arguments to supply to the fragment, which it</div><div class="line">     * can retrieve with &#123;<span class="doctag">@link</span> #getArguments()&#125;.  May be null.</div><div class="line">     * <span class="doctag">@return</span> Returns a new fragment instance.</div><div class="line">     * <span class="doctag">@throws</span> InstantiationException If there is a failure in instantiating</div><div class="line">     * the given fragment class.  This is a runtime exception; it is not</div><div class="line">     * normally expected to happen.</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Fragment <span class="title">instantiate</span><span class="params">(Context context, String fname, @Nullable Bundle args)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Class&lt;?&gt; clazz = sClassMap.get(fname);</div><div class="line">            <span class="keyword">if</span> (clazz == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="comment">// Class not found in the cache, see if it's real, and try to add it</span></div><div class="line">                clazz = context.getClassLoader().loadClass(fname);</div><div class="line">                <span class="keyword">if</span> (!Fragment.class.isAssignableFrom(clazz)) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> InstantiationException(<span class="string">"Trying to instantiate a class "</span> + fname</div><div class="line">                            + <span class="string">" that is not a Fragment"</span>, <span class="keyword">new</span> ClassCastException());</div><div class="line">                &#125;</div><div class="line">                sClassMap.put(fname, clazz);</div><div class="line">            &#125;</div><div class="line">            Fragment f = (Fragment)clazz.newInstance();</div><div class="line">            <span class="keyword">if</span> (args != <span class="keyword">null</span>) &#123;</div><div class="line">                args.setClassLoader(f.getClass().getClassLoader());</div><div class="line">                f.mArguments = args;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> f;</div><div class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InstantiationException(<span class="string">"Unable to instantiate fragment "</span> + fname</div><div class="line">                    + <span class="string">": make sure class name exists, is public, and has an"</span></div><div class="line">                    + <span class="string">" empty constructor that is public"</span>, e);</div><div class="line">        &#125; <span class="keyword">catch</span> (java.lang.InstantiationException e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InstantiationException(<span class="string">"Unable to instantiate fragment "</span> + fname</div><div class="line">                    + <span class="string">": make sure class name exists, is public, and has an"</span></div><div class="line">                    + <span class="string">" empty constructor that is public"</span>, e);</div><div class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> InstantiationException(<span class="string">"Unable to instantiate fragment "</span> + fname</div><div class="line">                    + <span class="string">": make sure class name exists, is public, and has an"</span></div><div class="line">                    + <span class="string">" empty constructor that is public"</span>, e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>最终会通过反射无参构造实例化一个新的Fragment，并且会调用的使我们的默认构造函数。我们最终在30行的时候发现了$f.mArguments = args$, 好吧，到目前为止我们的问题大致都清楚了。</p>
+
+      
+    </div>
+
+	
+	<div>
+	
+	<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束 ------</div>
+	
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/17/汇编语言基础之寄存器（二）/" rel="next" title="汇编语言基础之寄存器（二）">
+                <i class="fa fa-chevron-left"></i> 汇编语言基础之寄存器（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/20/起泡算法和插入算法/" rel="prev" title="起泡算法和插入算法">
+                起泡算法和插入算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JianRan" />
+          <p class="site-author-name" itemprop="name">JianRan</p>
+           
+              <p class="site-description motion-element" itemprop="description">做好手里面的事情</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个Fragment"><span class="nav-number">1.</span> <span class="nav-text">创建一个Fragment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态的处理Fragment"><span class="nav-number">2.</span> <span class="nav-text">动态的处理Fragment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fragment的一些问题"><span class="nav-number">3.</span> <span class="nav-text">Fragment的一些问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-https://avatars1.githubusercontent.com/u/32269?v=3&s=460"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JianRan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jianran';
+      var disqus_identifier = '2017/03/20/Fragment（Training）/';
+
+      var disqus_title = "Fragment（Training）";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+
+    </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
