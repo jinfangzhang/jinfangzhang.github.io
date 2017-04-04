@@ -4,6 +4,51 @@
   
     
     <entry>
+      <title><![CDATA[Bitmap—— Android 高效加载图片]]></title>
+      <url>http://yoursite.com/2017/04/04/Bitmap%E2%80%94%E2%80%94-Android-%E9%AB%98%E6%95%88%E5%8A%A0%E8%BD%BD%E5%9B%BE%E7%89%87/</url>
+      <content type="html"><![CDATA[<p>自从装完 Linux 好久都没有写文章，主要自己发现在某块内容方面严重欠缺，正在狠补当中。</p>
+<p>对于 Google 文档的进度到了 “Android图片与动画”，这一块在 <a href="https://developer.android.google.cn/training/index.html?hl=zh-cn" target="_blank" rel="external">Google Training</a>上面已经找不到了，具体还是去看 胡凯翻译的<a href="http://hukai.me/android-training-course-in-chinese/basics/index.html" target="_blank" rel="external"> Google 文档</a>。哪怕只是 Training 里面依然有很多干货。</p>
+<hr>
+<p>本文会讲关于 Android 加载图片的一些知识。我们在通过 ImageView 来加载一张图片的时候，如果不加任何处理的话经常会出现 OOM(Out Of Memory) 的情况，哪怕只是加载一些只有几十KB的图片，通过 Android Studio 所提供 Monitor 会发现，一张如此小的图片竟然消耗了十几兆的内存，简直不要太可怕！</p>
+<p>这里我们引出了一个问题，Android系统图片加载机制到底是怎么样的？ 是什么导致了一张几十KB的图片，摇身一变成内存大魔王了？</p>
+<p>###Android系统加载图片机制</p>
+<p> Android 色彩模式说明：</p>
+<ul>
+<li>ALPHA_8：每个像素占用1byte内存。</li>
+<li>ARGB_4444:每个像素占用2byte内存</li>
+<li>ARGB_8888:每个像素占用4byte内存</li>
+<li>RGB_565:每个像素占用2byte内存</li>
+</ul>
+<p>Android默认的色彩模式为 ARGB_8888 ，这个色彩模式色彩最细腻，显示质量最高。但同样的，占用的内存也最大，而且不管你的图片格式是 PNG 还是 JPG 格式 Android 系统都采用 Bitmap 这个加载形式来加载。<br>假设一张1024<em>1024，模式为ARGB_8888的图片，那么它占有的内存就是：1024</em>1024*4 = 4MB</p>
+<p>注：无论是怎样格式的图片，Android 都会看成是由一个一个像素组成的，然后一个一个像素加载</p>
+<p>###解决问题</p>
+<p>BitmapFactory 这个类提供了多个解析方法(decodeByteArray, decodeFile, decodeResource 等)用于创建 Bitmap对象，我们应该根据图片的来源选择合适的方法。比如 SD 卡中的图片可以使用 decodeFile 方法，网络上的图片可以使用 decodeStream 方法，资源文件中的图片可以使用 decodeResource 方法。这些方法会尝试为已经构建的 bitmap 分配内存，这时就会很容易导致 OOM 出现。为此每种解析方法都提供了一个可选的 BitmapFactory.Options 参数，在里面有一个 inJustDecodeBounds 的参数， 我们将他设置为 true， 就可以禁止给 Bitmap 分配内存，但是我们依然可以获得这个图片的长宽这个信息，我们可以通过这个来缩放我们图片达到适当的大小。</p>
+<p>我们这里为什么要进行图片的缩放了？<br>举一个例子，某情景下我们要给用户设置一个 128 × 128 头像，但是我们如果采用直接不加处理的显示一个 1920 × 1080 的一个图片，尽管我们最终只能在 128 × 128 这个面积下看到图像，但是 Android系统 会给它分配 1920 × 1080 × 4KB大小的内存。<br>所以我们要将图片缩放到适当大小，我们完全没有必要为了一个 “头像” 而是用如此大的内存消耗</p>
+<p>我们可以通过如下方法获取图片的长宽：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</div><div class="line">options.inJustDecodeBounds = <span class="keyword">true</span>;</div><div class="line">BitmapFactory.decodeResource(getResources(), R.id.image, options);</div><div class="line"><span class="keyword">int</span> imageHeight = options.outHeight;</div><div class="line"><span class="keyword">int</span> imageWidth = options.outWidth;</div></pre></td></tr></table></figure></p>
+<p>我们知道图片原本的长宽，下来我们要根据我们要使用的的具体的长宽进行缩放，使用的是在 BitmapFactory.Options 中的 inSampleSize 的属性，这个属性的意思大概是缩放比例的意思，例如, 一个分辨率为2048x1536的图片，如果设置 inSampleSize 为4，那么会产出一个大约512x384大小的Bitmap。加载这张缩小的图片仅仅使用大概0.75MB的内存，如果是加载完整尺寸的图片，那么大概需要花费12MB（前提都是Bitmap的配置是 ARGB_8888）。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">calculateInSampleSize</span><span class="params">(</span></span></div><div class="line">            BitmapFactory.Options options, <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight) &#123;</div><div class="line">    <span class="comment">// Raw height and width of image</span></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> height = options.outHeight;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> width = options.outWidth;</div><div class="line">    <span class="keyword">int</span> inSampleSize = <span class="number">1</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (height &gt; reqHeight || width &gt; reqWidth) &#123;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> halfHeight = height / <span class="number">2</span>;</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> halfWidth = width / <span class="number">2</span>;</div><div class="line"></div><div class="line">        <span class="comment">// Calculate the largest inSampleSize value that is a power of 2 and keeps both</span></div><div class="line">        <span class="comment">// height and width larger than the requested height and width.</span></div><div class="line">        <span class="keyword">while</span> ((halfHeight / inSampleSize) &gt; reqHeight</div><div class="line">                &amp;&amp; (halfWidth / inSampleSize) &gt; reqWidth) &#123;</div><div class="line">            inSampleSize *= <span class="number">2</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> inSampleSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<pre><code>以上是 Google 文档的内容，有人会问，为什么我们要用2的倍数？
+设置inSampleSize为2的幂是因为解码器最终还是会对非2的幂的数进行向下处理，获取到最靠近2的幂的数。详情参考inSampleSize的文档。
+</code></pre><p>缩放比例已经确定，现在只剩下最后的生成图片了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Bitmap <span class="title">decodeSampledBitmapFromResource</span><span class="params">(Resources res, <span class="keyword">int</span> resId,</span></span></div><div class="line">        <span class="keyword">int</span> reqWidth, <span class="keyword">int</span> reqHeight) &#123;</div><div class="line"></div><div class="line">    <span class="comment">// First decode with inJustDecodeBounds=true to check dimensions</span></div><div class="line">    <span class="keyword">final</span> BitmapFactory.Options options = <span class="keyword">new</span> BitmapFactory.Options();</div><div class="line">    options.inJustDecodeBounds = <span class="keyword">true</span>;</div><div class="line">    BitmapFactory.decodeResource(res, resId, options);</div><div class="line"></div><div class="line">    <span class="comment">// Calculate inSampleSize</span></div><div class="line">    options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);</div><div class="line"></div><div class="line">    <span class="comment">// Decode bitmap with inSampleSize set</span></div><div class="line">    options.inJustDecodeBounds = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span> BitmapFactory.decodeResource(res, resId, options);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后我们要把 inJustDecodeBounds 设置成 false 这样通过 decodeResource 最后返回的才是会是真正的 Bitmap 图片 </p>
+]]></content>
+      
+        <categories>
+            
+            <category> Android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[起泡算法和插入算法]]></title>
       <url>http://yoursite.com/2017/03/20/%E8%B5%B7%E6%B3%A1%E7%AE%97%E6%B3%95%E5%92%8C%E6%8F%92%E5%85%A5%E7%AE%97%E6%B3%95/</url>
       <content type="html"><![CDATA[<h2 id="起泡算法"><a href="#起泡算法" class="headerlink" title="起泡算法"></a>起泡算法</h2><ol>
