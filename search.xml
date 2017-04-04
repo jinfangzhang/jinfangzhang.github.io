@@ -9,6 +9,18 @@
       <content type="html"><![CDATA[<p>JianRan<br>2017/4/4</p>
 ]]></content>
       
+        <categories>
+            
+            <category> 阶段一 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 2017-4 </tag>
+            
+        </tags>
         
     </entry>
     
@@ -51,7 +63,7 @@
         
         <tags>
             
-            <tag> Android </tag>
+            <tag> 2017-4 </tag>
             
         </tags>
         
@@ -94,7 +106,7 @@
         
         <tags>
             
-            <tag> 数据结构 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -147,7 +159,7 @@
         
         <tags>
             
-            <tag> Android </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -184,7 +196,7 @@
         
         <tags>
             
-            <tag> 汇编语言基础 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -212,7 +224,7 @@
         
         <tags>
             
-            <tag> 数据结构 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -286,7 +298,7 @@
         
         <tags>
             
-            <tag> 汇编语言基础 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -400,7 +412,7 @@ list.setAdapter(MyAdapter);
         
         <tags>
             
-            <tag> Android </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -426,7 +438,7 @@ list.setAdapter(MyAdapter);
         
         <tags>
             
-            <tag> 乱七八糟 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -459,7 +471,7 @@ list.setAdapter(MyAdapter);
         
         <tags>
             
-            <tag> 数据结构 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -489,7 +501,7 @@ list.setAdapter(MyAdapter);
         
         <tags>
             
-            <tag> 汇编语言基础 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -549,7 +561,7 @@ list.setAdapter(MyAdapter);
         
         <tags>
             
-            <tag> 数据结构 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -603,7 +615,7 @@ list.setAdapter(MyAdapter);
         
         <tags>
             
-            <tag> Java编程思想 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
@@ -641,7 +653,7 @@ list.setAdapter(MyAdapter);
         
         <tags>
             
-            <tag> 乱七八糟 </tag>
+            <tag> 2017-3 </tag>
             
         </tags>
         
