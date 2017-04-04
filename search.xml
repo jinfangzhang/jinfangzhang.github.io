@@ -9,7 +9,7 @@
       <content type="html"><![CDATA[<p>自从装完 Linux 好久都没有写文章，主要自己发现在某块内容方面严重欠缺，正在狠补当中。</p>
 <p>对于 Google 文档的进度到了 “Android图片与动画”，这一块在 <a href="https://developer.android.google.cn/training/index.html?hl=zh-cn" target="_blank" rel="external">Google Training</a>上面已经找不到了，具体还是去看 胡凯翻译的<a href="http://hukai.me/android-training-course-in-chinese/basics/index.html" target="_blank" rel="external"> Google 文档</a>。哪怕只是 Training 里面依然有很多干货。</p>
 <hr>
-<p>本文会讲关于 Android 加载图片的一些知识。我们在通过 ImageView 来加载一张图片的时候，如果不加任何处理的话经常会出现 OOM(Out Of Memory) 的情况，哪怕只是加载一些只有几十KB的图片，通过 Android Studio 所提供 Monitor 会发现，一张如此小的图片竟然消耗了十几兆的内存，简直不要太可怕！</p>
+<p>本文会讲关于 Android 加载图片的一些知识。我们在通过 ImageView 来加载一张图片的时候，如果不加任何处理的话经常会出现 OOM(Out Of Memory) 的情况，哪怕只是加载一张只有几十KB的图片，通过 Android Studio 所提供 Monitor 会发现，一张如此小的图片竟然消耗了十几兆的内存，简直不要太可怕！</p>
 <p>这里我们引出了一个问题，Android系统图片加载机制到底是怎么样的？ 是什么导致了一张几十KB的图片，摇身一变成内存大魔王了？</p>
 <p>###Android系统加载图片机制</p>
 <p> Android 色彩模式说明：</p>
