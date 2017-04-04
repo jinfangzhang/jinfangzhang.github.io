@@ -11,14 +11,14 @@
       
         <categories>
             
-            <category> 阶段一 </category>
+            <category> 2017-4 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-4 </tag>
+            <tag> 阶段一 </tag>
             
         </tags>
         
@@ -56,14 +56,14 @@
       
         <categories>
             
-            <category> Android </category>
+            <category> 2017-4 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-4 </tag>
+            <tag> Android </tag>
             
         </tags>
         
@@ -99,14 +99,14 @@
       
         <categories>
             
-            <category> 数据结构 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 数据结构 </tag>
             
         </tags>
         
@@ -152,14 +152,14 @@
       
         <categories>
             
-            <category> Android </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> Android </tag>
             
         </tags>
         
@@ -189,14 +189,14 @@
       
         <categories>
             
-            <category> 汇编语言基础 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 汇编语言基础 </tag>
             
         </tags>
         
@@ -217,14 +217,14 @@
       
         <categories>
             
-            <category> 数据结构 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 数据结构 </tag>
             
         </tags>
         
@@ -291,14 +291,14 @@
       
         <categories>
             
-            <category> 汇编语言基础 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 汇编语言基础 </tag>
             
         </tags>
         
@@ -405,14 +405,14 @@ list.setAdapter(MyAdapter);
       
         <categories>
             
-            <category> Android </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> Android </tag>
             
         </tags>
         
@@ -431,14 +431,14 @@ list.setAdapter(MyAdapter);
       
         <categories>
             
-            <category> 乱七八糟 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 乱七八糟 </tag>
             
         </tags>
         
@@ -464,14 +464,14 @@ list.setAdapter(MyAdapter);
       
         <categories>
             
-            <category> 数据结构 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 数据结构 </tag>
             
         </tags>
         
@@ -494,14 +494,14 @@ list.setAdapter(MyAdapter);
       
         <categories>
             
-            <category> 汇编语言基础 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 汇编语言基础 </tag>
             
         </tags>
         
@@ -554,14 +554,14 @@ list.setAdapter(MyAdapter);
       
         <categories>
             
-            <category> 数据结构 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 数据结构 </tag>
             
         </tags>
         
@@ -608,14 +608,14 @@ list.setAdapter(MyAdapter);
       
         <categories>
             
-            <category> Java编程思想 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> Java编程思想 </tag>
             
         </tags>
         
@@ -646,14 +646,14 @@ list.setAdapter(MyAdapter);
       
         <categories>
             
-            <category> 乱七八糟 </category>
+            <category> 2017-3 </category>
             
         </categories>
         
         
         <tags>
             
-            <tag> 2017-3 </tag>
+            <tag> 乱七八糟 </tag>
             
         </tags>
         
