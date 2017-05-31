@@ -99,7 +99,7 @@
 
 ##最简单的汇编程序
 1234567891011121314151617181920212223#PURPOSE: Simple program that exits and returns a#status code back to the Linux">
-<meta property="og:updated_time" content="2017-05-31T03:15:46.907Z">
+<meta property="og:updated_time" content="2017-05-31T03:16:50.922Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content=" C语言剖析——X86汇编程序基础(一）">
 <meta name="twitter:description" content="要搞清楚 C语言 的原理,就必须深入到指令层去理解. 你编写一行代码会生成什么样的指令,要做到心中有数,所以这里只会说明一些必要的汇编语言信息
@@ -365,7 +365,7 @@
 <p>有人可能会问,为什么汇编语言翻译成机器指令还需要使用有一个链接的步骤?<br>链接主要有两个作用:<br>    1) 修改「目标文件」中的信息,对地址进行重定位<br>    2) 把「多个目标文件」合并成一个执行文件</p>
 <p>现在这个程序只执行一件事情 —— 退出，退出状态是 4 </p>
 <pre><code>$ ./hello
-</code></pre><p>$ echo \$?<br>    4</p>
+</code></pre><p>$ echo  $?<br>    4</p>
 <p>##分析程序</p>
 <p>首先， #表示单行注释，类似于 C语言 当中 //</p>
 <pre><code>.section .data
