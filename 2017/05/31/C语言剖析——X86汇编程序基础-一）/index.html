@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="数据结构," />
+  <meta name="keywords" content="C语言," />
 
 
 
@@ -87,27 +87,25 @@
 
 
 
-<meta name="description" content="起泡算法
-什么是顺序？什么是逆序？在由一组整数组成的序列A[0, n - 1]中，满足A[i - 1] &amp;lt; A[i]的相邻元素称作顺序的；否则是逆序的
+<meta name="description" content="要搞清楚 C语言 的原理,就必须深入到指令层去理解. 你编写一行代码会生成什么样的指令,要做到心中有数,所以这里只会说明一些必要的汇编语言信息
 
-算法思路已知有一组无序元素集合，最终我们的目的是让他们成为有序集合（这个的有序是升幂次序）。我们对这个数组进行扫描，在扫描的过程中，依次比较 A[i - 1] 和 A[i] ,如果发现他们中有逆序对的存在就相互交换，并且认为这个序列是无序的">
+##最简单的汇编程序
+1234567891011121314151617181920212223#PURPOSE: Simple program that exits and returns a#status code back to the Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="起泡算法和插入算法">
-<meta property="og:url" content="http://yoursite.com/2017/03/20/起泡算法和插入算法/index.html">
+<meta property="og:title" content=" C语言剖析——X86汇编程序基础(一）">
+<meta property="og:url" content="http://yoursite.com/2017/05/31/C语言剖析——X86汇编程序基础-一）/index.html">
 <meta property="og:site_name" content="JianRan">
-<meta property="og:description" content="起泡算法
-什么是顺序？什么是逆序？在由一组整数组成的序列A[0, n - 1]中，满足A[i - 1] &amp;lt; A[i]的相邻元素称作顺序的；否则是逆序的
+<meta property="og:description" content="要搞清楚 C语言 的原理,就必须深入到指令层去理解. 你编写一行代码会生成什么样的指令,要做到心中有数,所以这里只会说明一些必要的汇编语言信息
 
-算法思路已知有一组无序元素集合，最终我们的目的是让他们成为有序集合（这个的有序是升幂次序）。我们对这个数组进行扫描，在扫描的过程中，依次比较 A[i - 1] 和 A[i] ,如果发现他们中有逆序对的存在就相互交换，并且认为这个序列是无序的">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdqt264nvsj30je07ltbz.jpg">
-<meta property="og:updated_time" content="2017-04-04T07:06:22.114Z">
+##最简单的汇编程序
+1234567891011121314151617181920212223#PURPOSE: Simple program that exits and returns a#status code back to the Linux">
+<meta property="og:updated_time" content="2017-05-31T01:38:22.937Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="起泡算法和插入算法">
-<meta name="twitter:description" content="起泡算法
-什么是顺序？什么是逆序？在由一组整数组成的序列A[0, n - 1]中，满足A[i - 1] &amp;lt; A[i]的相邻元素称作顺序的；否则是逆序的
+<meta name="twitter:title" content=" C语言剖析——X86汇编程序基础(一）">
+<meta name="twitter:description" content="要搞清楚 C语言 的原理,就必须深入到指令层去理解. 你编写一行代码会生成什么样的指令,要做到心中有数,所以这里只会说明一些必要的汇编语言信息
 
-算法思路已知有一组无序元素集合，最终我们的目的是让他们成为有序集合（这个的有序是升幂次序）。我们对这个数组进行扫描，在扫描的过程中，依次比较 A[i - 1] 和 A[i] ,如果发现他们中有逆序对的存在就相互交换，并且认为这个序列是无序的">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdqt264nvsj30je07ltbz.jpg">
+##最简单的汇编程序
+1234567891011121314151617181920212223#PURPOSE: Simple program that exits and returns a#status code back to the Linux">
 
 
 
@@ -135,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/20/起泡算法和插入算法/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/31/C语言剖析——X86汇编程序基础-一）/"/>
 
 
 
 
 
-  <title> 起泡算法和插入算法 | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>  C语言剖析——X86汇编程序基础(一） | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -260,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/20/起泡算法和插入算法/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/31/C语言剖析——X86汇编程序基础-一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JianRan">
@@ -281,7 +279,7 @@
             
             
               
-                起泡算法和插入算法
+                 C语言剖析——X86汇编程序基础(一）
               
             
           </h1>
@@ -296,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-20T23:14:45+08:00">
-                2017-03-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T09:37:09+08:00">
+                2017-05-31
               </time>
             
 
@@ -319,8 +317,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2017-3/" itemprop="url" rel="index">
-                    <span itemprop="name">2017-3</span>
+                  <a href="/categories/2017-5/" itemprop="url" rel="index">
+                    <span itemprop="name">2017-5</span>
                   </a>
                 </span>
 
@@ -330,18 +328,6 @@
             </span>
           
 
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/20/起泡算法和插入算法/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/20/起泡算法和插入算法/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -364,28 +350,53 @@
       
 
       
-        <h2 id="起泡算法"><a href="#起泡算法" class="headerlink" title="起泡算法"></a>起泡算法</h2><ol>
-<li><p>什么是顺序？什么是逆序？<br>在由一组整数组成的序列A[0, n - 1]中，满足A[i - 1] &lt; A[i]的相邻元素称作顺序的；否则是逆序的</p>
-</li>
-<li><p>算法思路<br>已知有一组无序元素集合，最终我们的目的是让他们成为有序集合（这个的有序是升幂次序）。我们对这个数组进行扫描，在扫描的过程中，依次比较 A[i - 1] 和 A[i] ,如果发现他们中有逆序对的存在就相互交换，并且认为这个序列是无序的，不断的执行扫描，直到没有发现任何逆序对，我们就认为这个序列是有序的。</p>
+        <p>要搞清楚 C语言 的原理,就必须深入到指令层去理解. 你编写一行代码会生成什么样的指令,要做到心中有数,所以这里只会说明一些必要的汇编语言信息</p>
+<hr>
+<p>##最简单的汇编程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#PURPOSE: Simple program that exits and returns a</div><div class="line">#status code back to the Linux kernel</div><div class="line">#</div><div class="line">#INPUT:none</div><div class="line">#</div><div class="line">#OUTPUT: returns a status code. This can be viewed</div><div class="line">#        by typing</div><div class="line">#</div><div class="line">#        echo $?</div><div class="line">#</div><div class="line">#        after running the program</div><div class="line">#</div><div class="line">#VARIABLES:</div><div class="line">#        %eax holds the system call number</div><div class="line">#        %ebx holds the return status</div><div class="line">#</div><div class="line">.section .data</div><div class="line">.section .text</div><div class="line">.globl _start</div><div class="line">_start:</div><div class="line">movl $1, %eax</div><div class="line">movl $4,%ebx</div><div class="line">int $0x80</div></pre></td></tr></table></figure>
+<p>将这个文件保存为 hello.s (汇编程序通常以 .s 作为文件后缀),用汇编器 as 把汇编程序中的助记符翻译成机器指令,生成<strong>目标文件</strong> hello.o</p>
 <blockquote>
-<p>注：算法思路已经做了优化，在最坏的情况下，我们的算法复杂度依然保持着$n^2$的复杂度，但是我们对于最好的情况已经成为$O(n)$的复杂度。对于起泡算法有了解同学应该清楚，我就不多说了</p>
+<p>$ as hello.s -o hello.o</p>
 </blockquote>
-</li>
-<li><p>算法实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">sort(<span class="keyword">int</span>[] a)&#123;</div><div class="line">	<span class="keyword">boolean</span> sort = <span class="keyword">false</span>;<span class="comment">//默认是无序的</span></div><div class="line">	<span class="keyword">if</span>(！sort)&#123;<span class="comment">//如果是无序的就进行扫描</span></div><div class="line">	    sort = <span class="keyword">true</span>;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i&lt;a.seiz();i++)&#123;</div><div class="line">			<span class="keyword">if</span>(a[i-<span class="number">1</span>]&gt;a[i])&#123;</div><div class="line">				<span class="comment">//交换位置</span></div><div class="line">				<span class="keyword">int</span> temp = a[i-<span class="number">1</span>];</div><div class="line">				a[i-<span class="number">1</span>] = a[i];</div><div class="line">				a[i] = tmp;</div><div class="line">				sort = <span class="keyword">false</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> a;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>图示如下：<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdqt264nvsj30je07ltbz.jpg" alt=""></p>
-</li>
-<li><p>思考<br>我们的算法依然有改进的趋势，比如，在我们排序的过程当中，我们原先的机制是，只要判断这个序列是无序的，我们就从头开始遍历。如果我们在长度为 n 的序列当中，前n - k 都已是排好顺序的了，但是我们依然是从头开始。</p>
-</li>
+<p>然后用链接器(Linker) ld 把目标文件 hello.o<strong>链接</strong>成可执行文件 hello:</p>
+<blockquote>
+<p>$ ld hello.o -o hello</p>
+</blockquote>
+<p>有人可能会问,为什么汇编语言翻译成机器指令还需要使用有一个链接的步骤?<br>链接主要有两个作用:<br>    1) 修改「目标文件」中的信息,对地址进行重定位<br>    2) 把「多个目标文件」合并成一个执行文件</p>
+<p>现在这个程序只执行一件事情 —— 退出，退出状态是 4 </p>
+<pre><code>$ ./hello
+</code></pre><p>$ echo $?<br>    4</p>
+<p>##分析程序</p>
+<p>首先， #表示单行注释，类似于 C语言 当中 //</p>
+<pre><code>.section .data
+</code></pre><p>汇编语言中以「 . 」开头的名称并不是指令的 助记符，不会被翻译成 机器指令， 而是给汇编一些提醒，叫做 汇编指示 或 伪操作.<br>「 .section指示 」把代码划分成若干个「 Section 」，程序被操作系统 加载 执行时，每一段被加载到不同地址，<strong>操作系统对不同的页面设置不同的读、写、执行权限.</strong> .data段 保存程序的数据，是可读可写的，相当于 C 程序 的全局变量，对于本程序来说没有定义数据，所以 .data段 是空的</p>
+<pre><code>.section .text
+</code></pre><p>.text段 保存代码，是<strong>只读和可执行的</strong>，后面那些指令都属于 .text段</p>
+<pre><code>.globl _start
+</code></pre><p>_start 是一个符号，符号在汇编程序中代表一个地址，可以用在指令中，汇编程序经过汇编器的处理之后，所有的符号都被替换成它所代表的地址值。在 C语言 中我们通过变量名访问一个变量，其实就是访问从某个地址开始的内存单元，通过函数名调用一个函数，其实就是跳转到该函数第一条指令所在的地址，所以变量名和函数名都是符号，本质上是代表内存地址的.</p>
+<p>.globl 告诉汇编器，_start 这个符号要被链接器用到，所以要在目标文件的符号表中标记它是一个全局符号. _start 就像 C程序 的main函数一样特殊，是整个函数的入口，链接器在链接时会查找目标文件中的 _start 符号代表的地址，把它设置为整个程序的入口地址，所以每个汇编器 都要提供一个 _start 符号并且用 .globl 声明。如果一个符号没有 .globl 声明，就表示这个符号没有用 .globl 声明，就表示这个符号不会被链接器用到</p>
+<pre><code>_start:
+</code></pre><p>这里定义了 _start 符号，汇编器在 翻译 汇编程序会计算每个 数据对象 和 每条指令 的地址，当看到这样一个这样一个符号定义时，就把它后面一条指令的地址作为这个符号代表的地址。而 _start 这个符号比较特殊，它所代表的地址是整个程序的入口地址，所以下一条指令 movl $1, %eax 就成了程序第一条被执行的指令了</p>
+<pre><code>movl $1, %eax
+</code></pre><p>这是一条数据传送指令，这条指令要求 CPU 内部产生一个数字 1 并 保存到 eax 寄存器中。mov 的后缀 l 表示 long， 说明是 32 位的传送指令。这条指令不要求 CPU 读内存，1 这个数字是从 CPU 内部产生的，叫做立即数。在汇编程序中，<strong>立即数前面要加 $ </strong>,寄存器名前面要加 % ，以便和 符号名 区分开来。 </p>
+<pre><code>movl $4, %ebx
+</code></pre><p>与上一条指令基本格式相同，生成一个立即数，然后存放到 ebx 寄存器当中</p>
+<pre><code>int $0x80
+</code></pre><p>前两条指令都是为这条指令做准备的，执行这条时发生一下动作：</p>
+<ol>
+<li>int 指令称为 软中断指令，可以用这条指令故意产生一个异常，CPU 从用户模式切换到特权模式，然后跳转到内核代码中执行异常处理程序</li>
+<li>int 指令中的立即数 \$0x80 是一个参数，在异常处理中要根据这个参数决定如何处理，在 Linux内核中 int $0x80 这种异常称为 「系统调用」。内核提供了很多系统服务供用户程序使用，但这些系统服务不能像库函数（比如 print 一样调用），因为在执行用户程序时 CPU 处于用户模式，不能直接调用，所以需要通过系统调用 切换 CPU 模式，经由异常处理程序进入内核，<strong>用户程序只能通过寄存器传入几个参数</strong>，之后就要按内核设计好的线路走了，而不能任由用户程序随心所欲的调用</li>
+<li>eax 和 ebx 是传递给「系统调用」的两个参数。eax 的值是系统调用号，Linux 的各种系统调用都是由 int $0x80 指令引发的，内核需要通过 eax 判断用户需要哪个系统调用，_exit 的系统调用号是 1 . ebx 的值是传给 _exit 的参数，表示退出状态. 大多数系统调用完成之后，会返回用户空间继续执行后面的指令，而 <strong>_ext 系统比较特殊，它会终止当前而不是反回用户空间继续执行</strong>， 这个大概解释了「 echo $?」打印出来的为什么是 4（明明我们没有进行输入怎么就打印了？）</li>
 </ol>
-<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><ol>
-<li><p>算法思路<br>插入排序的工作方式像许多人排序一手扑克牌。开始的时候我们左手里，一张扑克牌也没有，右手的功能是每一次拿一张扑克牌，并且从左向右依次比较左手里面的扑克牌，找到排放位置插入该位置。我们总保证左手里面的扑克牌是有序的。依照这样的方式排序整个序列。</p>
-</li>
-<li><p>算法实现 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">insert_sort(<span class="keyword">int</span>[] a)&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span> ; i &lt; a.size(); i++)&#123;</div><div class="line">   			key = a[i];</div><div class="line">   			<span class="keyword">int</span> j = i;</div><div class="line">   			<span class="keyword">while</span>(j &gt; <span class="number">0</span> &amp;&amp; a[j-<span class="number">1</span>] &gt; key)</div><div class="line">   				a[j] = key;</div><div class="line">   				j = j - <span class="number">1</span>;</div><div class="line">   			&#125;</div><div class="line">   			a[j] = key; </div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注释：算法导论的算法很棒，我简单做了一下修改就直接弄上去了</p>
-</li>
+<hr>
+<p>本节重点：</p>
+<ol>
+<li>「 .section指示 」把代码划分成若干个「 Section 」，程序被操作系统 加载 执行时，每一段被加载到不同地址，操作系统对不同的页面设置不同的读、写、执行权限.</li>
+<li>.data段 保存程序的数据，是可读可写的，相当于 C 程序 的全局变量</li>
+<li>.text段 只读用于保存代码</li>
+<li>.globl _start 相当于 main，.globl 的作用</li>
+<li>符号 地址的由来</li>
+<li>系统调用的基本知识</li>
 </ol>
 
       
@@ -416,7 +427,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+            <a href="/tags/C语言/" rel="tag"># C语言</a>
           
         </div>
       
@@ -429,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/20/Fragment（Training）/" rel="next" title="Fragment（Training）">
-                <i class="fa fa-chevron-left"></i> Fragment（Training）
+              <a href="/2017/04/04/529/" rel="next" title="529">
+                <i class="fa fa-chevron-left"></i> 529
               </a>
             
           </div>
@@ -438,10 +449,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/04/Bitmap——-Android-高效加载图片/" rel="prev" title="Bitmap—— Android 高效加载图片">
-                Bitmap—— Android 高效加载图片 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -466,17 +473,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div id="disqus_thread">
-        <noscript>
-          Please enable JavaScript to view the
-          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
-        </noscript>
-      </div>
-    
-  </div>
-
 
         </div>
         
@@ -496,17 +492,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -568,22 +555,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#起泡算法"><span class="nav-number">1.</span> <span class="nav-text">起泡算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入排序"><span class="nav-number">2.</span> <span class="nav-text">插入排序</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -709,9 +680,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'jianran';
-      var disqus_identifier = '2017/03/20/起泡算法和插入算法/';
+      var disqus_identifier = '2017/05/31/C语言剖析——X86汇编程序基础-一）/';
 
-      var disqus_title = "起泡算法和插入算法";
+      var disqus_title = " C语言剖析——X86汇编程序基础(一）";
 
 
       function run_disqus_script(disqus_script) {
@@ -724,13 +695,6 @@
 
       run_disqus_script('count.js');
 
-      
-        var disqus_config = function () {
-            this.page.url = disqus_url;
-            this.page.identifier = disqus_identifier;
-            this.page.title = disqus_title;
-        };
-        run_disqus_script('embed.js');
       
 
     </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
