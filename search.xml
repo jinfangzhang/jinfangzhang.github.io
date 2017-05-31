@@ -4,6 +4,44 @@
   
     
     <entry>
+      <title><![CDATA[寻址方式]]></title>
+      <url>http://yoursite.com/2017/05/31/%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/</url>
+      <content type="html"><![CDATA[<p>常用的几种寻址方式。内存寻址在指令中可以表示成如下的通用格式：</p>
+<p>$$ADDRESS_OR(\%BASE_OR_OFFSET,\%INDEX,MULTIPLIER)$$</p>
+<p>他所表示的地址可以这样计算出来<br>FINAL ADDRESS = ADDRESS_OR_OFFEST + BASE_OR_OFFSET + MULTIPLIER x INDEX</p>
+<p>其中 ADDRESS_OR_OFFSET 和 MULTIPLIER 必须是常数，BASE_OR_OFFSET 和 INDEX 必须是寄存器</p>
+<ul>
+<li><p><strong>直接寻址</strong>。只使用 ADDRESS_OR_OFFEST 寻址，例如 movl ADDRESS，%eax 把 ADDRESS 地址处的32位数传送到 eax 寄存器</p>
+</li>
+<li><p><strong>变址寻址</strong>。 movl data_items（，%edi，4），%eax 就属于这种寻址，用于访问数组元素比较方便</p>
+</li>
+<li><p><strong>间接寻址</strong>。只是用 BASE_OR_OFFSET 寻址，例如 movl （%eax），%ebx，把 eax 寄存器的值看做地址，把内存中这个地址处的 32 位数传送到 ebx 寄存器。</p>
+</li>
+<li><p><strong>基址寻址</strong>。只使用 ADDRESS_OR_OFFSET 和 BASE_OR_OFFSET 寻址，<br>例如： movl 4（%eax），%ebx，用于访问结构体成员比较方便，例如一个结构体的基地址保存在 寄存器eax 中，其中一个成员在结构体中的偏移量是 4 字节，要把这个成员读上来就可以使用这条指令</p>
+</li>
+<li><p><strong>立即数寻址</strong>。就是指令中有一个操作数是立即数，例如：movl $12, %eax</p>
+</li>
+<li><p><strong>寄存器寻址</strong>。就是指令中一个操作数是寄存器</p>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 2017-5 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 汇编语言基础 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[ C语言剖析——X86汇编程序基础(一）]]></title>
       <url>http://yoursite.com/2017/05/31/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94X86%E6%B1%87%E7%BC%96%E7%A8%8B%E5%BA%8F%E5%9F%BA%E7%A1%80-%E4%B8%80%EF%BC%89/</url>
       <content type="html"><![CDATA[<p>要搞清楚 C语言 的原理,就必须深入到指令层去理解. 你编写一行代码会生成什么样的指令,要做到心中有数,所以这里只会说明一些必要的汇编语言信息</p>
