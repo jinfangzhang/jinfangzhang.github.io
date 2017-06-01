@@ -1,0 +1,705 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C语言," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="经过前一轮分析目标文件，现在开始该分析可执行文件了，汇编源码就不贴了。
+
+让我们看看 通过链接器生成的可执行文件，做了些什么改动。123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言剖析————可执行文件">
+<meta property="og:url" content="http://yoursite.com/2017/06/01/C语言剖析————可执行文件/index.html">
+<meta property="og:site_name" content="JianRan">
+<meta property="og:description" content="经过前一轮分析目标文件，现在开始该分析可执行文件了，汇编源码就不贴了。
+
+让我们看看 通过链接器生成的可执行文件，做了些什么改动。123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172">
+<meta property="og:updated_time" content="2017-06-01T08:20:11.120Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C语言剖析————可执行文件">
+<meta name="twitter:description" content="经过前一轮分析目标文件，现在开始该分析可执行文件了，汇编源码就不贴了。
+
+让我们看看 通过链接器生成的可执行文件，做了些什么改动。123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/01/C语言剖析————可执行文件/"/>
+
+
+
+
+
+  <title> C语言剖析————可执行文件 | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JianRan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/01/C语言剖析————可执行文件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                C语言剖析————可执行文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-01T16:19:21+08:00">
+                2017-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2017-6/" itemprop="url" rel="index">
+                    <span itemprop="name">2017-6</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>经过前一轮分析目标文件，现在开始该分析可执行文件了，汇编源码就不贴了。</p>
+<hr>
+<p>让我们看看 通过链接器生成的可执行文件，做了些什么改动。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ readelf -a max</div><div class="line">ELF Header:</div><div class="line">  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 </div><div class="line">  Class:                             ELF64</div><div class="line">  Data:                              2&apos;s complement, little endian</div><div class="line">  Version:                           1 (current)</div><div class="line">  OS/ABI:                            UNIX - System V</div><div class="line">  ABI Version:                       0</div><div class="line">  Type:                              EXEC (Executable file)</div><div class="line">  Machine:                           Advanced Micro Devices X86-64</div><div class="line">  Version:                           0x1</div><div class="line">  Entry point address:               0x4000b0</div><div class="line">  Start of program headers:          64 (bytes into file)</div><div class="line">  Start of section headers:          648 (bytes into file)</div><div class="line">  Flags:                             0x0</div><div class="line">  Size of this header:               64 (bytes)</div><div class="line">  Size of program headers:           56 (bytes)</div><div class="line">  Number of program headers:         2</div><div class="line">  Size of section headers:           64 (bytes)</div><div class="line">  Number of section headers:         6</div><div class="line">  Section header string table index: 5</div><div class="line"></div><div class="line">Section Headers:</div><div class="line">  [Nr] Name              Type             Address           Offset</div><div class="line">       Size              EntSize          Flags  Link  Info  Align</div><div class="line">  [ 0]                   NULL             0000000000000000  00000000</div><div class="line">       0000000000000000  0000000000000000           0     0     0</div><div class="line">  [ 1] .text             PROGBITS         00000000004000b0  000000b0</div><div class="line">       000000000000002d  0000000000000000  AX       0     0     1</div><div class="line">  [ 2] .data             PROGBITS         00000000006000dd  000000dd</div><div class="line">       0000000000000038  0000000000000000  WA       0     0     1</div><div class="line">  [ 3] .symtab           SYMTAB           0000000000000000  00000118</div><div class="line">       0000000000000108  0000000000000018           4     7     8</div><div class="line">  [ 4] .strtab           STRTAB           0000000000000000  00000220</div><div class="line">       000000000000003f  0000000000000000           0     0     1</div><div class="line">  [ 5] .shstrtab         STRTAB           0000000000000000  0000025f</div><div class="line">       0000000000000027  0000000000000000           0     0     1</div><div class="line">Key to Flags:</div><div class="line">  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),</div><div class="line">  L (link order), O (extra OS processing required), G (group), T (TLS),</div><div class="line">  C (compressed), x (unknown), o (OS specific), E (exclude),</div><div class="line">  l (large), p (processor specific)</div><div class="line"></div><div class="line">There are no section groups in this file.</div><div class="line"></div><div class="line">Program Headers:</div><div class="line">  Type           Offset             VirtAddr           PhysAddr</div><div class="line">                 FileSiz            MemSiz              Flags  Align</div><div class="line">  LOAD           0x0000000000000000 0x0000000000400000 0x0000000000400000</div><div class="line">                 0x00000000000000dd 0x00000000000000dd  R E    0x200000</div><div class="line">  LOAD           0x00000000000000dd 0x00000000006000dd 0x00000000006000dd</div><div class="line">                 0x0000000000000038 0x0000000000000038  RW     0x200000</div><div class="line"></div><div class="line"> Section to Segment mapping:</div><div class="line">  Segment Sections...</div><div class="line">   00     .text </div><div class="line">   01     .data </div><div class="line"></div><div class="line">There is no dynamic section in this file.</div><div class="line"></div><div class="line">There are no relocations in this file.</div><div class="line"></div><div class="line">The decoding of unwind sections for machine type Advanced Micro Devices X86-64 is not currently supported.</div><div class="line"></div><div class="line">Symbol table &apos;.symtab&apos; contains 11 entries:</div><div class="line">   Num:    Value          Size Type    Bind   Vis      Ndx Name</div><div class="line">     0: 0000000000000000     0 NOTYPE  LOCAL  DEFAULT  UND </div><div class="line">     1: 00000000004000b0     0 SECTION LOCAL  DEFAULT    1 </div><div class="line">     2: 00000000006000dd     0 SECTION LOCAL  DEFAULT    2 </div><div class="line">     3: 0000000000000000     0 FILE    LOCAL  DEFAULT  ABS max.o</div><div class="line">     4: 00000000006000dd     0 NOTYPE  LOCAL  DEFAULT    2 data_items</div><div class="line">     5: 00000000004000bf     0 NOTYPE  LOCAL  DEFAULT    1 start_loop</div><div class="line">     6: 00000000004000d6     0 NOTYPE  LOCAL  DEFAULT    1 loop_exit</div><div class="line">     7: 00000000004000b0     0 NOTYPE  GLOBAL DEFAULT    1 _start</div><div class="line">     8: 0000000000600115     0 NOTYPE  GLOBAL DEFAULT    2 __bss_start</div><div class="line">     9: 0000000000600115     0 NOTYPE  GLOBAL DEFAULT    2 _edata</div><div class="line">    10: 0000000000600118     0 NOTYPE  GLOBAL DEFAULT    2 _end</div><div class="line"></div><div class="line">No version information found in this file.</div></pre></td></tr></table></figure></p>
+<p>在 ELF Header Table 中 改成了 EXEC，由目标文件变成了可执行文件，Entry point address(入口点地址）改成了 0x4000b0（这是 _start 符号的地址），还可以看出多了两个 Program Header，少了两个 Section Header。</p>
+<p>在 Section Header Table 中的 .text 和 .data段的加载地址分别改成了00000000004000b0 和 00000000006000dd 。 .bss段没有用到，所以被删除了。.rel.text段就是用于链接器过程的，做完链接也就没有用，被删除了</p>
+<p>多出的 Program Header Table 描述了两个 Segment 的信息。.text段和前面的 ELF Header、Program Header Table 一起组成一个 Segment，.data段组成另一个 Segment，以后我们就把这两个 Segment 分别叫做 Text Segment 和 Data Segment。VirtAddr 列出了 Text Segment 加载到虚拟地址 0x0000000000400000，Data Segment 加载到地址 0x00000000006000dd，Flg列指出了 Text Segment 的访问权限是「可读可执行」，Align 的值 0x200000，是该平台下内存页面大小。在加载时文件也要按页面大小分成若干页，文件中的一页对内存中的一页。</p>
+<p>这个可执行文件很小，总共也不超过一页大小，但是两个 Segment 必须加载到内存中两个不同的页面，因为 MMU 的权限保护机制是以页为单位的，一个页面只能设置一种权限。同时为了简化链接器和加载器的实现，还规定每个 Segement 在文件页面偏移多少，加载到内存页面就要偏移多少。</p>
+<p>原来目标文件符号表中的 Value 都是相对地址，现在都变成了绝对地址。此外还多了三个符号 _bss_start 、_endta 和 _end，这些符号在链接脚本中定义被链接器添加到可执行程序了。</p>
+<p>再来看一个返回的结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ objdump -d max</div><div class="line"></div><div class="line">max:     file format elf64-x86-64</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">00000000004000b0 &lt;_start&gt;:</div><div class="line">  4000b0:	bf 00 00 00 00       	mov    $0x0,%edi</div><div class="line">  4000b5:	67 8b 04 bd dd 00 60 	mov    0x6000dd(,%edi,4),%eax</div><div class="line">  4000bc:	00 </div><div class="line">  4000bd:	89 c3                	mov    %eax,%ebx</div><div class="line"></div><div class="line">00000000004000bf &lt;start_loop&gt;:</div><div class="line">  4000bf:	83 f8 00             	cmp    $0x0,%eax</div><div class="line">  4000c2:	74 12                	je     4000d6 &lt;loop_exit&gt;</div><div class="line">  4000c4:	ff c7                	inc    %edi</div><div class="line">  4000c6:	67 8b 04 bd dd 00 60 	mov    0x6000dd(,%edi,4),%eax</div><div class="line">  4000cd:	00 </div><div class="line">  4000ce:	39 d8                	cmp    %ebx,%eax</div><div class="line">  4000d0:	7e ed                	jle    4000bf &lt;start_loop&gt;</div><div class="line">  4000d2:	89 c3                	mov    %eax,%ebx</div><div class="line">  4000d4:	eb e9                	jmp    4000bf &lt;start_loop&gt;</div><div class="line"></div><div class="line">00000000004000d6 &lt;loop_exit&gt;:</div><div class="line">  4000d6:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line">  4000db:	cd 80                	int    $0x80</div></pre></td></tr></table></figure></p>
+<p>指令中的相对地址都变成了绝对地址。同时为什么链接器怎么知道要改这两处？是根据目标文件中 .rel.text 提供的重定位信息修改的。</p>
+<hr>
+<p>前奏终于干完，接下来撸起袖子，让我们正式开把～～</p>
+
+      
+    </div>
+
+	
+	<div>
+	
+	<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束 ------</div>
+	
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C语言/" rel="tag"># C语言</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/01/C语言剖析————目标文件/" rel="next" title="C语言剖析————目标文件">
+                <i class="fa fa-chevron-left"></i> C语言剖析————目标文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JianRan" />
+          <p class="site-author-name" itemprop="name">JianRan</p>
+           
+              <p class="site-description motion-element" itemprop="description">做好手里面的事情</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-https://avatars1.githubusercontent.com/u/32269?v=3&s=460"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JianRan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jianran';
+      var disqus_identifier = '2017/06/01/C语言剖析————可执行文件/';
+
+      var disqus_title = "C语言剖析————可执行文件";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+
+    </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
