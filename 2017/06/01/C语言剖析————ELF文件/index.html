@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="汇编语言基础," />
+  <meta name="keywords" content="C语言," />
 
 
 
@@ -87,29 +87,48 @@
 
 
 
-<meta name="description" content="我们这里承接上文「汇编语言基础之寄存器（一）」
-上回说到了在8086CPU中有20根地址线，然而寄存器却只有16位，结果我们将用组合段地址和偏移量的方式，最终我们来拼接出一个20位的地址。这里需要关注的是「段地址」在8086CPU的段寄存器中存放的位置。8086CPU有 4 个寄存器：CS、DS、SS、 ES，当8086CPU访问内存时由这4个段寄存器提供内存单元的段地址，不过目前我们只说「CS」">
+<meta name="description" content="ELF 文件格式是一个开放标准，各种 UNIX 系统的可执行文件都采用 ELF 格式，它有以下三种不同的类型。
+
+可重定位的目标文件
+可执行文件
+共享库
+
+共享库留着以后慢慢说。
+
+现在解释一下程序的汇编、链接、运行过程
+1、写一个汇编程序并且保存成文本文件 
+2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .sectio">
 <meta property="og:type" content="article">
-<meta property="og:title" content="汇编语言基础之寄存器（二）">
-<meta property="og:url" content="http://yoursite.com/2017/03/17/汇编语言基础之寄存器（二）/index.html">
+<meta property="og:title" content="C语言剖析————ELF文件">
+<meta property="og:url" content="http://yoursite.com/2017/06/01/C语言剖析————ELF文件/index.html">
 <meta property="og:site_name" content="JianRan">
-<meta property="og:description" content="我们这里承接上文「汇编语言基础之寄存器（一）」
-上回说到了在8086CPU中有20根地址线，然而寄存器却只有16位，结果我们将用组合段地址和偏移量的方式，最终我们来拼接出一个20位的地址。这里需要关注的是「段地址」在8086CPU的段寄存器中存放的位置。8086CPU有 4 个寄存器：CS、DS、SS、 ES，当8086CPU访问内存时由这4个段寄存器提供内存单元的段地址，不过目前我们只说「CS」">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9bzkmezj30k9097n0p.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9i0721bj30k509177s.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9iic7m7j30lp096tc2.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9iyk6uhj30ku09gwhv.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9jg6usrj30kk08ujux.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9jq3t0tj30ke097adj.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9k716e7j30k80ap78d.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9kk3vflj30l30950w0.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9l3kjxdj30jp096gp1.jpg">
-<meta property="og:updated_time" content="2017-05-31T15:22:23.273Z">
+<meta property="og:description" content="ELF 文件格式是一个开放标准，各种 UNIX 系统的可执行文件都采用 ELF 格式，它有以下三种不同的类型。
+
+可重定位的目标文件
+可执行文件
+共享库
+
+共享库留着以后慢慢说。
+
+现在解释一下程序的汇编、链接、运行过程
+1、写一个汇编程序并且保存成文本文件 
+2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .sectio">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b36c7eebly1fg5e81iptfj209p07mab5.jpg">
+<meta property="og:updated_time" content="2017-06-01T00:46:47.544Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="汇编语言基础之寄存器（二）">
-<meta name="twitter:description" content="我们这里承接上文「汇编语言基础之寄存器（一）」
-上回说到了在8086CPU中有20根地址线，然而寄存器却只有16位，结果我们将用组合段地址和偏移量的方式，最终我们来拼接出一个20位的地址。这里需要关注的是「段地址」在8086CPU的段寄存器中存放的位置。8086CPU有 4 个寄存器：CS、DS、SS、 ES，当8086CPU访问内存时由这4个段寄存器提供内存单元的段地址，不过目前我们只说「CS」">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9bzkmezj30k9097n0p.jpg">
+<meta name="twitter:title" content="C语言剖析————ELF文件">
+<meta name="twitter:description" content="ELF 文件格式是一个开放标准，各种 UNIX 系统的可执行文件都采用 ELF 格式，它有以下三种不同的类型。
+
+可重定位的目标文件
+可执行文件
+共享库
+
+共享库留着以后慢慢说。
+
+现在解释一下程序的汇编、链接、运行过程
+1、写一个汇编程序并且保存成文本文件 
+2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .sectio">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b36c7eebly1fg5e81iptfj209p07mab5.jpg">
 
 
 
@@ -137,13 +156,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/17/汇编语言基础之寄存器（二）/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/01/C语言剖析————ELF文件/"/>
 
 
 
 
 
-  <title> 汇编语言基础之寄存器（二） | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> C语言剖析————ELF文件 | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +281,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/17/汇编语言基础之寄存器（二）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/01/C语言剖析————ELF文件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JianRan">
@@ -283,7 +302,7 @@
             
             
               
-                汇编语言基础之寄存器（二）
+                C语言剖析————ELF文件
               
             
           </h1>
@@ -298,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-17T23:55:22+08:00">
-                2017-03-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-01T08:46:04+08:00">
+                2017-06-01
               </time>
             
 
@@ -321,8 +340,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2017-3/" itemprop="url" rel="index">
-                    <span itemprop="name">2017-3</span>
+                  <a href="/categories/2017-6/" itemprop="url" rel="index">
+                    <span itemprop="name">2017-6</span>
                   </a>
                 </span>
 
@@ -354,23 +373,23 @@
       
 
       
-        <p>我们这里承接上文「<a href="https://jinfangzhang.github.io/2017/03/13/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%AF%84%E5%AD%98%E5%99%A8%EF%BC%88%E4%B8%80%EF%BC%89/" target="_blank" rel="external">汇编语言基础之寄存器（一）</a>」</p>
-<p>上回说到了在8086CPU中有20根地址线，然而寄存器却只有16位，结果我们将用组合段地址和偏移量的方式，最终我们来拼接出一个20位的地址。这里需要关注的是「段地址」在8086CPU的段寄存器中存放的位置。8086CPU有 4 个寄存器：CS、DS、SS、 ES，当8086CPU访问内存时由这4个段寄存器提供内存单元的段地址，不过目前我们只说「CS」<br>「CS」和「IP」是8086CPU中两个最关键的寄存器，他们指示了CPU当前要读取指令的地址。「CS」为代码段寄存器，「IP」为指令指针寄存器。光从名字看，大致就清楚了，这个两个的作用，之前我们知道「物理地址 = 段地址 <em> 16 + 偏移地址」，这里段地址是CS寄存器里面的内容，IP寄存器里面的内容自然是偏移地址。<br>我们用图解的方式来更好地理解<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9bzkmezj30k9097n0p.jpg" alt=""><br>初始状态下，我们在内存的20000H~2000AH有如图指令，此刻我们CPU中CS存储的是2000，IP存储的是0000，所以指向的指令是20000H = 2000H </em> 16 + 0000.<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9i0721bj30k509177s.jpg" alt=""><br>   接下来我们将「CS」和「IP」这两个寄存器里面的值送往地址加法器，得出相应的结论。<br>   <img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9iic7m7j30lp096tc2.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9iyk6uhj30ku09gwhv.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9jg6usrj30kk08ujux.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9jq3t0tj30ke097adj.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9k716e7j30k80ap78d.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9kk3vflj30l30950w0.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fdq9l3kjxdj30jp096gp1.jpg" alt=""></p>
-<p>到目前为止一条指令的执行流程完毕，估计对于「CS」和「IP」的工作方式有一个更全面的了解，不过总的来说8086CPU的工作过程可以简要描述如下：<br>（1）从CS：IP指令的内存单元读取命令，读取的指令进入指令缓存器；<br>（2）IP = IP + 所读取指令的长度，从而指向下一条指令<br>（3）执行指令，转到步骤（1）。</p>
-<p>我们已经给出了「CS」和「IP」的作用，那么我们有时候可能会想的去修改这两个寄存器里面的值，这个时候我们应该如何修改呢？</p>
-<p>我想信大家第一反应就是mov指令，但是在8086CPU中mov叫做传送指令，能修改这两个寄存器的命令叫做「转移指令」，所对应得指令为jmp。<br>使用方法：</p>
+        <p>ELF 文件格式是一个开放标准，各种 UNIX 系统的<strong>可执行文件</strong>都采用 ELF 格式，它有以下三种不同的类型。</p>
 <ul>
-<li><p>同时修改「CS」和「IP」的内容<br>jmp 2000:3，执行后，CS = 2000，IP = 3</p>
-</li>
-<li><p>仅修改IP<br>mov ax，3<br>jmp ax<br>执行之后IP= 3</p>
-</li>
+<li>可重定位的目标文件</li>
+<li>可执行文件</li>
+<li>共享库</li>
 </ul>
+<p>共享库留着以后慢慢说。</p>
+<hr>
+<p>现在解释一下程序的汇编、链接、运行过程</p>
+<p>1、写一个汇编程序并且保存成<strong>文本文件</strong> </p>
+<p>2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .section 会成为目标文件中的 Section ，此外汇编器还会自动添加 Section</p>
+<p>3、然后链接器把目标文件中的 Section 合并成几个 Segment ，生成可执行文件</p>
+<p>4、最后 加载器 根据 可执行文件中的 Segment 信息加载运行这个程序。</p>
+<p>所以 ELF 格式提供了两种不同的视角，从 链接器 把 ELF文件 看成 Section 的集合。而从 加载器 把 ELF文件 看成 Segment 的集合</p>
+<p><img src="http://ww1.sinaimg.cn/large/b36c7eebly1fg5e81iptfj209p07mab5.jpg" alt=""></p>
+<p>图的左边是从 链接器 角度看， 开头的 ELF header 描述了 体系结构 和 操作系统等基本信息，并指出 Section Header Table 和 Program Header Table 文件中的位置，Program Header Table 在链接过程用不到，所以可有可无，Section Header Table 可以找到每个 Section 在文件中的位置。右边是从 加载器 的角度看 ELF文件，开头是 ELF Header, Program Header Table 中保存了所有 Segment 的描述信息，相反 Section Header Table 是用了不到的，从图中可以看出，一个 Segment 由 一个或多个 Section 组成，这些 Section 加载到内存是具有 相同的访问权限，有些 Section 只对 链接器 有意义，在运行时用不到，也不需要加载到内存，那么就不属于 任何 Segment </p>
+<p>注：这里 Section Header Table 和 Program Header Table只是为了清晰，真实的两个表并不一定要位于文件开头和结尾</p>
 
       
     </div>
@@ -400,7 +419,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/汇编语言基础/" rel="tag"># 汇编语言基础</a>
+            <a href="/tags/C语言/" rel="tag"># C语言</a>
           
         </div>
       
@@ -413,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/14/向量与列表（一）/" rel="next" title="向量与列表（一）">
-                <i class="fa fa-chevron-left"></i> 向量与列表（一）
+              <a href="/2017/05/31/寻址方式/" rel="next" title="寻址方式">
+                <i class="fa fa-chevron-left"></i> 寻址方式
               </a>
             
           </div>
@@ -422,10 +441,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/20/Fragment（Training）/" rel="prev" title="Fragment（Training）">
-                Fragment（Training） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -657,9 +672,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'jianran';
-      var disqus_identifier = '2017/03/17/汇编语言基础之寄存器（二）/';
+      var disqus_identifier = '2017/06/01/C语言剖析————ELF文件/';
 
-      var disqus_title = "汇编语言基础之寄存器（二）";
+      var disqus_title = "C语言剖析————ELF文件";
 
 
       function run_disqus_script(disqus_script) {

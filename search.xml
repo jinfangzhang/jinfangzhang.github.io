@@ -4,6 +4,43 @@
   
     
     <entry>
+      <title><![CDATA[C语言剖析————ELF文件]]></title>
+      <url>http://yoursite.com/2017/06/01/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94ELF%E6%96%87%E4%BB%B6/</url>
+      <content type="html"><![CDATA[<p>ELF 文件格式是一个开放标准，各种 UNIX 系统的<strong>可执行文件</strong>都采用 ELF 格式，它有以下三种不同的类型。</p>
+<ul>
+<li>可重定位的目标文件</li>
+<li>可执行文件</li>
+<li>共享库</li>
+</ul>
+<p>共享库留着以后慢慢说。</p>
+<hr>
+<p>现在解释一下程序的汇编、链接、运行过程</p>
+<p>1、写一个汇编程序并且保存成<strong>文本文件</strong> </p>
+<p>2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .section 会成为目标文件中的 Section ，此外汇编器还会自动添加 Section</p>
+<p>3、然后链接器把目标文件中的 Section 合并成几个 Segment ，生成可执行文件</p>
+<p>4、最后 加载器 根据 可执行文件中的 Segment 信息加载运行这个程序。</p>
+<p>所以 ELF 格式提供了两种不同的视角，从 链接器 把 ELF文件 看成 Section 的集合。而从 加载器 把 ELF文件 看成 Segment 的集合</p>
+<p><img src="http://ww1.sinaimg.cn/large/b36c7eebly1fg5e81iptfj209p07mab5.jpg" alt=""></p>
+<p>图的左边是从 链接器 角度看， 开头的 ELF header 描述了 体系结构 和 操作系统等基本信息，并指出 Section Header Table 和 Program Header Table 文件中的位置，Program Header Table 在链接过程用不到，所以可有可无，Section Header Table 可以找到每个 Section 在文件中的位置。右边是从 加载器 的角度看 ELF文件，开头是 ELF Header, Program Header Table 中保存了所有 Segment 的描述信息，相反 Section Header Table 是用了不到的，从图中可以看出，一个 Segment 由 一个或多个 Section 组成，这些 Section 加载到内存是具有 相同的访问权限，有些 Section 只对 链接器 有意义，在运行时用不到，也不需要加载到内存，那么就不属于 任何 Segment </p>
+<p>注：这里 Section Header Table 和 Program Header Table只是为了清晰，真实的两个表并不一定要位于文件开头和结尾</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2017-6 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C语言 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[寻址方式]]></title>
       <url>http://yoursite.com/2017/05/31/%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>常用的几种寻址方式。内存寻址在指令中可以表示成如下的通用格式：</p>
