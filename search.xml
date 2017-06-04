@@ -240,7 +240,7 @@
       <title><![CDATA[寻址方式]]></title>
       <url>http://yoursite.com/2017/05/31/%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/</url>
       <content type="html"><![CDATA[<p>常用的几种寻址方式。内存寻址在指令中可以表示成如下的通用格式：</p>
-<p>$$ADDRESS_OR(\%BASE_OR_OFFSET,\%INDEX,MULTIPLIER)$$</p>
+<p>$$ADDRESS_OR(%BASE_OR_OFFSET,%INDEX,MULTIPLIER)$$</p>
 <p>他所表示的地址可以这样计算出来<br>FINAL ADDRESS = ADDRESS_OR_OFFEST + BASE_OR_OFFSET + MULTIPLIER x INDEX</p>
 <p>其中 ADDRESS_OR_OFFSET 和 MULTIPLIER 必须是常数，BASE_OR_OFFSET 和 INDEX 必须是寄存器</p>
 <ul>
