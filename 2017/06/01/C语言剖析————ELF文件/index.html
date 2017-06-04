@@ -97,7 +97,7 @@
 
 现在解释一下程序的汇编、链接、运行过程
 1、写一个汇编程序并且保存成文本文件 
-2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .sectio">
+2、汇编器读取这个文本文件并将其转换成目标文件。目标文件由若干个 Section 组成，我们在汇编程序中声明 .section 会成为目标">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C语言剖析————ELF文件">
 <meta property="og:url" content="http://yoursite.com/2017/06/01/C语言剖析————ELF文件/index.html">
@@ -112,9 +112,9 @@
 
 现在解释一下程序的汇编、链接、运行过程
 1、写一个汇编程序并且保存成文本文件 
-2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .sectio">
+2、汇编器读取这个文本文件并将其转换成目标文件。目标文件由若干个 Section 组成，我们在汇编程序中声明 .section 会成为目标">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b36c7eebly1fg5e81iptfj209p07mab5.jpg">
-<meta property="og:updated_time" content="2017-06-01T02:46:19.015Z">
+<meta property="og:updated_time" content="2017-06-04T07:14:48.363Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C语言剖析————ELF文件">
 <meta name="twitter:description" content="ELF 文件格式是一个开放标准，各种 UNIX 系统的可执行文件都采用 ELF 格式，它有以下三种不同的类型。
@@ -127,7 +127,7 @@
 
 现在解释一下程序的汇编、链接、运行过程
 1、写一个汇编程序并且保存成文本文件 
-2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .sectio">
+2、汇编器读取这个文本文件并将其转换成目标文件。目标文件由若干个 Section 组成，我们在汇编程序中声明 .section 会成为目标">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b36c7eebly1fg5e81iptfj209p07mab5.jpg">
 
 
@@ -383,7 +383,7 @@
 <hr>
 <p>现在解释一下程序的汇编、链接、运行过程</p>
 <p>1、写一个汇编程序并且保存成<strong>文本文件</strong> </p>
-<p>2、汇编器读取这个文本文件并将其转换成目标文件 max.o 。目标文件由若干个 Section 组成，我们在汇编程序中声明 .section 会成为目标文件中的 Section ，此外汇编器还会自动添加 Section</p>
+<p>2、汇编器读取这个文本文件并将其转换成目标文件。目标文件由若干个 Section 组成，我们在汇编程序中声明 .section 会成为目标文件中的 Section ，此外汇编器还会自动添加 Section</p>
 <p>3、然后链接器把目标文件中的 Section 合并成几个 Segment ，生成可执行文件</p>
 <p>4、最后 加载器 根据 可执行文件中的 Segment 信息加载运行这个程序。</p>
 <p>所以 ELF 格式提供了两种不同的视角，从 链接器 把 ELF文件 看成 Section 的集合。而从 加载器 把 ELF文件 看成 Segment 的集合</p>
