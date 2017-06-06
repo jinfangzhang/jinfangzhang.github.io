@@ -1,0 +1,714 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C语言," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="#extern 和 static 关键字
+在前面一篇当中我们把两个 .c 文件（main.c 和 stack.c)放在一起编译, mian.c 用到的函数 push、pop 和 is_empty 由 stack.c 提供，虽然可以运行但是他会报告处出三个警告。
+123456789101112Wjianran@jianran:~/桌面/x86HB$ gcc main.c stack.cmain.c:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言剖析————定义与声明">
+<meta property="og:url" content="http://yoursite.com/2017/06/06/C语言剖析————定义与声明/index.html">
+<meta property="og:site_name" content="JianRan">
+<meta property="og:description" content="#extern 和 static 关键字
+在前面一篇当中我们把两个 .c 文件（main.c 和 stack.c)放在一起编译, mian.c 用到的函数 push、pop 和 is_empty 由 stack.c 提供，虽然可以运行但是他会报告处出三个警告。
+123456789101112Wjianran@jianran:~/桌面/x86HB$ gcc main.c stack.cmain.c:">
+<meta property="og:updated_time" content="2017-06-06T12:04:50.554Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C语言剖析————定义与声明">
+<meta name="twitter:description" content="#extern 和 static 关键字
+在前面一篇当中我们把两个 .c 文件（main.c 和 stack.c)放在一起编译, mian.c 用到的函数 push、pop 和 is_empty 由 stack.c 提供，虽然可以运行但是他会报告处出三个警告。
+123456789101112Wjianran@jianran:~/桌面/x86HB$ gcc main.c stack.cmain.c:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/06/C语言剖析————定义与声明/"/>
+
+
+
+
+
+  <title> C语言剖析————定义与声明 | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JianRan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/06/C语言剖析————定义与声明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                C语言剖析————定义与声明
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-06T20:03:55+08:00">
+                2017-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2017-6/" itemprop="url" rel="index">
+                    <span itemprop="name">2017-6</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#extern 和 static 关键字</p>
+<p>在前面一篇当中我们把两个 .c 文件（main.c 和 stack.c)放在一起编译, mian.c 用到的函数 push、pop 和 is_empty 由 stack.c 提供，虽然可以运行但是他会报告处出三个警告。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">W</div><div class="line">jianran@jianran:~/桌面/x86HB$ gcc main.c stack.c</div><div class="line">main.c: In function ‘main’:</div><div class="line">main.c:6:5: warning: implicit declaration of function ‘push’ [-Wimplicit-function-declaration]</div><div class="line">     push(&apos;a&apos;);</div><div class="line">     ^~~~</div><div class="line">main.c:10:12: warning: implicit declaration of function ‘is_empty’ [-Wimplicit-function-declaration]</div><div class="line">     while(!is_empty())</div><div class="line">            ^~~~~~~~</div><div class="line">main.c:11:13: warning: implicit declaration of function ‘pop’ [-Wimplicit-function-declaration]</div><div class="line">     putchar(pop());</div><div class="line">             ^~~</div></pre></td></tr></table></figure>
+<p>警告的原因是：「编译器在处理 main.c 中的函数调用时找不到函数原型」，也就不知道函数的参数和返回值类型，而只能根据函数调用的实参做隐式的声明，并假定返回值是 int 型。编译器把这三个函数隐式声明为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int push(char);</div><div class="line">int pop(void);</div><div class="line">int is_empty(void);</div></pre></td></tr></table></figure></p>
+<p>为什么编译器在处理函数调用时需要知道函数原型？<br>因为必须知道参数的类型和个数以及返回值类型才能知道应该生成应该生成什么样的指令。</p>
+<p>如果光使用 隐式声明 是靠不住的。因为 隐式声明是根据函数调用代码推测的，<br>    第一，函数的形参类型可能跟实参类型不一样；<br>    第二，如果函数定义带有可变参数（例如：printf), 从函数调用代码也看不出它带可变参数；<br>    第三，从函数调用看不出返回值应该是什么类型，隐式声明只能假定返回值都是 int 类型的。</p>
+<p>既然隐式声明靠不住，那编译器为什么不自己去找函数定义，而非要我们在调用前提供函数原型呢？因为编译压根不知道去哪里找函数定义。</p>
+<p>现在我们来在 mian.c 中声明这几个函数的原型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/* main.c */</div><div class="line">#include&lt;stdio.h&gt;</div><div class="line"></div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    push(&apos;b&apos;);</div><div class="line">    push(&apos;c&apos;);</div><div class="line"></div><div class="line">    while(!is_empty())</div><div class="line">    putchar(pop());</div><div class="line">    putchar(&apos;\n&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样编译器就不会报警了。用 extern 关键字修饰的函数名具有 External Linkage。push 这个标示符具有 External Linkage 指的是：push 在 main.c 和 stack.c 中都有声明（stack.c 中的声明同时也是定义），如果把 main.c 和 stack.c 链接在一起，那么这些声明指的是同一个函数，在链接时，各目标文件中的全局符号 push 代表 同一个地址，函数声明中的 extern 关键字也可以省略不写。</p>
+<p>用 static 关键字修饰的函数名具有 Internal Linkage。例如 有以下两个 .c 文件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* foo.c */</div><div class="line">static void foo(void)&#123;&#125;</div><div class="line">/* main.c */</div><div class="line">void foo(void);</div><div class="line">int main(void)&#123; foo(); return 0; &#125;</div></pre></td></tr></table></figure></p>
+<p>编译链接在一起会出错。虽然 foo.c 中定义了函数 foo 。 但是这个函数名只有 Internal Linkage，只有在 foo.c 中引用这个函数名才表示同一个函数，而在 main.c 中声明的哪个 foo.c 应该表示一个具有 External Linkage 的函数名。如果把 foo.c 编译成目标文件，函数名 foo 在其中是一个局部符号，在链接时不参与「 符号解析 」。所以，在 main.c 中引用了一个具有 External Linkage 的函数名 foo，但是链接器却找不到它的定义在哪，无法确定它的地址，只好报错。凡是被多次声明的变量或函数，必须有且只有一个声明是定义，如果有多个定义，或者一个定义都没有，链接器就无法完成链接。</p>
+<p>以上讲了用 static 和 extern 修饰函数声明的情况，现在来看用它们修饰变量声明的情况，仍然用 stack.c 和 main.c 的例子，如果我想在 main.c 中直接访问 stack.c 定义的变量 top，可以用 extern 声明它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/* main.c */</div><div class="line">#include&lt;stdio.h&gt;</div><div class="line"></div><div class="line">void push(char);</div><div class="line">char pop(void);</div><div class="line">int is_empty(void);</div><div class="line">extern int top;</div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    push(&apos;b&apos;);</div><div class="line">    push(&apos;c&apos;);</div><div class="line"></div><div class="line">    while(!is_empty())</div><div class="line">    putchar(pop());</div><div class="line">    putchar(&apos;\n&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>变量 top 具有 External Linkage，extern int top 只是一个声明而不是定义，因为 它 不在 main.c 中分配存储空间，而是在 stack.c 中定义和分配存储空间， main.c 只是引用 这个变量名。以上这些函数和变量名也可以写在 main 函数体当中，使得声明的标识符具有块作用域。</p>
+<blockquote>
+<p>变量声明和函数声明有一点不同，函数声明的 extern 关键字可以被省去而变量声明没有写 extern 意思就完全变了，如果 extertn int top 没有了 extern 那么就相当与定义了一个局部变量 top。另外，变量定义可以初始化而声明却不可以</p>
+</blockquote>
+<p>在 main.c 中可以通过 extern 声明来访问 stack.c 中的变量 top ，但是从 实现 stack.c这个模板来看，top 这个变量是不希望被外界访问到的，变量 top 和 stack 都属于这个模块的内部状态，外界应该只允许通过 push、pop函数来改变模块的内部状态，这样才能保证 堆栈 的特性，那么应该怎么样来阻止外界来访问 top 和 stack 呢？ 答案就是用static 关键字把他们声明为 Internal Linkage</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/* stack.c */</div><div class="line">static char stack[512];</div><div class="line">static int top = -1;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line">stack[++top] = c;</div><div class="line">&#125;</div><div class="line"></div><div class="line">char pop(void)&#123;</div><div class="line">return stack[top--];</div><div class="line">&#125;</div><div class="line"></div><div class="line">int is_empty(void)&#123;</div><div class="line">return top == -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，即使在 main.c 中用 extern 声明也访问不到 stack.c 的变量 top 和 stack，从而保护了 stack.c 模块的内部状态。</p>
+
+      
+    </div>
+
+	
+	<div>
+	
+	<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束 ------</div>
+	
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C语言/" rel="tag"># C语言</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/04/C语言剖析————多目标文件的链接/" rel="next" title="C语言剖析————多目标文件的链接">
+                <i class="fa fa-chevron-left"></i> C语言剖析————多目标文件的链接
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JianRan" />
+          <p class="site-author-name" itemprop="name">JianRan</p>
+           
+              <p class="site-description motion-element" itemprop="description">做好手里面的事情</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-https://avatars1.githubusercontent.com/u/32269?v=3&s=460"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JianRan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jianran';
+      var disqus_identifier = '2017/06/06/C语言剖析————定义与声明/';
+
+      var disqus_title = "C语言剖析————定义与声明";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+
+    </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

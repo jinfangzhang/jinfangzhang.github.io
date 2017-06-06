@@ -4,6 +4,47 @@
   
     
     <entry>
+      <title><![CDATA[C语言剖析————定义与声明]]></title>
+      <url>http://yoursite.com/2017/06/06/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%A3%B0%E6%98%8E/</url>
+      <content type="html"><![CDATA[<p>#extern 和 static 关键字</p>
+<p>在前面一篇当中我们把两个 .c 文件（main.c 和 stack.c)放在一起编译, mian.c 用到的函数 push、pop 和 is_empty 由 stack.c 提供，虽然可以运行但是他会报告处出三个警告。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">W</div><div class="line">jianran@jianran:~/桌面/x86HB$ gcc main.c stack.c</div><div class="line">main.c: In function ‘main’:</div><div class="line">main.c:6:5: warning: implicit declaration of function ‘push’ [-Wimplicit-function-declaration]</div><div class="line">     push(&apos;a&apos;);</div><div class="line">     ^~~~</div><div class="line">main.c:10:12: warning: implicit declaration of function ‘is_empty’ [-Wimplicit-function-declaration]</div><div class="line">     while(!is_empty())</div><div class="line">            ^~~~~~~~</div><div class="line">main.c:11:13: warning: implicit declaration of function ‘pop’ [-Wimplicit-function-declaration]</div><div class="line">     putchar(pop());</div><div class="line">             ^~~</div></pre></td></tr></table></figure>
+<p>警告的原因是：「编译器在处理 main.c 中的函数调用时找不到函数原型」，也就不知道函数的参数和返回值类型，而只能根据函数调用的实参做隐式的声明，并假定返回值是 int 型。编译器把这三个函数隐式声明为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int push(char);</div><div class="line">int pop(void);</div><div class="line">int is_empty(void);</div></pre></td></tr></table></figure></p>
+<p>为什么编译器在处理函数调用时需要知道函数原型？<br>因为必须知道参数的类型和个数以及返回值类型才能知道应该生成应该生成什么样的指令。</p>
+<p>如果光使用 隐式声明 是靠不住的。因为 隐式声明是根据函数调用代码推测的，<br>    第一，函数的形参类型可能跟实参类型不一样；<br>    第二，如果函数定义带有可变参数（例如：printf), 从函数调用代码也看不出它带可变参数；<br>    第三，从函数调用看不出返回值应该是什么类型，隐式声明只能假定返回值都是 int 类型的。</p>
+<p>既然隐式声明靠不住，那编译器为什么不自己去找函数定义，而非要我们在调用前提供函数原型呢？因为编译压根不知道去哪里找函数定义。</p>
+<p>现在我们来在 mian.c 中声明这几个函数的原型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">/* main.c */</div><div class="line">#include&lt;stdio.h&gt;</div><div class="line"></div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    push(&apos;b&apos;);</div><div class="line">    push(&apos;c&apos;);</div><div class="line"></div><div class="line">    while(!is_empty())</div><div class="line">    putchar(pop());</div><div class="line">    putchar(&apos;\n&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样编译器就不会报警了。用 extern 关键字修饰的函数名具有 External Linkage。push 这个标示符具有 External Linkage 指的是：push 在 main.c 和 stack.c 中都有声明（stack.c 中的声明同时也是定义），如果把 main.c 和 stack.c 链接在一起，那么这些声明指的是同一个函数，在链接时，各目标文件中的全局符号 push 代表 同一个地址，函数声明中的 extern 关键字也可以省略不写。</p>
+<p>用 static 关键字修饰的函数名具有 Internal Linkage。例如 有以下两个 .c 文件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/* foo.c */</div><div class="line">static void foo(void)&#123;&#125;</div><div class="line">/* main.c */</div><div class="line">void foo(void);</div><div class="line">int main(void)&#123; foo(); return 0; &#125;</div></pre></td></tr></table></figure></p>
+<p>编译链接在一起会出错。虽然 foo.c 中定义了函数 foo 。 但是这个函数名只有 Internal Linkage，只有在 foo.c 中引用这个函数名才表示同一个函数，而在 main.c 中声明的哪个 foo.c 应该表示一个具有 External Linkage 的函数名。如果把 foo.c 编译成目标文件，函数名 foo 在其中是一个局部符号，在链接时不参与「 符号解析 」。所以，在 main.c 中引用了一个具有 External Linkage 的函数名 foo，但是链接器却找不到它的定义在哪，无法确定它的地址，只好报错。凡是被多次声明的变量或函数，必须有且只有一个声明是定义，如果有多个定义，或者一个定义都没有，链接器就无法完成链接。</p>
+<p>以上讲了用 static 和 extern 修饰函数声明的情况，现在来看用它们修饰变量声明的情况，仍然用 stack.c 和 main.c 的例子，如果我想在 main.c 中直接访问 stack.c 定义的变量 top，可以用 extern 声明它。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/* main.c */</div><div class="line">#include&lt;stdio.h&gt;</div><div class="line"></div><div class="line">void push(char);</div><div class="line">char pop(void);</div><div class="line">int is_empty(void);</div><div class="line">extern int top;</div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    push(&apos;b&apos;);</div><div class="line">    push(&apos;c&apos;);</div><div class="line"></div><div class="line">    while(!is_empty())</div><div class="line">    putchar(pop());</div><div class="line">    putchar(&apos;\n&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>变量 top 具有 External Linkage，extern int top 只是一个声明而不是定义，因为 它 不在 main.c 中分配存储空间，而是在 stack.c 中定义和分配存储空间， main.c 只是引用 这个变量名。以上这些函数和变量名也可以写在 main 函数体当中，使得声明的标识符具有块作用域。</p>
+<blockquote>
+<p>变量声明和函数声明有一点不同，函数声明的 extern 关键字可以被省去而变量声明没有写 extern 意思就完全变了，如果 extertn int top 没有了 extern 那么就相当与定义了一个局部变量 top。另外，变量定义可以初始化而声明却不可以</p>
+</blockquote>
+<p>在 main.c 中可以通过 extern 声明来访问 stack.c 中的变量 top ，但是从 实现 stack.c这个模板来看，top 这个变量是不希望被外界访问到的，变量 top 和 stack 都属于这个模块的内部状态，外界应该只允许通过 push、pop函数来改变模块的内部状态，这样才能保证 堆栈 的特性，那么应该怎么样来阻止外界来访问 top 和 stack 呢？ 答案就是用static 关键字把他们声明为 Internal Linkage</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/* stack.c */</div><div class="line">static char stack[512];</div><div class="line">static int top = -1;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line">stack[++top] = c;</div><div class="line">&#125;</div><div class="line"></div><div class="line">char pop(void)&#123;</div><div class="line">return stack[top--];</div><div class="line">&#125;</div><div class="line"></div><div class="line">int is_empty(void)&#123;</div><div class="line">return top == -1;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，即使在 main.c 中用 extern 声明也访问不到 stack.c 的变量 top 和 stack，从而保护了 stack.c 模块的内部状态。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2017-6 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C语言 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C语言剖析————多目标文件的链接]]></title>
       <url>http://yoursite.com/2017/06/04/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E5%A4%9A%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6%E7%9A%84%E9%93%BE%E6%8E%A5/</url>
       <content type="html"><![CDATA[<p>正如题目，多文件～，我们需要自己创造一些多文件，同时这些文件在未来几天文章当中都会使用，以后我就直接引用不进行说明了。</p>
