@@ -1,0 +1,743 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C语言," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前一篇我们讲了静态库，我们来到了 链接阶段的最后一部分，事不宜迟继续我们今天的战斗。
+
+组成共享库的目标文件和一般的目标文件是有所不同的，在编译时要加 -fPIC 选项
+例如
+gcc -c -fPIC stack/stack.c stack/push.c stack/pop.c stack/is_empty.c
+由于接下来要用 objdump -dS 把反汇编指令和源代码穿插起来分析，所以用 -g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="共享库">
+<meta property="og:url" content="http://yoursite.com/2017/06/08/共享库/index.html">
+<meta property="og:site_name" content="JianRan">
+<meta property="og:description" content="前一篇我们讲了静态库，我们来到了 链接阶段的最后一部分，事不宜迟继续我们今天的战斗。
+
+组成共享库的目标文件和一般的目标文件是有所不同的，在编译时要加 -fPIC 选项
+例如
+gcc -c -fPIC stack/stack.c stack/push.c stack/pop.c stack/is_empty.c
+由于接下来要用 objdump -dS 把反汇编指令和源代码穿插起来分析，所以用 -g">
+<meta property="og:updated_time" content="2017-06-08T11:38:12.793Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="共享库">
+<meta name="twitter:description" content="前一篇我们讲了静态库，我们来到了 链接阶段的最后一部分，事不宜迟继续我们今天的战斗。
+
+组成共享库的目标文件和一般的目标文件是有所不同的，在编译时要加 -fPIC 选项
+例如
+gcc -c -fPIC stack/stack.c stack/push.c stack/pop.c stack/is_empty.c
+由于接下来要用 objdump -dS 把反汇编指令和源代码穿插起来分析，所以用 -g">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/08/共享库/"/>
+
+
+
+
+
+  <title> 共享库 | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JianRan</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/08/共享库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                共享库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-08T19:36:48+08:00">
+                2017-06-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2017-6/" itemprop="url" rel="index">
+                    <span itemprop="name">2017-6</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前一篇我们讲了静态库，我们来到了 链接阶段的最后一部分，事不宜迟继续我们今天的战斗。</p>
+<hr>
+<p>组成共享库的目标文件和一般的目标文件是有所不同的，在编译时要加 -fPIC 选项</p>
+<p>例如</p>
+<pre><code>gcc -c -fPIC stack/stack.c stack/push.c stack/pop.c stack/is_empty.c
+</code></pre><p>由于接下来要用 objdump -dS 把反汇编指令和源代码穿插起来分析，所以用 -g 选项来加调试信息。注意，必须在编译每个文件时都要加 -g 选项，而不能只在最后链接时加 -g 选项，如果目标文件中没有调试信息，链接生成的可执行文件也不会有的。我们反汇编查看下 push.o </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ objdump -dS push.o</div><div class="line"></div><div class="line">push.o：     文件格式 elf64-x86-64</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">0000000000000000 &lt;push&gt;:</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line">   0:   55                      push   %rbp</div><div class="line">   1:   48 89 e5                mov    %rsp,%rbp</div><div class="line">   4:   89 f8                   mov    %edi,%eax</div><div class="line">   6:   88 45 fc                mov    %al,-0x4(%rbp)</div><div class="line">    stack[++top] = c;</div><div class="line">   9:   8b 05 00 00 00 00       mov    0x0(%rip),%eax        # f &lt;push+0xf&gt;</div><div class="line">   f:   83 c0 01                add    $0x1,%eax</div><div class="line">  12:   89 05 00 00 00 00       mov    %eax,0x0(%rip)        # 18 &lt;push+0x18&gt;</div><div class="line">  18:   8b 05 00 00 00 00       mov    0x0(%rip),%eax        # 1e &lt;push+0x1e&gt;</div><div class="line">  1e:   48 63 d0                movslq %eax,%rdx</div><div class="line">  21:   48 8d 05 00 00 00 00    lea    0x0(%rip),%rax        # 28 &lt;push+0x28&gt;</div><div class="line">  28:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx</div><div class="line">  2c:   88 0c 02                mov    %cl,(%rdx,%rax,1)</div><div class="line">  2f:   90                      nop</div><div class="line">  30:   5d                      pop    %rbp</div><div class="line">  31:   c3                      retq</div></pre></td></tr></table></figure>
+<p>指令中方式用到 stack 和 top 的地址都用 0x0 表示，以备在重定向时修改。再看 readelf 的 .rel.text 段的信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">重定位节 &apos;.rela.text&apos; 位于偏移量 0x488 含有 4 个条目：</div><div class="line">  偏移量          信息           类型           符号值        符号名称 + 加数</div><div class="line">00000000000b  000e00000002 R_X86_64_PC32     0000000000000000 top - 4</div><div class="line">000000000014  000e00000002 R_X86_64_PC32     0000000000000000 top - 4</div><div class="line">00000000001a  000e00000002 R_X86_64_PC32     0000000000000000 top - 4</div><div class="line">000000000024  000f00000002 R_X86_64_PC32     0000000000000000 stack - 4</div></pre></td></tr></table></figure>
+<p>上述信息指出了指令中有四处需要在重定位时修改。编译连接成可执行文件之后，再做反编译分析:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">0000000000000675 &lt;push&gt;:</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line"> 675:   55                      push   %rbp</div><div class="line"> 676:   48 89 e5                mov    %rsp,%rbp</div><div class="line"> 679:   89 f8                   mov    %edi,%eax</div><div class="line"> 67b:   88 45 fc                mov    %al,-0x4(%rbp)</div><div class="line">    stack[++top] = c;</div><div class="line"> 67e:   8b 05 8c 09 20 00       mov    0x20098c(%rip),%eax        # 201010 &lt;top&gt;</div><div class="line"> 684:   83 c0 01                add    $0x1,%eax</div><div class="line"> 687:   89 05 83 09 20 00       mov    %eax,0x200983(%rip)        # 201010 &lt;top&gt;</div><div class="line"> 68d:   8b 05 7d 09 20 00       mov    0x20097d(%rip),%eax        # 201010 &lt;top&gt;</div><div class="line"> 693:   48 63 d0                movslq %eax,%rdx</div><div class="line"> 696:   48 8d 05 a3 09 20 00    lea    0x2009a3(%rip),%rax        # 201040 &lt;stack&gt;</div><div class="line"> 69d:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx</div><div class="line"> 6a1:   88 0c 02                mov    %cl,(%rdx,%rax,1)</div><div class="line"> 6a4:   90                      nop</div><div class="line"> 6a5:   5d                      pop    %rbp</div><div class="line"> 6a6:   c3                      retq</div></pre></td></tr></table></figure>
+<p>原来指令中 0x0 被改成了正经的地址，这样做了重定位之后，各段的加载就定死了，因为在指令使用了绝对地址。</p>
+<p>我们来看看用了 -fPIC 选项编译生成的目标文件有什么不同:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ objdump -dS push.o</div><div class="line"></div><div class="line">push.o：     文件格式 elf64-x86-64</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">0000000000000000 &lt;push&gt;:</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line">   0:   55                      push   %rbp</div><div class="line">   1:   48 89 e5                mov    %rsp,%rbp</div><div class="line">   4:   89 f8                   mov    %edi,%eax</div><div class="line">   6:   88 45 fc                mov    %al,-0x4(%rbp)</div><div class="line">    stack[++top] = c;</div><div class="line">   9:   48 8b 05 00 00 00 00    mov    0x0(%rip),%rax        # 10 &lt;push+0x10&gt;</div><div class="line">  10:   8b 00                   mov    (%rax),%eax</div><div class="line">  12:   8d 50 01                lea    0x1(%rax),%edx</div><div class="line">  15:   48 8b 05 00 00 00 00    mov    0x0(%rip),%rax        # 1c &lt;push+0x1c&gt;</div><div class="line">  1c:   89 10                   mov    %edx,(%rax)</div><div class="line">  1e:   48 8b 05 00 00 00 00    mov    0x0(%rip),%rax        # 25 &lt;push+0x25&gt;</div><div class="line">  25:   8b 00                   mov    (%rax),%eax</div><div class="line">  27:   48 8b 15 00 00 00 00    mov    0x0(%rip),%rdx        # 2e &lt;push+0x2e&gt;</div><div class="line">  2e:   48 98                   cltq</div><div class="line">  30:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx</div><div class="line">  34:   88 0c 02                mov    %cl,(%rdx,%rax,1)</div><div class="line">  37:   90                      nop</div><div class="line">  38:   5d                      pop    %rbp</div><div class="line">  39:   c3                      retq</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> 重定位节 &apos;.rela.text&apos; 位于偏移量 0x4c8 含有 4 个条目：</div><div class="line">  偏移量          信息           类型           符号值        符号名称 + 加数</div><div class="line">00000000000c  000f0000002a R_X86_64_REX_GOTP 0000000000000000 top - 4</div><div class="line">000000000018  000f0000002a R_X86_64_REX_GOTP 0000000000000000 top - 4</div><div class="line">000000000021  000f0000002a R_X86_64_REX_GOTP 0000000000000000 top - 4</div><div class="line">00000000002a  00100000002a R_X86_64_REX_GOTP 0000000000000000 stack - 4</div></pre></td></tr></table></figure>
+<p>push.o 的代码几乎完全和 之前的不相同，.rela.text 表中的类型也不相同。</p>
+<p>下来我们编译生成共享库再反汇编分析:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">00000000000006f0 &lt;push&gt;:</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line"> 6f0:   55                      push   %rbp</div><div class="line"> 6f1:   48 89 e5                mov    %rsp,%rbp</div><div class="line"> 6f4:   89 f8                   mov    %edi,%eax</div><div class="line"> 6f6:   88 45 fc                mov    %al,-0x4(%rbp)</div><div class="line">    stack[++top] = c;</div><div class="line"> 6f9:   48 8b 05 d8 08 20 00    mov    0x2008d8(%rip),%rax        # 200fd8 &lt;top@@Base-0x48&gt;</div><div class="line"> 700:   8b 00                   mov    (%rax),%eax</div><div class="line"> 702:   8d 50 01                lea    0x1(%rax),%edx</div><div class="line"> 705:   48 8b 05 cc 08 20 00    mov    0x2008cc(%rip),%rax        # 200fd8 &lt;top@@Base-0x48&gt;</div><div class="line"> 70c:   89 10                   mov    %edx,(%rax)</div><div class="line"> 70e:   48 8b 05 c3 08 20 00    mov    0x2008c3(%rip),%rax        # 200fd8 &lt;top@@Base-0x48&gt;</div><div class="line"> 715:   8b 00                   mov    (%rax),%eax</div><div class="line"> 717:   48 8b 15 ca 08 20 00    mov    0x2008ca(%rip),%rdx        # 200fe8 &lt;stack@@Base-0x78&gt;</div><div class="line"> 71e:   48 98                   cltq</div><div class="line"> 720:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx</div><div class="line"> 724:   88 0c 02                mov    %cl,(%rdx,%rax,1)</div><div class="line"> 727:   90                      nop</div><div class="line"> 728:   5d                      pop    %rbp</div><div class="line"> 729:   c3                      retq</div></pre></td></tr></table></figure>
+<p>在这台机器里面看的不是那么明显，主要还是看背后注释的差距。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">201010 &lt;top&gt; 变成了 # 200fd8 &lt;top@@Base-0x48&gt;</div></pre></td></tr></table></figure>
+<p>通过注释我们意识到，我们这个不是一个绝对地址。所以共享库各段的加载地址并没有被定死，可以加载到任意的位置，因为指令中的地址都是相对于 top@@Base 的，这就是位置无关代码的特点。</p>
+<p>接下来我们把 main.c 与共享库编译链接在一起，然后运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ gcc main.c -g -L. lstack -Istack -o main</div><div class="line">jianran@jianran:~/桌面/x86HB$ ./main</div><div class="line">./main: error while loading shared libraries: libstack.so: cannot open shared object file: No such file or directory</div></pre></td></tr></table></figure>
+<p>结果十分的令人神奇，编译的时候没有问题，然后在执行的时候，报错说找不到 libstack.so。 那么运行时在那些路径下来找共享库呢？</p>
+<p>我们先用 ldd 命令查看可执行文件依赖于那些共享库:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ ldd main</div><div class="line">        linux-vdso.so.1 =&gt;  (0x00007ffcd41ab000)</div><div class="line">        libstack.so =&gt; not found</div><div class="line">        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fd788704000)</div><div class="line">        /lib64/ld-linux-x86-64.so.2 (0x00005569c3f91000)</div></pre></td></tr></table></figure></p>
+<p>ldd 模拟运行一遍 main程序 ，在运行过程中做动态链接，从而得知这个程序依赖于哪些共享库以及这些共享库都在声明路径下。我们在之前说到过 gcc 调用 ld 做链接时用 -dynamic-linker … 选项指定动态链接器的路径，动态链接器也像其他共享库一样加载到进程的地址空间中。而另一个 -lc 只说明需要链接 libc 却没有指出 libc 库的完整路径，-lstack 也是如此，共享库的路径需要在运行时由动态链接器进行查找。在上面的代码当中，动态链接器找到libc.so.6，而 libstack 的路径没有找到，无法完成链接。</p>
+<p>那么动态链接库会到哪些目录下搜索共享库呢？<br>路径搜索顺序如下:</p>
+<ol>
+<li><p>首先在环境变量 LD_LIBRARY_PATH 保存的路径中查找</p>
+</li>
+<li><p>然后从缓存文件 /etc/ld.so.cache 中查找。这个缓存文件是由 ldconfig 命令读取配置文件 /etc/ld.so.conf 生成的</p>
+</li>
+</ol>
+<p>3.如果上述步骤没有找到，则到默认的系统库文件目录查找。</p>
+<p>知道了搜索顺序，也就算知道了解决方案了:</p>
+<p><strong>第一种解决方案</strong>，在运行程序时设置环境变量 LD_LIBRARY_PATH 把共享库所在的目录添加到搜索路径,这种方式，只适合开发调试中临时使用一下，但是不建议使用</p>
+<pre><code>export LD_LIBRARY_PATH=~/桌面/x86HB
+./main
+</code></pre><p>第一条命令在当前 Shell 进程中设置一个环境变量 LD_LIBRARY_PATH，一旦在 Shell 进程当中设置了环境变量，以后每次执行命令时 Shell 进程都会把自己的环境变量传给新创建的进程，所以第二条指令就得以运行成功了。</p>
+<p><strong>第二种解决方案</strong>，这是最常用的方法。把 libstack.so 所在的目录的绝对路径添加到配置文件 /etc/ld.so.conf（该文件当中每个路径占一行），然后运行 ldconfig 命令。</p>
+<p>ldconfig 命令除了处理 /etc/ld.so.conf 中配置的目录之外，还处理一些默认目录，处理的过程主要是建立索引以便快速查找，处理之后生成 /etc/ld.so.cache 缓存文件，动态链接库就从这个缓存文件中搜索共享库，配置之后通过 ldd 就可以找到了</p>
+<p><strong>第三种方法</strong>，就是把 libstack.so 复制到 /usr/lib或者/lib 目录之下。</p>
+
+      
+    </div>
+
+	
+	<div>
+	
+	<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束 ------</div>
+	
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C语言/" rel="tag"># C语言</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/08/C语言剖析————静态库/" rel="next" title="C语言剖析————静态库">
+                <i class="fa fa-chevron-left"></i> C语言剖析————静态库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="JianRan" />
+          <p class="site-author-name" itemprop="name">JianRan</p>
+           
+              <p class="site-description motion-element" itemprop="description">做好手里面的事情</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-https://avatars1.githubusercontent.com/u/32269?v=3&s=460"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JianRan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'jianran';
+      var disqus_identifier = '2017/06/08/共享库/';
+
+      var disqus_title = "共享库";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+
+    </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

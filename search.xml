@@ -4,6 +4,194 @@
   
     
     <entry>
+      <title><![CDATA[共享库]]></title>
+      <url>http://yoursite.com/2017/06/08/%E5%85%B1%E4%BA%AB%E5%BA%93/</url>
+      <content type="html"><![CDATA[<p>前一篇我们讲了静态库，我们来到了 链接阶段的最后一部分，事不宜迟继续我们今天的战斗。</p>
+<hr>
+<p>组成共享库的目标文件和一般的目标文件是有所不同的，在编译时要加 -fPIC 选项</p>
+<p>例如</p>
+<pre><code>gcc -c -fPIC stack/stack.c stack/push.c stack/pop.c stack/is_empty.c
+</code></pre><p>由于接下来要用 objdump -dS 把反汇编指令和源代码穿插起来分析，所以用 -g 选项来加调试信息。注意，必须在编译每个文件时都要加 -g 选项，而不能只在最后链接时加 -g 选项，如果目标文件中没有调试信息，链接生成的可执行文件也不会有的。我们反汇编查看下 push.o </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ objdump -dS push.o</div><div class="line"></div><div class="line">push.o：     文件格式 elf64-x86-64</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">0000000000000000 &lt;push&gt;:</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line">   0:   55                      push   %rbp</div><div class="line">   1:   48 89 e5                mov    %rsp,%rbp</div><div class="line">   4:   89 f8                   mov    %edi,%eax</div><div class="line">   6:   88 45 fc                mov    %al,-0x4(%rbp)</div><div class="line">    stack[++top] = c;</div><div class="line">   9:   8b 05 00 00 00 00       mov    0x0(%rip),%eax        # f &lt;push+0xf&gt;</div><div class="line">   f:   83 c0 01                add    $0x1,%eax</div><div class="line">  12:   89 05 00 00 00 00       mov    %eax,0x0(%rip)        # 18 &lt;push+0x18&gt;</div><div class="line">  18:   8b 05 00 00 00 00       mov    0x0(%rip),%eax        # 1e &lt;push+0x1e&gt;</div><div class="line">  1e:   48 63 d0                movslq %eax,%rdx</div><div class="line">  21:   48 8d 05 00 00 00 00    lea    0x0(%rip),%rax        # 28 &lt;push+0x28&gt;</div><div class="line">  28:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx</div><div class="line">  2c:   88 0c 02                mov    %cl,(%rdx,%rax,1)</div><div class="line">  2f:   90                      nop</div><div class="line">  30:   5d                      pop    %rbp</div><div class="line">  31:   c3                      retq</div></pre></td></tr></table></figure>
+<p>指令中方式用到 stack 和 top 的地址都用 0x0 表示，以备在重定向时修改。再看 readelf 的 .rel.text 段的信息:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">重定位节 &apos;.rela.text&apos; 位于偏移量 0x488 含有 4 个条目：</div><div class="line">  偏移量          信息           类型           符号值        符号名称 + 加数</div><div class="line">00000000000b  000e00000002 R_X86_64_PC32     0000000000000000 top - 4</div><div class="line">000000000014  000e00000002 R_X86_64_PC32     0000000000000000 top - 4</div><div class="line">00000000001a  000e00000002 R_X86_64_PC32     0000000000000000 top - 4</div><div class="line">000000000024  000f00000002 R_X86_64_PC32     0000000000000000 stack - 4</div></pre></td></tr></table></figure>
+<p>上述信息指出了指令中有四处需要在重定位时修改。编译连接成可执行文件之后，再做反编译分析:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">0000000000000675 &lt;push&gt;:</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line"> 675:   55                      push   %rbp</div><div class="line"> 676:   48 89 e5                mov    %rsp,%rbp</div><div class="line"> 679:   89 f8                   mov    %edi,%eax</div><div class="line"> 67b:   88 45 fc                mov    %al,-0x4(%rbp)</div><div class="line">    stack[++top] = c;</div><div class="line"> 67e:   8b 05 8c 09 20 00       mov    0x20098c(%rip),%eax        # 201010 &lt;top&gt;</div><div class="line"> 684:   83 c0 01                add    $0x1,%eax</div><div class="line"> 687:   89 05 83 09 20 00       mov    %eax,0x200983(%rip)        # 201010 &lt;top&gt;</div><div class="line"> 68d:   8b 05 7d 09 20 00       mov    0x20097d(%rip),%eax        # 201010 &lt;top&gt;</div><div class="line"> 693:   48 63 d0                movslq %eax,%rdx</div><div class="line"> 696:   48 8d 05 a3 09 20 00    lea    0x2009a3(%rip),%rax        # 201040 &lt;stack&gt;</div><div class="line"> 69d:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx</div><div class="line"> 6a1:   88 0c 02                mov    %cl,(%rdx,%rax,1)</div><div class="line"> 6a4:   90                      nop</div><div class="line"> 6a5:   5d                      pop    %rbp</div><div class="line"> 6a6:   c3                      retq</div></pre></td></tr></table></figure>
+<p>原来指令中 0x0 被改成了正经的地址，这样做了重定位之后，各段的加载就定死了，因为在指令使用了绝对地址。</p>
+<p>我们来看看用了 -fPIC 选项编译生成的目标文件有什么不同:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ objdump -dS push.o</div><div class="line"></div><div class="line">push.o：     文件格式 elf64-x86-64</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">0000000000000000 &lt;push&gt;:</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line">   0:   55                      push   %rbp</div><div class="line">   1:   48 89 e5                mov    %rsp,%rbp</div><div class="line">   4:   89 f8                   mov    %edi,%eax</div><div class="line">   6:   88 45 fc                mov    %al,-0x4(%rbp)</div><div class="line">    stack[++top] = c;</div><div class="line">   9:   48 8b 05 00 00 00 00    mov    0x0(%rip),%rax        # 10 &lt;push+0x10&gt;</div><div class="line">  10:   8b 00                   mov    (%rax),%eax</div><div class="line">  12:   8d 50 01                lea    0x1(%rax),%edx</div><div class="line">  15:   48 8b 05 00 00 00 00    mov    0x0(%rip),%rax        # 1c &lt;push+0x1c&gt;</div><div class="line">  1c:   89 10                   mov    %edx,(%rax)</div><div class="line">  1e:   48 8b 05 00 00 00 00    mov    0x0(%rip),%rax        # 25 &lt;push+0x25&gt;</div><div class="line">  25:   8b 00                   mov    (%rax),%eax</div><div class="line">  27:   48 8b 15 00 00 00 00    mov    0x0(%rip),%rdx        # 2e &lt;push+0x2e&gt;</div><div class="line">  2e:   48 98                   cltq</div><div class="line">  30:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx</div><div class="line">  34:   88 0c 02                mov    %cl,(%rdx,%rax,1)</div><div class="line">  37:   90                      nop</div><div class="line">  38:   5d                      pop    %rbp</div><div class="line">  39:   c3                      retq</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> 重定位节 &apos;.rela.text&apos; 位于偏移量 0x4c8 含有 4 个条目：</div><div class="line">  偏移量          信息           类型           符号值        符号名称 + 加数</div><div class="line">00000000000c  000f0000002a R_X86_64_REX_GOTP 0000000000000000 top - 4</div><div class="line">000000000018  000f0000002a R_X86_64_REX_GOTP 0000000000000000 top - 4</div><div class="line">000000000021  000f0000002a R_X86_64_REX_GOTP 0000000000000000 top - 4</div><div class="line">00000000002a  00100000002a R_X86_64_REX_GOTP 0000000000000000 stack - 4</div></pre></td></tr></table></figure>
+<p>push.o 的代码几乎完全和 之前的不相同，.rela.text 表中的类型也不相同。</p>
+<p>下来我们编译生成共享库再反汇编分析:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">00000000000006f0 &lt;push&gt;:</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line"> 6f0:   55                      push   %rbp</div><div class="line"> 6f1:   48 89 e5                mov    %rsp,%rbp</div><div class="line"> 6f4:   89 f8                   mov    %edi,%eax</div><div class="line"> 6f6:   88 45 fc                mov    %al,-0x4(%rbp)</div><div class="line">    stack[++top] = c;</div><div class="line"> 6f9:   48 8b 05 d8 08 20 00    mov    0x2008d8(%rip),%rax        # 200fd8 &lt;top@@Base-0x48&gt;</div><div class="line"> 700:   8b 00                   mov    (%rax),%eax</div><div class="line"> 702:   8d 50 01                lea    0x1(%rax),%edx</div><div class="line"> 705:   48 8b 05 cc 08 20 00    mov    0x2008cc(%rip),%rax        # 200fd8 &lt;top@@Base-0x48&gt;</div><div class="line"> 70c:   89 10                   mov    %edx,(%rax)</div><div class="line"> 70e:   48 8b 05 c3 08 20 00    mov    0x2008c3(%rip),%rax        # 200fd8 &lt;top@@Base-0x48&gt;</div><div class="line"> 715:   8b 00                   mov    (%rax),%eax</div><div class="line"> 717:   48 8b 15 ca 08 20 00    mov    0x2008ca(%rip),%rdx        # 200fe8 &lt;stack@@Base-0x78&gt;</div><div class="line"> 71e:   48 98                   cltq</div><div class="line"> 720:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx</div><div class="line"> 724:   88 0c 02                mov    %cl,(%rdx,%rax,1)</div><div class="line"> 727:   90                      nop</div><div class="line"> 728:   5d                      pop    %rbp</div><div class="line"> 729:   c3                      retq</div></pre></td></tr></table></figure>
+<p>在这台机器里面看的不是那么明显，主要还是看背后注释的差距。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">201010 &lt;top&gt; 变成了 # 200fd8 &lt;top@@Base-0x48&gt;</div></pre></td></tr></table></figure>
+<p>通过注释我们意识到，我们这个不是一个绝对地址。所以共享库各段的加载地址并没有被定死，可以加载到任意的位置，因为指令中的地址都是相对于 top@@Base 的，这就是位置无关代码的特点。</p>
+<p>接下来我们把 main.c 与共享库编译链接在一起，然后运行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ gcc main.c -g -L. lstack -Istack -o main</div><div class="line">jianran@jianran:~/桌面/x86HB$ ./main</div><div class="line">./main: error while loading shared libraries: libstack.so: cannot open shared object file: No such file or directory</div></pre></td></tr></table></figure>
+<p>结果十分的令人神奇，编译的时候没有问题，然后在执行的时候，报错说找不到 libstack.so。 那么运行时在那些路径下来找共享库呢？</p>
+<p>我们先用 ldd 命令查看可执行文件依赖于那些共享库:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ ldd main</div><div class="line">        linux-vdso.so.1 =&gt;  (0x00007ffcd41ab000)</div><div class="line">        libstack.so =&gt; not found</div><div class="line">        libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007fd788704000)</div><div class="line">        /lib64/ld-linux-x86-64.so.2 (0x00005569c3f91000)</div></pre></td></tr></table></figure></p>
+<p>ldd 模拟运行一遍 main程序 ，在运行过程中做动态链接，从而得知这个程序依赖于哪些共享库以及这些共享库都在声明路径下。我们在之前说到过 gcc 调用 ld 做链接时用 -dynamic-linker … 选项指定动态链接器的路径，动态链接器也像其他共享库一样加载到进程的地址空间中。而另一个 -lc 只说明需要链接 libc 却没有指出 libc 库的完整路径，-lstack 也是如此，共享库的路径需要在运行时由动态链接器进行查找。在上面的代码当中，动态链接器找到libc.so.6，而 libstack 的路径没有找到，无法完成链接。</p>
+<p>那么动态链接库会到哪些目录下搜索共享库呢？<br>路径搜索顺序如下:</p>
+<ol>
+<li><p>首先在环境变量 LD_LIBRARY_PATH 保存的路径中查找</p>
+</li>
+<li><p>然后从缓存文件 /etc/ld.so.cache 中查找。这个缓存文件是由 ldconfig 命令读取配置文件 /etc/ld.so.conf 生成的</p>
+</li>
+</ol>
+<p>3.如果上述步骤没有找到，则到默认的系统库文件目录查找。</p>
+<p>知道了搜索顺序，也就算知道了解决方案了:</p>
+<p><strong>第一种解决方案</strong>，在运行程序时设置环境变量 LD_LIBRARY_PATH 把共享库所在的目录添加到搜索路径,这种方式，只适合开发调试中临时使用一下，但是不建议使用</p>
+<pre><code>export LD_LIBRARY_PATH=~/桌面/x86HB
+./main
+</code></pre><p>第一条命令在当前 Shell 进程中设置一个环境变量 LD_LIBRARY_PATH，一旦在 Shell 进程当中设置了环境变量，以后每次执行命令时 Shell 进程都会把自己的环境变量传给新创建的进程，所以第二条指令就得以运行成功了。</p>
+<p><strong>第二种解决方案</strong>，这是最常用的方法。把 libstack.so 所在的目录的绝对路径添加到配置文件 /etc/ld.so.conf（该文件当中每个路径占一行），然后运行 ldconfig 命令。</p>
+<p>ldconfig 命令除了处理 /etc/ld.so.conf 中配置的目录之外，还处理一些默认目录，处理的过程主要是建立索引以便快速查找，处理之后生成 /etc/ld.so.cache 缓存文件，动态链接库就从这个缓存文件中搜索共享库，配置之后通过 ldd 就可以找到了</p>
+<p><strong>第三种方法</strong>，就是把 libstack.so 复制到 /usr/lib或者/lib 目录之下。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2017-6 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C语言 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C语言剖析————静态库]]></title>
+      <url>http://yoursite.com/2017/06/08/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E9%9D%99%E6%80%81%E5%BA%93/</url>
+      <content type="html"><![CDATA[<p>有时候需要把一组代码编译成一个库，这个库在很多项目都要用到，例如 libc 就是这样一个库，我们在不同的程序中都会用到 libc 中定义的库函数（例如 printf（3）和全局变量 （例如 environ（3））。接下来的两篇的重点介绍如何创建这样的库，同时通过这样的方式，让我们来理解进一步理解</p>
+<p>我们继续用 stack.c 的例子。为了便于理解，我们把 stack.c 拆分为是个 .c  文件（虽然实际情况下，这么做没有太大的必要），我们接下来用到的代码如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">/* stack.c */</div><div class="line">char stack[512];</div><div class="line">int top = -1;</div><div class="line"></div><div class="line">/* push.c */</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">void push(char c)&#123;</div><div class="line">    stack[++top] = c;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* pop.c */</div><div class="line">extern char stack[512];</div><div class="line">extern int top;</div><div class="line"></div><div class="line">char pop(void)&#123;</div><div class="line">    return stack[top--];</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* is_empty.c */</div><div class="line">extern int top;</div><div class="line">int is_empty(void)&#123;</div><div class="line">    return top == -1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* stack.h*/</div><div class="line"></div><div class="line">#ifndef STACK_H</div><div class="line">#define STACK_H</div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line">#endif</div><div class="line"></div><div class="line">/* main.c */</div><div class="line"></div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &quot;stack.h&quot;</div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>目录结构如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ tree</div><div class="line">.</div><div class="line">├── main.c</div><div class="line">└── stack</div><div class="line">    ├── is_empty.c</div><div class="line">    ├── pop.c</div><div class="line">    ├── push.c</div><div class="line">    ├── stack.c</div><div class="line">    └── stack.h</div><div class="line"></div><div class="line">1 directory, 6 files</div></pre></td></tr></table></figure></p>
+<p>我们把 stack.c、push.c、pop.c、is_empty.c 编译成目标文件:</p>
+<blockquote>
+<p>$ gcc -c stack/stack.c stack/push.c stack/pop.c stack/is_empty.c</p>
+</blockquote>
+<p>然后打包成一个静态库 「 libstack.a 」</p>
+<blockquote>
+<p>$ ar rs libstack.a stack.o push.o pop.o is_empty.o<br>ar: 正在创建 libstack.a</p>
+</blockquote>
+<p>库文件都是以 lib 开头的，静态库以 .a 作为后缀，表示 Archive。ar命令类似于 tar 命令，也是用来打包的，但是把目标文件打成静态库的格式只能用 ar 命令而不能用 tar 命令。<br><strong>r 选项表示将后面的目标文件列表添加到文件包 libstack.a 中，如果 libstack.a 不存在就创建它，如果 libstack.a 中已有同名的目标文件就替换成新的。</strong><br><strong>s 选项表示为静态库创建索引。这个索引被链接器使用</strong></p>
+<p>然后我们把 libstack.a 和 main.c 编译链接在一起</p>
+<blockquote>
+<p>$ gcc main.c -L. -lstack -Istack -o main</p>
+</blockquote>
+<p>-L 选项告诉编译器去哪里找需要的库文件，「 -L. 」表示在当前目录找。<br>-lstack 选项告诉编译器要链接 libstack 库， -I 选项告诉编译器去哪里找头文件。</p>
+<p>注意，即使库文件就在当前目录，编译器默认也不会去找的，所以 「 -L. 」选项是不能少的。编译器默认去哪里找呢？可以使用 -print-search-dirs 选项查看一下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ gcc -print-search-dirs</div><div class="line">install: /usr/lib/gcc/x86_64-linux-gnu/6/</div><div class="line">programs: =/usr/lib/gcc/x86_64-linux-gnu/6/:/usr/lib/gcc/x86_64-linux-gnu/6/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/6/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc</div><div class="line">/x86_64-linux-gnu/6/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/6/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../../x86_64-linux-gnu/bin/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gn</div><div class="line">u/6/../../../../x86_64-linux-gnu/bin/</div><div class="line">libraries: =/usr/lib/gcc/x86_64-linux-gnu/6/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../../x86_64-linux-gnu/lib/x86_64-linux-gnu/6/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../../x86_64-lin</div><div class="line">ux-gnu/lib/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../../x86_64-linux-gnu/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../x86_64-linux-gnu/6/:/usr/lib/gcc/x86_64-l</div><div class="line">inux-gnu/6/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../../lib/:/lib/x86_64-linux-gnu/6/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/6/:/usr/li</div><div class="line">b/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../../x86_64-linux-gnu/lib/:/usr/lib/gcc/x86_64-linux-gnu/6/../../../:/lib/:/usr/lib/</div></pre></td></tr></table></figure>
+<p>其中的 <strong>libraries</strong> 就是库文件的搜索路径列表，各路径之间用冒号隔开。在处理 -lstack 选项时， gcc 首先到 -L 选项指定的目录下查找，看有没有<strong>共享库</strong> libstack.so, 如果有就链接它，否则再找有没有<strong>静态库</strong> libstack.a 如果有链接它，如果还是没有，就到默认搜索路径下按同样的步骤查找。gcc 在链接时优先考虑共享库，其次才是静态库，如果希望 gcc 只考虑静态库，可以指定 -static 选项</p>
+<h2 id="那么链接共享库和静态库有什么区别？"><a href="#那么链接共享库和静态库有什么区别？" class="headerlink" title="那么链接共享库和静态库有什么区别？"></a>那么链接共享库和静态库有什么区别？</h2><p>在之前我们说过，链接 libc 共享库时，链接器只是确认可执行 main 引用的某些符号在 libc 中有定义，并没有最终确定这些符号的地址，这些符号在可执行文件 main 中仍然是未定义符号，要在运行时做动态链接。而链接静态库时，链接器会把静态库中的目标文件取出来和可执行文件真正链接到一起。我们反汇编查看上一步生成的可执行文件 main</p>
+<pre><code> 0000000000000660 &lt;main&gt;:
+ 660:   55                      push   %rbp
+ 661:   48 89 e5                mov    %rsp,%rbp
+ 664:   bf 61 00 00 00          mov    $0x61,%edi
+ 669:   e8 07 00 00 00          callq  675 &lt;push&gt;
+ 66e:   b8 00 00 00 00          mov    $0x0,%eax
+ 673:   5d                      pop    %rbp
+ 674:   c3                      retq
+
+0000000000000675 &lt;push&gt;:
+ 675:   55                      push   %rbp
+ 676:   48 89 e5                mov    %rsp,%rbp
+ 679:   89 f8                   mov    %edi,%eax
+ 67b:   88 45 fc                mov    %al,-0x4(%rbp)
+ 67e:   8b 05 8c 09 20 00       mov    0x20098c(%rip),%eax        # 201010 &lt;top&gt;
+ 684:   83 c0 01                add    $0x1,%eax
+ 687:   89 05 83 09 20 00       mov    %eax,0x200983(%rip)        # 201010 &lt;top&gt;
+ 68d:   8b 05 7d 09 20 00       mov    0x20097d(%rip),%eax        # 201010 &lt;top&gt;
+ 693:   48 63 d0                movslq %eax,%rdx
+ 696:   48 8d 05 a3 09 20 00    lea    0x2009a3(%rip),%rax        # 201040 &lt;stack&gt;
+ 69d:   0f b6 4d fc             movzbl -0x4(%rbp),%ecx
+ 6a1:   88 0c 02                mov    %cl,(%rdx,%rax,1)
+ 6a4:   90                      nop
+ 6a5:   5d                      pop    %rbp
+ 6a6:   c3                      retq
+ 6a7:   66 0f 1f 84 00 00 00    nopw   0x0(%rax,%rax,1)
+ 6ae:   00 00
+
+00000000000006b0 &lt;__libc_csu_init&gt;:
+ 6b0:   41 57                   push   %r15
+ 6b2:   41 56                   push   %r14
+ 6b4:   41 89 ff                mov    %edi,%r15d
+ ...
+</code></pre><p>有趣的是，main.c 只调用了 push 这个函数，所以链接生成的可执行文件中也只有 push 而没有 pop 和 is_empty。<strong>这是使用静态库的一个好处</strong>，链接器从静态库中只取出需要的目标文件来做链接，不需要的目标文件可不链接，如果直接把目标文件和 main.c 编译链接在一起，则没有用到的也会链接进来。另一个静态库的好处是只需要写一个库文件，而不需要写一长串目标文件名。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2017-6 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C语言 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[C语言剖析————头文件]]></title>
+      <url>http://yoursite.com/2017/06/08/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E5%A4%B4%E6%96%87%E4%BB%B6/</url>
+      <content type="html"><![CDATA[<p>我们这一篇继续讨论，前面关于 stack.c 和 main.c 的讨论。stack.c 这个模块封装了 top 和 stack 两个变量，导出了 push、pop、pop、is_empty 三个函数接口，已经设计的比较完善。但是使用这个模块的每一个 .c 文件都要写三个函数声明，如果要用的文件中方法再多一点的话 或者 要有多个文件使用这个的话，我们应该尽量避免重复代码的出现。在这里我们可以使用「 头文件 」来进行解决。</p>
+<p>我们来自己写一个头文件 stack.h:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/* stack.h */</div><div class="line">#ifndef STACK_H</div><div class="line">#define STACK_H</div><div class="line"></div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line"></div><div class="line">#endif</div></pre></td></tr></table></figure></p>
+<p>然后我们在 main.c 函数当中包含我们的 stack.h ，我们就可以不用写那三个声明了，具体代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/* main.c */</div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &quot;stack.h&quot;</div><div class="line"></div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    push(&apos;b&apos;);</div><div class="line">    push(&apos;c&apos;);</div><div class="line"></div><div class="line">    while(!is_empty())</div><div class="line">    putchar(pop());</div><div class="line">    putchar(&apos;\n&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>无形当中，我们又抛出了几个问题，不过下面我会一一进行解答。</p>
+<p>首先说为什么 #include <stdio.h> 是用角括号，而 #include “stack.h” 用引号？</stdio.h></p>
+<p>对于用角括号包含的头文件来说，gcc 首先查找 -I 选项指定的目录，然后查找系统的头文件目录，而对于 引号 包含的头文件，gcc 首先<strong>查找这个头文件的当前文件所在的目录</strong>，然后<strong>查找 -I 选项指定的目录，然后查找系统的头文件目录</strong></p>
+<p>比如说，我们三个文件都放在同一个目录下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> jianran@jianran:~/桌面/x86HB$ tree</div><div class="line">.</div><div class="line">├── main.c</div><div class="line">├── stack.c</div><div class="line">└── stack.h</div><div class="line">0 directories, 3 files</div></pre></td></tr></table></figure></p>
+<p>则可以用 gcc -c main.c 编译，gcc 会自动在 main.c 所在的目录中找到 stack.h。加入我们把 stack.h 和 stack.h 移动到一个子目录下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ tree</div><div class="line">.</div><div class="line">├── main.c</div><div class="line">└── stack</div><div class="line">    ├── stack.c</div><div class="line">    └── stack.h</div><div class="line">1 directory, 3 files</div></pre></td></tr></table></figure></p>
+<p>如果像这样一样，我们就必须给 -I 指定参数 gcc -c main.c -Istack, 让我们去告诉 gcc 头文件要到子目录 stack 中找。</p>
+<p>在 #include 预处理指示中可以使用相对路径，比如 #include “stack/stack.h”，那么就不需要加 -Istack 选项了，同时我们应该注意的是，相对路径是相对与当前工作目录的路径，而不是当前文件所在路径</p>
+<p>接着我们继续来回到 stack.h 中我们又看到两个新的预处理命令 #ifndef STACK_H 和 #endif，意思是说，如果 STACK_H  这个宏没有定义过，那么从 #ifndef 到 #endif 之间的代码就包含在预处理的输出结果中，否则这段代码就不会出现在预处理的结果当中。如果在包含这个头文件时 STACK_H 这个宏已经定义了，则相当于这个头文件里面什么都没有，只是包含了一个空文件。这个有什么用呢？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#include &quot;stack.h&quot;</div><div class="line">#include &quot;stack.h&quot;</div><div class="line"> </div><div class="line">int main(void)&#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第一次包含 stack.h 时并没有定义 STACK_H 这个宏，因此头文件的内容包含在预处理的输出结果中，处理完的结果就像如下代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#define STACK_H</div><div class="line"></div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line">#include &quot;stack.h&quot;</div><div class="line"></div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    push(&apos;b&apos;);</div><div class="line">    push(&apos;c&apos;);</div><div class="line"></div><div class="line">    while(!is_empty())</div><div class="line">    putchar(pop());</div><div class="line">    putchar(&apos;\n&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>当我们继续处理 第二个 #include “stack.h” 的时候，因为我们已经定义过了 STACK_H, stack.h 在这一次就被看成了一个空文件。这种保护头文件的写法称为 Header Guard 以后我们写的每个头文件都要加上 Header Guard</p>
+<hr>
+<p>接下来我们总结一下包含头文件主要有的问题：</p>
+<ol>
+<li>预处理编译的速度变慢，要处理很多本来不需要处理的代码。</li>
+<li>如果不小心出现 foo.h 包含 bar.h 、 bar.h 又包含 foo.h 的情况，就陷入死循环。一般编译器都会规定一个包含层次的上限，超过这个上限就会报错</li>
+<li>头文件里面有些代码是不允许被重复出现的，虽然变量和函数允许被多次声明，但是头文件中一些代码是不允许多次出现的，比如用 teypef 定义一个类型名，在一个编译单元只允许定义一次。</li>
+</ol>
+<p>还有一个问题，既然要 #include 头文件，那我不如直接在 main.c 中 #include “stack.h” 得了。这样 stack.c 和 main.c 合并成一个编译单元了，就算我们用 gcc main.c -o main 命令也是可以编译通过了，这样岂不是更加简单吗？</p>
+<p>假如又有一个 foo.c（main.c 要用到 foo.c) 也要用 stack.c 这个模块怎么办？如果再让 foo.c 也 #include “stack.c” 就相当与 push、pop、is_empty 这三个函数 在 main.c 和 foo.c 都有了定义，那么mian.c 和 foo.c 在一起 就不能编译通过, 如果采用头文件的方法，只需要定义一次就全部搞定了。</p>
+<hr>
+<p>写 .c 文件和 头文件时应该遵循以下原则:</p>
+<ul>
+<li><p>.c 文件中可以有变量或函数定义，而 .h 文件中应该只有函数或变量声明而没有定义</p>
+</li>
+<li><p>不要把一个 .c 文件包含到另外一个 .c 文件中</p>
+</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> 2017-6 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> C语言 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[C语言剖析————标识符的链接属性]]></title>
       <url>http://yoursite.com/2017/06/08/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E6%A0%87%E8%AF%86%E7%AC%A6%E7%9A%84%E9%93%BE%E6%8E%A5%E5%B1%9E%E6%80%A7/</url>
       <content type="html"><![CDATA[<ul>
