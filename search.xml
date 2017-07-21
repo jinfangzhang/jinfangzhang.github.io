@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[Fragment详解（一）]]></title>
+      <title><![CDATA[Fragment详解——生命周期]]></title>
       <url>http://yoursite.com/2017/07/21/Fragment%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/</url>
       <content type="html"><![CDATA[<p>这是关于Fragment的生命周期图，简单理解下，同时下面是Fragment与Activity生命周期对比</p>
 <p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fhrbuh1lqfj30k10npq52.jpg" alt=""></p>
