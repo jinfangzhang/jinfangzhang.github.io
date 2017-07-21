@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="乱七八糟," />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -87,19 +87,30 @@
 
 
 
-<meta name="description" content="搭建自己博客的想法已经持续了很长时间，但是总是给自己各种各样的理由推脱，无非是事情多，时间紧，或者之后的一段时间直接忘掉了，反正都没有付诸于行动。
-付费阅读很是火热（可能已经火了好久我才注意到），自己关注的微信公众号，都推出了自己的小密圈，于是抱着对于自身的好奇，当然还有对于作者充分的信任，我选择加入了一个（帅张）。里面交流的虽然不是很火热，不像QQ群一样(一会一大推的消息)，但里面总是给人一种">
+<meta name="description" content="这是关于Fragment的生命周期图，简单理解下，同时下面是Fragment与Activity生命周期对比
+
+
+接下来我们逐个对方法解释：onAttach: onAttach()方法与Activity关联之后调用，也就是在执行了 「setContentView（）」这个方法之后，就和 fragment 建立了联系。
+onCreate: fragment 初次创建时调用，尽管他看起来非常像 Acti">
 <meta property="og:type" content="article">
-<meta property="og:title" content="随想(1)">
-<meta property="og:url" content="http://yoursite.com/2017/03/05/随想（1）/index.html">
+<meta property="og:title" content="Fragment详解（一）">
+<meta property="og:url" content="http://yoursite.com/2017/07/21/Fragment详解（一）/index.html">
 <meta property="og:site_name" content="JianRan">
-<meta property="og:description" content="搭建自己博客的想法已经持续了很长时间，但是总是给自己各种各样的理由推脱，无非是事情多，时间紧，或者之后的一段时间直接忘掉了，反正都没有付诸于行动。
-付费阅读很是火热（可能已经火了好久我才注意到），自己关注的微信公众号，都推出了自己的小密圈，于是抱着对于自身的好奇，当然还有对于作者充分的信任，我选择加入了一个（帅张）。里面交流的虽然不是很火热，不像QQ群一样(一会一大推的消息)，但里面总是给人一种">
-<meta property="og:updated_time" content="2017-05-31T15:23:02.153Z">
+<meta property="og:description" content="这是关于Fragment的生命周期图，简单理解下，同时下面是Fragment与Activity生命周期对比
+
+
+接下来我们逐个对方法解释：onAttach: onAttach()方法与Activity关联之后调用，也就是在执行了 「setContentView（）」这个方法之后，就和 fragment 建立了联系。
+onCreate: fragment 初次创建时调用，尽管他看起来非常像 Acti">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fhrbuh1lqfj30k10npq52.jpg">
+<meta property="og:updated_time" content="2017-07-21T03:40:16.014Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="随想(1)">
-<meta name="twitter:description" content="搭建自己博客的想法已经持续了很长时间，但是总是给自己各种各样的理由推脱，无非是事情多，时间紧，或者之后的一段时间直接忘掉了，反正都没有付诸于行动。
-付费阅读很是火热（可能已经火了好久我才注意到），自己关注的微信公众号，都推出了自己的小密圈，于是抱着对于自身的好奇，当然还有对于作者充分的信任，我选择加入了一个（帅张）。里面交流的虽然不是很火热，不像QQ群一样(一会一大推的消息)，但里面总是给人一种">
+<meta name="twitter:title" content="Fragment详解（一）">
+<meta name="twitter:description" content="这是关于Fragment的生命周期图，简单理解下，同时下面是Fragment与Activity生命周期对比
+
+
+接下来我们逐个对方法解释：onAttach: onAttach()方法与Activity关联之后调用，也就是在执行了 「setContentView（）」这个方法之后，就和 fragment 建立了联系。
+onCreate: fragment 初次创建时调用，尽管他看起来非常像 Acti">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006o5OgAly1fhrbuh1lqfj30k10npq52.jpg">
 
 
 
@@ -127,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/05/随想（1）/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/21/Fragment详解（一）/"/>
 
 
 
 
 
-  <title> 随想(1) | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Fragment详解（一） | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -252,7 +263,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/05/随想（1）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/21/Fragment详解（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JianRan">
@@ -273,7 +284,7 @@
             
             
               
-                随想(1)
+                Fragment详解（一）
               
             
           </h1>
@@ -288,8 +299,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-05T11:11:14+08:00">
-                2017-03-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-21T11:38:23+08:00">
+                2017-07-21
               </time>
             
 
@@ -311,8 +322,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2017-3/" itemprop="url" rel="index">
-                    <span itemprop="name">2017-3</span>
+                  <a href="/categories/2017-7/" itemprop="url" rel="index">
+                    <span itemprop="name">2017-7</span>
                   </a>
                 </span>
 
@@ -344,24 +355,22 @@
       
 
       
-        <blockquote>
-<p>搭建自己博客的想法已经持续了很长时间，但是总是给自己各种各样的理由推脱，无非是事情多，时间紧，或者之后的一段时间直接忘掉了，反正都没有付诸于行动。</p>
-<p>付费阅读很是火热（可能已经火了好久我才注意到），自己关注的微信公众号，都推出了自己的小密圈，于是抱着对于自身的好奇，当然还有对于作者充分的信任，我选择加入了一个（帅张）。里面交流的虽然不是很火热，不像QQ群一样(一会一大推的消息)，但里面总是给人一种非常轻松，少去了很多浮躁的气息。而且里面分享的内容质量也很高。对于目前的我来说，总是能找到一些属于的养料进行吸收。</p>
-<p>通过公众号接触张哥，感觉是一个性情十足的汉子，同时也是在IT行业优秀的前辈。</p>
-<p>在里面，张哥写了一个分享叫&lt;为什么要写博客&gt;，之前也在公众号里面推送过类似的文章，同样这类的文章看的其实也有七八篇。先忽视在其他地方看到的。就这样的一位“开拓者”总是很用心的分享给我们他成功的方法。我是非常幸运，也是十分感激的。前方明明有一个比自己优秀多的人告诉自己前方的道路这样走会更快更好，自己偏偏要自己去摸索走各种弯路最终还是回到了这个上来。每次看到相应的博客，总是当时恍然大悟，茅塞顿开的感觉，然后呢？就没有了。这大概也是如今很多人通病所在。</p>
-<p>在加入小密圈的同时，我也在<em>得到</em>这样一个应用上面订阅了吴军老师专栏，里面的第一篇【发刊词】就提说到了这样一个问题。几年前Google举办一次商业活动，免费向合作伙伴发放入场券，拿到入场券的人都确认要来，但是到活动开始的时候，只来了一半的人。第二点Google每张入场券收取50美元，这当前只占Google所付出费用的小部分，但是这一次，大家因为掏了50美元，都来了，基于这个教训，我们意识到，一个人只有付出（哪怕只有一点点），才会珍惜他换来的。才会比较重视的主动的去思考一些内容。事实证明这样真的是很有效的。</p>
-<p>“道理我都懂，但是之后就没了下文”，这大概也就是我与真正优秀的人的差距了，别人做到了，而我却只说到了。生活中的例子不胜枚举，和我一同学习Android的同学，之前我就早就当面十分详尽的阐述了要注重看一手资料，要看Google官方文档，但是他就自己偏执一词，给出各种的理由，但是经过一个寒假的时间，才缓缓意识到这个问题，现在才慢慢开始看。这样的问题自己身上就多的数不清楚了。很多事情我们只是看到了，而没有意识到，然而自己的思想里面，非要站在一个制高点说“我意识到了”。只有当付出代价之后，你才会意识到一件事情的重要性，之后就会说，要是我当初做了，就怎么怎么样了，然而却完全没有时间改变。我很庆幸我自己真正意识到了这个问题，通过“付费”，这样一种代价很低的形式，庆幸自己没有让你自己用时间明白这一切，到时候就真的完了。</p>
-<p>已经使得到和<em>小密圈</em>一段时间，渐渐的已经熟悉的这么一个环境，聚集了一群志同道合的人，聊起天来也会感到分外轻松。我也不是一味夸许付费阅读有多好，但是“付费”的的确确过滤出了一个更好的环境，一个更有品质的环境。在小密圈中各路的前辈总是会乐意分享出自己阅读过程中有价值的文章给我们，同时也可以和向我一样处于同等阶段的同学们，互相了解。不是说非要通过付费的方式来可以获得，但是这个过程绝对会浪费比这种形式多出好几本的时间。在<em>得到</em>里面更多的是向学习优秀的人（更确切的说是卓越），如何去思考一些事情，知道大咖们在关注什么，可以通过他们来了解一些带有他们思考的前沿。方方面面的东西都可以帮助自己成长。开始尝试自己不曾做过的，开始主动的去步入一个新的世界（说了如此对于我付费阅读的优点，终究是属于自己的，我说的这些抽象出来都是所谓的事情，纯粹来说，这一件事情本身没有什么意义，所有意义都是人为赋予的且对于自己来说是唯一的）</p>
-</blockquote>
-<p>通过这样一个途径让我开始做一些之前没有的事情，就拿刚做的来说，搭建博客并且开始写博客，以此为起点我要开始做一些之前带有抵触情</p>
-<ul>
-<li>持续的写技术博客</li>
-<li>主动看纯英文文档</li>
-<li>开始使用第三方库</li>
-<li>尝试看常用第三方源码</li>
-</ul>
-<p>到目前为止，我已经拥有了自己的博客。</p>
-<p>这次博客用了不到一天的时间，没有过度的修饰，毕竟当前还是用来写文章，记录文章的。过多花哨的功能除更加美观外基本没有什么过多的作用。同时创建自己博客的初衷，不仅仅是做技术记录，单纯的技术博客，更多的是想记录下我的生活而不是仅仅是我的职业。刚开始文章各方面无论是语言表述方面还是排版方面都是很有欠缺的，希望自己通过这样一个小的平台来逐步提升自己，作为一个大学生来说，最基本的除具备未来职业的基本专业知识外，还要拥有良好的表达能力和写作能力。到我毕业之后希望给自己交一份不错的答卷。</p>
+        <p>这是关于Fragment的生命周期图，简单理解下，同时下面是Fragment与Activity生命周期对比</p>
+<p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fhrbuh1lqfj30k10npq52.jpg" alt=""></p>
+<hr>
+<p>接下来我们逐个对方法解释：<br><strong>onAttach:</strong> onAttach()方法与Activity关联之后调用，也就是在执行了 「setContentView（）」这个方法之后，就和 fragment 建立了联系。</p>
+<p><strong>onCreate:</strong> fragment 初次创建时调用，尽管他看起来非常像 Activty 的 onCreate 。此时 Activity 还没有建立完成，因为我们的 Fragment 也是 Activity 的一部分，所以在这里你想获取一些关于 Activity 中的一些资源，将会获取不到。</p>
+<p><strong>onCreateView:</strong> 在这个 fragment构造它的布局时进行调用。在这里返回此Fragment的一个视图层次结构。同时使用 LayoutInflater 的 inflater() 方法来构造实图，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public View onCreateView(LayoutInflater inflater, ViewGroup container,  </div><div class="line">                         Bundle savedInstanceState) &#123;  </div><div class="line">    return inflater.inflate(R.layout.fragment3, container, false);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>onActivityCreated:</strong>在 Activity 的 onCreate 完成之后会调用这个函数，所以这个时候 Activity 已经创建完毕，在这个方法当中可以获取 Activity 的所有资源的。 </p>
+<p><strong>onStart:</strong>当到 onStart() 时, Fragment 对用户就是可见的了，但是这个时候用户还没有和 Fragment 交互。在生命周期中也可以看到，Fragment 的 onStart 与 Activity 的 onStart 是绑定着的。</p>
+<p><strong>onResume:</strong>这是 Fragment 与用户交互之前进行的最后一个回调。这个方法执行结束之后，就可以与 Fragment 进行交互了</p>
+<p>onPause：此回调与 Activity 的 onPause() 相绑定，与 Activity 的 onPause() 意义一样。</p>
+<p><strong>onStop:</strong>这个也和 onPause 相同就不解释了。</p>
+<p><strong>onDestroyView:</strong> 如果 Fragment 即将被结束或者保存，那么撤销方向上面的下一个回调将会是该方法。这个方法会将在 onCreateView 中创建的视图与这个 Fragment 分离。下次这个 Fragment 若要显示，那么将会重新创建视图。</p>
+<p><strong>onDestroy:</strong>当这个fragment不再使用时调用。需要注意的是，它即使经过了onDestroy()阶段，但仍然能从Activity中找到，因为它还没有Detach。</p>
+<p><strong>onDetach:</strong>Fragment生命周期中最后一个回调是onDetach()。调用它以后，Fragment就不再与Activity相绑定，它也不再拥有视图层次结构，它的所有资源都将被释放。</p>
+<hr>
+<p>总结:<br>在这里简单总结以下 Fragment 过程。<br>大概可以分为两类: 第一类是 Fragment 与 Activity 建立联系，第二类是 Fragment 与 View 建立联系。<br>过程总结如下:<br>1、与 Activyt 建立联系<br>2、与 View 建立联系<br>3、与 用户 进行交互<br>4、与 View 失去联系<br>5、与 Activity 失去联系</p>
 
       
     </div>
@@ -391,7 +400,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/乱七八糟/" rel="tag"># 乱七八糟</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
         </div>
       
@@ -404,15 +413,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/06/08/共享库/" rel="next" title="共享库">
+                <i class="fa fa-chevron-left"></i> 共享库
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/07/Java-一/" rel="prev" title="Java(一)">
-                Java(一) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -644,9 +653,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'jianran';
-      var disqus_identifier = '2017/03/05/随想（1）/';
+      var disqus_identifier = '2017/07/21/Fragment详解（一）/';
 
-      var disqus_title = "随想(1)";
+      var disqus_title = "Fragment详解（一）";
 
 
       function run_disqus_script(disqus_script) {
