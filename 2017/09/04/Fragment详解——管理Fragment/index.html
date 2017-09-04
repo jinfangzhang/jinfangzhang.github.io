@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -87,15 +87,22 @@
 
 
 
-<meta name="description" content="做好手里面的事情">
-<meta property="og:type" content="website">
-<meta property="og:title" content="JianRan">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+<meta name="description" content="在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。
+##FragmentManager
+它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Frag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fragment详解——管理Fragment">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/Fragment详解——管理Fragment/index.html">
 <meta property="og:site_name" content="JianRan">
-<meta property="og:description" content="做好手里面的事情">
+<meta property="og:description" content="在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。
+##FragmentManager
+它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Frag">
+<meta property="og:updated_time" content="2017-09-04T12:10:05.390Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JianRan">
-<meta name="twitter:description" content="做好手里面的事情">
+<meta name="twitter:title" content="Fragment详解——管理Fragment">
+<meta name="twitter:description" content="在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。
+##FragmentManager
+它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Frag">
 
 
 
@@ -123,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/04/Fragment详解——管理Fragment/"/>
 
 
 
 
 
-  <title> 归档 | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> Fragment详解——管理Fragment | JianRan </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -154,7 +161,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left  page-archive  ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -238,403 +245,201 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 29 篇日志。 继续努力。
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/Fragment详解——管理Fragment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
     </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Fragment详解——管理Fragment
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-04T20:09:14+08:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2017-7/" itemprop="url" rel="index">
+                    <span itemprop="name">2017-7</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
 
       
       
-      
 
+      
+        <p>在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。</p>
+<p>##FragmentManager</p>
+<p>它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Fragment 进行相关操作。获取 FragmentManager 是 Activity 本身的一个方法的结果（getFragmentManager）。仔细思考其中的道理，不难想清楚，对于 Activity 而言它本身是可以依赖多个 Fragment，如果对于每个Fragment单独操作，不免费事费力，不如提供一个统一的一个接口来进行使用。</p>
+<p>常用的方法如下：</p>
+<ol>
+<li>findFragmentById()<br>根据 ID 来获取对应的 Fragment 实例，主要使用在静态绑定中</li>
+<li>findFragmentByTag()<br>意思基本和上面相同</li>
+<li>beginTransaction()<br>开启一个事务</li>
+</ol>
+<p>##FragmentTransaction</p>
+<p>常用方法如下：</p>
+<ol>
+<li><p>add(int containerViewId, Fragment fragment, String tag)<br>将一个fragment实例添加到Activity的最上层 </p>
+</li>
+<li><p>remove(Fragment fragment)<br>将一个fragment实例从Activity的fragment队列中删除  </p>
+</li>
+<li><p>replace(int containerViewId, Fragment fragment)<br>替换 containerViewId 中的 fragment 实例，注意，它首先把 containerViewId 中所有 fragment 删除，然后再 add 进去当前的 fragment  </p>
+</li>
+</ol>
+<p>##有关回滚——FragmentTransaction</p>
+<p>上面简单记录了一个相关的主要方法，现在我们来简单说一个回滚功能。要实现回滚只需要 commit() 和 addToBackStack(String tag)这个两个方法，每次在commit()之前，使用<strong>addToBackStack()</strong>将其添加到回退栈中。需要回退的时候只需要使用 popBackStack() 方法即可，回退的单位是以一次 commit() 为主。</p>
+<blockquote>
+<p>另外补充说明一下，FragmentManager 还提供了监听回退栈的方法<br>FragmentManager::addOnBackStackChangedListener(listener);//添加监听器<br>FragmentManager::removeOnBackStackChangedListener(listener);//移除监听器 </p>
+<p>不过,这里你们要注意理解为什么 FragmentManager 提供监听回退栈的方法。</p>
+</blockquote>
+<p>##That’s All</p>
+
+      
+    </div>
+
+	
+	<div>
+	
+	<div style="text-align:center;color: #ccc;font-size:14px;">------ 本文结束 ------</div>
+	
+	</div>
+
+    <div>
       
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
         </div>
       
+
+      
+        
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/21/Fragment详解——基本使用/" rel="next" title="Fragment详解——基本使用">
+                <i class="fa fa-chevron-left"></i> Fragment详解——基本使用
+              </a>
+            
+          </div>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          <span class="post-nav-divider"></span>
 
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/04/Fragment详解——管理Fragment/" itemprop="url">
-              
-                <span itemprop="name">Fragment详解——管理Fragment</span>
-              
-            </a>
-        
-      </h1>
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-04T20:09:14+08:00"
-              content="2017-09-04" >
-          09-04
-        </time>
-      </div>
-
-    </header>
+      
+      
+    </footer>
   </article>
 
 
 
-    
-
+    <div class="post-spread">
       
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/21/Fragment详解——基本使用/" itemprop="url">
-              
-                <span itemprop="name">Fragment详解——基本使用</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-21T18:38:04+08:00"
-              content="2017-07-21" >
-          07-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/21/Fragment详解（一）/" itemprop="url">
-              
-                <span itemprop="name">Fragment详解——生命周期</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-21T11:38:23+08:00"
-              content="2017-07-21" >
-          07-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/08/共享库/" itemprop="url">
-              
-                <span itemprop="name">共享库</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-08T19:36:48+08:00"
-              content="2017-06-08" >
-          06-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/08/C语言剖析————静态库/" itemprop="url">
-              
-                <span itemprop="name">C语言剖析————静态库</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-08T19:34:40+08:00"
-              content="2017-06-08" >
-          06-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/08/C语言剖析————头文件/" itemprop="url">
-              
-                <span itemprop="name">C语言剖析————头文件</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-08T19:32:47+08:00"
-              content="2017-06-08" >
-          06-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/08/C语言剖析————标识符的链接属性/" itemprop="url">
-              
-                <span itemprop="name">C语言剖析————标识符的链接属性</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-08T17:35:13+08:00"
-              content="2017-06-08" >
-          06-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/06/C语言剖析————定义与声明/" itemprop="url">
-              
-                <span itemprop="name">C语言剖析————定义与声明</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-06T20:03:55+08:00"
-              content="2017-06-06" >
-          06-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/04/C语言剖析————多目标文件的链接/" itemprop="url">
-              
-                <span itemprop="name">C语言剖析————多目标文件的链接</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-04T10:55:22+08:00"
-              content="2017-06-04" >
-          06-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-      
-      
-      
-
-      
-      
-
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/03/C语言剖析————main函数、启动历程和退出状态/" itemprop="url">
-              
-                <span itemprop="name">C语言剖析————main函数、启动历程和退出状态</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-06-03T20:22:41+08:00"
-              content="2017-06-03" >
-          06-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-    
-
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2017/page/2/">2</a><a class="page-number" href="/archives/2017/page/3/">3</a><a class="extend next" rel="next" href="/archives/2017/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
-
+    </div>
+  </div>
 
           
           </div>
@@ -830,11 +635,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
 
 
   
@@ -852,9 +655,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'jianran';
-      var disqus_identifier = 'archives/2017/index.html';
+      var disqus_identifier = '2017/09/04/Fragment详解——管理Fragment/';
 
-      var disqus_title = "";
+      var disqus_title = "Fragment详解——管理Fragment";
 
 
       function run_disqus_script(disqus_script) {
