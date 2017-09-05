@@ -4,6 +4,42 @@
   
     
     <entry>
+      <title><![CDATA[Adapter设计模式与 ListView 和 RecylerView]]></title>
+      <url>http://yoursite.com/2017/09/05/Adapter%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E-ListView-%E5%92%8C-RecylerView/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>永远不做超出当前认知的事情</p>
+</blockquote>
+<p>简单谈谈 Adapter设计模式，及其在 Android 中的简单应用，尝试着去理解这些设计。</p>
+<p> Adapter模式的<strong>定义：</strong>适配器模式把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配的问题而无法一起工作的两个类能够一起工作。</p>
+<p> Adapter模式 换句话说，就像条想要给手机充电的USB线，光有USB插头是无法插到插座上给手机充电的，需要连接个充电头才可以实现。那么这个充电头就是 Adapter。提供了一个转换接头，让USB接口与插座完全解耦，两者之间没有任何联系。在代码中实现其实就是在这二者中间加入了一个类获取其他可以实现这种功能的代码。</p>
+<p> 比较经典的是 ListView 和 RecylerView 的 Adapter 类，两者的结构完全相同。</p>
+<p> 首先，ListView 和 RecylerView 直接需要View的引用，及其View的数量等信息，但是我们能提供的只能是什么信息都没有的View 和 独立的一堆信息，这个工作如果直接传给 ListView 和 RecylerView 他们来做，就会直接耦合在一起，ListView 和 RecylerView 将会过于臃肿，结构混乱。</p>
+<p> 我们做的事情是把对于他们而言，他们所需要的信息由Adapter直接提供。而 Adapter的具体细节他们不需要知道了。我们把 信息全部传递给 Adapter，让它进行内部的组合，组合处合理的信息即可。</p>
+<blockquote>
+<p>说白了就是USB接口和充电头之间的关系</p>
+</blockquote>
+<h2 id="两种不同的实现方式"><a href="#两种不同的实现方式" class="headerlink" title="两种不同的实现方式"></a>两种不同的实现方式</h2><p><strong>类适配器模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//USB</div><div class="line">public class USB&#123;</div><div class="line"></div><div class="line">    //使用USB传输电能</div><div class="line">    public void usbEnergy()&#123;&#125;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">//转换头</div><div class="line">public  interface TransHead&#123;</div><div class="line"></div><div class="line">    //使用插头传输电能</div><div class="line">    public void usbEnergy;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class EnergyAdapter extends USB implements TransHead&#123;</div><div class="line"></div><div class="line">    public void usbEnergy()&#123;</div><div class="line">        usbEnergy()&#123;&#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>对象适配器模式</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class EnergyAdapter implements TransHead&#123;</div><div class="line">    USB usb;</div><div class="line">    </div><div class="line">    EnergyAdapter(USB usb)&#123;</div><div class="line">        this.usb = usb;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void usbEnergy()&#123;</div><div class="line">        usb.usbEnergy();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="That’s-All"><a href="#That’s-All" class="headerlink" title="That’s All"></a>That’s All</h2>]]></content>
+      
+        <categories>
+            
+            <category> 2017-9 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Fragment详解——管理Fragment]]></title>
       <url>http://yoursite.com/2017/09/04/Fragment%E8%AF%A6%E8%A7%A3%E2%80%94%E2%80%94%E7%AE%A1%E7%90%86Fragment/</url>
       <content type="html"><![CDATA[<p>在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。</p>
