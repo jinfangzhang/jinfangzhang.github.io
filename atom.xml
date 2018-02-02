@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-01T09:53:38.300Z</updated>
+  <updated>2018-02-02T14:14:25.003Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>log001</title>
+    <link href="http://yoursite.com/2018/02/02/log001/"/>
+    <id>http://yoursite.com/2018/02/02/log001/</id>
+    <published>2018-02-02T14:13:27.000Z</published>
+    <updated>2018-02-02T14:14:25.003Z</updated>
+    
+    <content type="html"><![CDATA[<p>订阅得到的专栏也有一年时间了，但他们多是碎片话的知识，我至今累计订阅的5个专栏，一个专栏一年至少365篇文章，5个就是将近1600篇文章，每一篇文章都具有一个观点，或者说几篇文章一个系列。庞大的知识，经过一次阅读也就一些产生共鸣的些许文章有影响，说收获的话还真说不上来，可能更过的是潜移默化的吧，曾今也计划逐步的开始整理这些文章，但终究成为曾今。</p><p>不过这件事情，不管结果怎样都是应该继续做下去的。不说结果有多好，但至少是对自己有帮助的事情。</p><hr><p>今天从新听了一遍VOA，竟然感觉他说的好慢，虽然它本来就是慢速英语，但对于半年前的我来说，依然理解吃力。</p><hr><p>TODO List</p><ul><li>[x] 学太极</li><li>[ ] 七点起床</li><li>[x] 早上起来学习英语</li><li>[x] 基础2小时</li><li>[x] 项目2-3小时</li><li>[x] 下午英语学习</li><li>[x] 10点开会总结</li><li>[x] 得到两篇文章</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;订阅得到的专栏也有一年时间了，但他们多是碎片话的知识，我至今累计订阅的5个专栏，一个专栏一年至少365篇文章，5个就是将近1600篇文章，每一篇文章都具有一个观点，或者说几篇文章一个系列。庞大的知识，经过一次阅读也就一些产生共鸣的些许文章有影响，说收获的话还真说不上来，可能
+      
+    
+    </summary>
+    
+      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
+    
+    
+      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
   
   <entry>
     <title>log000</title>
@@ -521,33 +546,6 @@
     
     
       <category term="C语言" scheme="http://yoursite.com/tags/C%E8%AF%AD%E8%A8%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>寻址方式</title>
-    <link href="http://yoursite.com/2017/05/31/%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/05/31/寻址方式/</id>
-    <published>2017-05-31T15:19:08.000Z</published>
-    <updated>2017-06-04T07:09:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>常用的几种寻址方式。内存寻址在指令中可以表示成如下的通用格式：</p><pre><code>ADDRESS_OR(%BASE_OR_OFFSET,%INDEX,MULTIPLIER)</code></pre><p>他所表示的地址可以这样计算出来<br>FINAL ADDRESS = ADDRESS_OR_OFFEST + BASE_OR_OFFSET + MULTIPLIER x INDEX</p><p>其中 ADDRESS_OR_OFFSET 和 MULTIPLIER 必须是常数，BASE_OR_OFFSET 和 INDEX 必须是寄存器</p><ul><li><p><strong>直接寻址</strong>。只使用 ADDRESS_OR_OFFEST 寻址，例如 movl ADDRESS，%eax 把 ADDRESS 地址处的32位数传送到 eax 寄存器</p></li><li><p><strong>变址寻址</strong>。 movl data_items（，%edi，4），%eax 就属于这种寻址，用于访问数组元素比较方便</p></li><li><p><strong>间接寻址</strong>。只是用 BASE_OR_OFFSET 寻址，例如 movl （%eax），%ebx，把 eax 寄存器的值看做地址，把内存中这个地址处的 32 位数传送到 ebx 寄存器。</p></li><li><p><strong>基址寻址</strong>。只使用 ADDRESS_OR_OFFSET 和 BASE_OR_OFFSET 寻址，<br>例如： movl 4（%eax），%ebx，用于访问结构体成员比较方便，例如一个结构体的基地址保存在 寄存器eax 中，其中一个成员在结构体中的偏移量是 4 字节，要把这个成员读上来就可以使用这条指令</p></li><li><p><strong>立即数寻址</strong>。就是指令中有一个操作数是立即数，例如：movl $12, %eax</p></li><li><p><strong>寄存器寻址</strong>。就是指令中一个操作数是寄存器</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;常用的几种寻址方式。内存寻址在指令中可以表示成如下的通用格式：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ADDRESS_OR(%BASE_OR_OFFSET,%INDEX,MULTIPLIER)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;他所表示的地址可以这样计算出来&lt;br&gt;FINAL ADD
-      
-    
-    </summary>
-    
-      <category term="2017-5" scheme="http://yoursite.com/categories/2017-5/"/>
-    
-    
-      <category term="汇编语言基础" scheme="http://yoursite.com/tags/%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
