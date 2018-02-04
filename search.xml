@@ -4,6 +4,30 @@
   
     
     <entry>
+      <title><![CDATA[Log002]]></title>
+      <url>http://yoursite.com/2018/02/03/log002/</url>
+      <content type="html"><![CDATA[<p>今天可以说，最大的收获是听谷歌方法论，对于计算机思维的一些思考。同时也因为着迷漫画而打乱了一天的节奏。</p>
+<p>并且重新发问一个新问题，我每天都在学习新知识，那么太极拳我是否有时间去思考和学习呢？可能这需要我严密的去组织时间。</p>
+<p>中午的时间浪费的出奇的严重，这是需要改正的一点。</p>
+<p>当然今天还有很多没有完成的事情。周遭环境的不适应，应该更加快快速的的调整。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-2 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Log </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[数据结构与算法的一些准备工作]]></title>
       <url>http://yoursite.com/2018/02/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%80%E4%BA%9B%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C/</url>
       <content type="html"><![CDATA[<p>对于算法而言，虽然我们可以从理论上面分析该算法是时间复杂度，是$O(nlog^n)$,还是$O(n^2)$，这些难免有点过于抽象，难以理解。为此，我们应该准备一些必要的工具，去从正面直接理解和观察他们，是我们进一步理解和解决问题的基础</p>
