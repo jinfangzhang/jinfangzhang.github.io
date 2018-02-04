@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-04T04:09:10.115Z</updated>
+  <updated>2018-02-04T15:48:20.080Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>log003</title>
+    <link href="http://yoursite.com/2018/02/04/log003/"/>
+    <id>http://yoursite.com/2018/02/04/log003/</id>
+    <published>2018-02-04T15:47:37.000Z</published>
+    <updated>2018-02-04T15:48:20.080Z</updated>
+    
+    <content type="html"><![CDATA[<p>节奏渐入佳境，无论是博客还是技术 。尽管所有的时间安排都在按照计划执行，但是在安排任务上面，从任务量来说并没有完成。过分纠结于一个问题，导致解决时间过长。</p><p>在资源已经充分利用的前提下，下来比拼的就是效率了。</p><p>在思考之后，决定继续学习太极拳。</p><p>假期本来是打算去静下来看会书，结果最终也成了战场。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;节奏渐入佳境，无论是博客还是技术 。尽管所有的时间安排都在按照计划执行，但是在安排任务上面，从任务量来说并没有完成。过分纠结于一个问题，导致解决时间过长。&lt;/p&gt;
+&lt;p&gt;在资源已经充分利用的前提下，下来比拼的就是效率了。&lt;/p&gt;
+&lt;p&gt;在思考之后，决定继续学习太极拳。&lt;/p
+      
+    
+    </summary>
+    
+      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
+    
+    
+      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
   
   <entry>
     <title>编写算法时一些思想与实践</title>
@@ -502,31 +529,6 @@
 &lt;hr&gt;
 &lt;p&gt;目前我们在同一个文件夹下创建 stack.c 和 main.c 文件，内容如下&lt;/p&gt;
 &lt;figure class=&quot;highli
-      
-    
-    </summary>
-    
-      <category term="2017-6" scheme="http://yoursite.com/categories/2017-6/"/>
-    
-    
-      <category term="C语言" scheme="http://yoursite.com/tags/C%E8%AF%AD%E8%A8%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C语言剖析————main函数、启动历程和退出状态</title>
-    <link href="http://yoursite.com/2017/06/03/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94main%E5%87%BD%E6%95%B0%E3%80%81%E5%90%AF%E5%8A%A8%E5%8E%86%E7%A8%8B%E5%92%8C%E9%80%80%E5%87%BA%E7%8A%B6%E6%80%81/"/>
-    <id>http://yoursite.com/2017/06/03/C语言剖析————main函数、启动历程和退出状态/</id>
-    <published>2017-06-03T12:22:41.000Z</published>
-    <updated>2017-06-04T01:09:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>为什么汇编程序入口是 _start 而 C程序 的入口是 main函数 呢？ 要弄清楚这个问题，首先要理解 gcc 的编译步骤。以前我们常用 gcc main.c -o main 命令编译一个程序，其实也可以分三步来走：<strong>第一步生成 汇编代码，第二步 生成目标文件，第三步 生成可执行文件</strong>：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ gcc -S main.c       #生成汇编文件</div><div class="line">$ gcc -c main.s       #生成目标文件</div><div class="line">$ gcc main.o          #生成可执行文件</div></pre></td></tr></table></figure><p>-S 生成 汇编代码，-c 生成目标文件，-E 只做预处理而不进行编译，如果这些选项都不加，则 gcc 执行完成的编译步骤，直到最后链接生成可执行文件。</p><p>这些选项都可以和 -o 搭配使用，给输出文件重新命名而不使用 gcc 默认的输出文件名。</p><pre><code>gcc main.c -o main</code></pre><p>在 gcc 内部也要分三步来走，同时 gcc 是一个外壳，在具体细节里面， gcc 调用了 C编译器、 汇编器、 链接器完成 C 代码的编译链接工作</p><ol><li>main.c 被 C编译器 编译成 汇编程序</li><li>这个汇编程序被 as 汇编成目标文件 </li><li>这个目标文件连同另外几个目标文件（crtl.o、crti.o、crtbegin.o、crtend.o、crtn.o)一起链接成可执行文件 mian。在链接过程中还使用 -l 选项选定了一些库文件，有 libc、libgcc、libgcc_s，其中有些库是共享库，需要动态链接，所以用 -dynamic-linker 选项指定动态链接是 /lib64/ld-linux-x86-64.so.2。这个随后我们会说到，<strong>这里我们只要理解可执行文件 mian 是由 mian.c 生成的目标文件和编译器提供的另外几个目标文件链接到一起生成的</strong></li></ol><p>现在让我们看看编译器提供的目标文件里面有些什么东西，我们只看符号表，这里主要看 crt1.o</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:/usr/lib/gcc/x86_64-linux-gnu/6$ nm /usr/lib/x86_64-linux-gnu/crt1.o</div><div class="line">0000000000000000 D __data_start</div><div class="line">0000000000000000 W data_start</div><div class="line">                 U _GLOBAL_OFFSET_TABLE_</div><div class="line">0000000000000000 R _IO_stdin_used</div><div class="line">                 U __libc_csu_fini</div><div class="line">                 U __libc_csu_init</div><div class="line">                 U __libc_start_main</div><div class="line">                 U main</div><div class="line">0000000000000000 T _start</div></pre></td></tr></table></figure><p>符号表的每一行由地址、符号类型和符号名组成。目标文件中的地址是待定的，所以是 0000000000000000.符号类型用一个字母表示，大写字母是全局符号，小写字母是局部符号,<br>U main 这一行表示 这个符号在 crtl.o 中已经被应用，但没有被定义（U 表示 Undefinded),因此需要别的目标文件提供一个定义和 crt1.o 链接在一起。T _start 这一行表示 _start 这个符号在 crtl.o 中提供了定义，这个符号的类型是 代码（T 表示 Text）</p><p>C程序的入口其实是 crt1.o 提供的 _start, 它首先做一些初始化工作（以下称为 启动例程），然后调用我们的 main函数。所以，以前我们说的 main函数 是程序的入口其实不够准确，_start 才是真正的入口点，而 main函数 是被 _start 调用的。下面我们反汇编查看以下 _start 的定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">jianran@jianran:/usr/lib/gcc/x86_64-linux-gnu/6$ objdump -d /usr/lib/x86_64-linux-gnu/crt1.o</div><div class="line"></div><div class="line">/usr/lib/x86_64-linux-gnu/crt1.o：     文件格式 elf64-x86-64</div><div class="line"></div><div class="line"></div><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">0000000000000000 &lt;_start&gt;:</div><div class="line">   0:   31 ed                   xor    %ebp,%ebp</div><div class="line">   2:   49 89 d1                mov    %rdx,%r9</div><div class="line">   5:   5e                      pop    %rsi</div><div class="line">   6:   48 89 e2                mov    %rsp,%rdx</div><div class="line">   9:   48 83 e4 f0             and    $0xfffffffffffffff0,%rsp</div><div class="line">   d:   50                      push   %rax</div><div class="line">   e:   54                      push   %rsp</div><div class="line">   f:   49 c7 c0 00 00 00 00    mov    $0x0,%r8</div><div class="line">  16:   48 c7 c1 00 00 00 00    mov    $0x0,%rcx</div><div class="line">  1d:   48 c7 c7 00 00 00 00    mov    $0x0,%rdi</div><div class="line">  24:   ff 15 00 00 00 00       callq  *0x0(%rip)        # 2a &lt;_start+0x2a&gt;</div><div class="line">  2a:   f4                      hlt</div></pre></td></tr></table></figure></p><p>callq 指令前面的 push 指令其实想把 main 这个符号所代表的地址压栈，但是这里还不到具体地址多少，这里只能先用 0x0 代替。现在我们对 main.c 编译成目标文件 main.o，然后和链接器提供的目标文件链接，对生成的可执行文件 main 做反汇编：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Disassembly of section .text:</div><div class="line"></div><div class="line">0000000000000530 &lt;_start&gt;:</div><div class="line"> 530:   31 ed                   xor    %ebp,%ebp</div><div class="line"> 532:   49 89 d1                mov    %rdx,%r9</div><div class="line"> 535:   5e                      pop    %rsi</div><div class="line"> 536:   48 89 e2                mov    %rsp,%rdx</div><div class="line"> 539:   48 83 e4 f0             and    $0xfffffffffffffff0,%rsp</div><div class="line"> 53d:   50                      push   %rax</div><div class="line"> 53e:   54                      push   %rsp</div><div class="line"> 53f:   4c 8d 05 ea 01 00 00    lea    0x1ea(%rip),%r8        # 730 &lt;__libc_csu_fini&gt;</div><div class="line"> 546:   48 8d 0d 73 01 00 00    lea    0x173(%rip),%rcx        # 6c0 &lt;__libc_csu_init&gt;</div><div class="line"> 54d:   48 8d 3d 45 01 00 00    lea    0x145(%rip),%rdi        # 699 &lt;main&gt;</div><div class="line"> 554:   ff 15 7e 0a 20 00       callq  *0x200a7e(%rip)        # 200fd8 &lt;__libc_start_main@GLIBC_2.2.5&gt;</div><div class="line"> 55a:   f4                      hlt</div><div class="line"> 55b:   0f 1f 44 00 00          nopl   0x0(%rax,%rax,1)</div></pre></td></tr></table></figure></p><p>crt1.o 中定义的 符号 _start 和 main.o 中定义的符号 main、foo、bar都合成到可执行文件的 .text 段中。符号 main 的 地址 变成 0x 699，原先的 0x0 被具体地址替代，一个目标文件中引用了某个符号，链接器在另一个目标文件中找到这个符号的定义并确定它的地址，这个过程叫做符号解析。</p><p>其实在 crt1.o 中还有一个 U __libc_start_main 这个符号在其他文件中没有定义，事实上这个符号在 libc 中定义，libc 是一个共享库，它并不像其他目标文件一样链接到可执行文件而是在运行时链接到的</p><p>1、操作系统在加载执行 main 这个程序时，首先查看它有没有需要动态链接的未定义符号<br>2、如果需要动态链接，就查看这个程序制定了哪些共享库，以及用什么动态链接器来做动态链接。我们在链接时用 -lc 指定了 共享库 libc ，用 -dynamic-linker /lib64/ld-linux-x86-64.so.2 指定了动态链接器，这些信息都会写到可执行文件中。<br>3、动态链接器加载共享库，在其中查找这些未定义符号的定义，完成链接过程。</p><p>我们回头看 _start 的反汇编过程，首先将一系列参数压栈，然后通过 callq 的命令调用库函数 <strong>libc_start_main 进行初始化工作，其中最后一个压栈是 main函数 的地址，</strong>libc_start_main做完初始化工作之后会根据这个参数调用 main函数。由于 __libc_start_main 需要做动态链接，所以这个库函数 的指令在 main 的反汇编中肯定找不到，这些指令 会在 一个 .plt 段中而不是 .text 段中找到， .plt段协助完成动态链接。</p><p>main 函数最标准的原型是 int main(int agrc，char *argv[]),也就是说启动例程会传两个参数给 main函数，到目前为止我们基本都把 main 函数写成 int main（void） 这是 C 代码允许的。</p><p>由于 main 函数是被启动例程调用，所以 main函数 return 时就返回到启动例程中，main函数的返回值会被启动例程得到，如果将启动例程表示成等价的 C代码，则它调用 main函数的 形式如下</p><pre><code>exit(main（argc，argc))</code></pre><p>也就是说，启动例程得到 main函数 返回值之后，会立刻用它做参数调用 exit函数。exit 也是 libc 的库函数，它首先做一些清理工作，然后调用 _exit系统终止进程，main 函数最终的返回值传给了 _exit 系统调用，成为进程的退出状态。我们也可以在 main函数中直接 调用 exit 终止进程而不返回启动进程。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;为什么汇编程序入口是 _start 而 C程序 的入口是 main函数 呢？ 要弄清楚这个问题，首先要理解 gcc 的编译步骤。以前我们常用 gcc main.c -o main 命令编译一个程序，其实也可以分三步来走：&lt;strong&gt;第一步生成 汇编代码，第二步 生成目标
       
     
     </summary>
