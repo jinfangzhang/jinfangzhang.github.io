@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title><![CDATA[log006]]></title>
+      <url>http://yoursite.com/2018/02/08/log006/</url>
+      <content type="html"><![CDATA[<p>总的来说，今天的效率好了很多。几乎在战斗的时候，都属于认真状态。但是错过了本可以完成所有今天任务的机会。</p>
+<p>对于娱乐，应该先把主要任务完成。</p>
+<p>休息的话，现在改成以15分钟为一个单位进行休息。</p>
+<p>自己的身体终究还是适应了晚睡，所以作息，往后顺眼一个小时，说不出呢还是7点起床呢～。哈哈哈</p>
+<p>新的一天加油。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-2 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Log </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[mergeSort]]></title>
       <url>http://yoursite.com/2018/02/07/mergeSort/</url>
       <content type="html"><![CDATA[<p>归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序作为分而治之算法的子过程。</p>

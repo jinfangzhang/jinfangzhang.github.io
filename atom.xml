@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-07T04:33:18.548Z</updated>
+  <updated>2018-02-07T17:25:20.512Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>log006</title>
+    <link href="http://yoursite.com/2018/02/08/log006/"/>
+    <id>http://yoursite.com/2018/02/08/log006/</id>
+    <published>2018-02-07T17:23:49.000Z</published>
+    <updated>2018-02-07T17:25:20.512Z</updated>
+    
+    <content type="html"><![CDATA[<p>总的来说，今天的效率好了很多。几乎在战斗的时候，都属于认真状态。但是错过了本可以完成所有今天任务的机会。</p><p>对于娱乐，应该先把主要任务完成。</p><p>休息的话，现在改成以15分钟为一个单位进行休息。</p><p>自己的身体终究还是适应了晚睡，所以作息，往后顺眼一个小时，说不出呢还是7点起床呢～。哈哈哈</p><p>新的一天加油。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;总的来说，今天的效率好了很多。几乎在战斗的时候，都属于认真状态。但是错过了本可以完成所有今天任务的机会。&lt;/p&gt;
+&lt;p&gt;对于娱乐，应该先把主要任务完成。&lt;/p&gt;
+&lt;p&gt;休息的话，现在改成以15分钟为一个单位进行休息。&lt;/p&gt;
+&lt;p&gt;自己的身体终究还是适应了晚睡，所以作息，往
+      
+    
+    </summary>
+    
+      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
+    
+    
+      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
   
   <entry>
     <title>mergeSort</title>
@@ -504,31 +532,6 @@
       
       
         &lt;p&gt;有时候需要把一组代码编译成一个库，这个库在很多项目都要用到，例如 libc 就是这样一个库，我们在不同的程序中都会用到 libc 中定义的库函数（例如 printf（3）和全局变量 （例如 environ（3））。接下来的两篇的重点介绍如何创建这样的库，同时通过这样的方式，
-      
-    
-    </summary>
-    
-      <category term="2017-6" scheme="http://yoursite.com/categories/2017-6/"/>
-    
-    
-      <category term="C语言" scheme="http://yoursite.com/tags/C%E8%AF%AD%E8%A8%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C语言剖析————头文件</title>
-    <link href="http://yoursite.com/2017/06/08/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E5%A4%B4%E6%96%87%E4%BB%B6/"/>
-    <id>http://yoursite.com/2017/06/08/C语言剖析————头文件/</id>
-    <published>2017-06-08T11:32:47.000Z</published>
-    <updated>2017-06-08T11:33:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>我们这一篇继续讨论，前面关于 stack.c 和 main.c 的讨论。stack.c 这个模块封装了 top 和 stack 两个变量，导出了 push、pop、pop、is_empty 三个函数接口，已经设计的比较完善。但是使用这个模块的每一个 .c 文件都要写三个函数声明，如果要用的文件中方法再多一点的话 或者 要有多个文件使用这个的话，我们应该尽量避免重复代码的出现。在这里我们可以使用「 头文件 」来进行解决。</p><p>我们来自己写一个头文件 stack.h:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/* stack.h */</div><div class="line">#ifndef STACK_H</div><div class="line">#define STACK_H</div><div class="line"></div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line"></div><div class="line">#endif</div></pre></td></tr></table></figure></p><p>然后我们在 main.c 函数当中包含我们的 stack.h ，我们就可以不用写那三个声明了，具体代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/* main.c */</div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &quot;stack.h&quot;</div><div class="line"></div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    push(&apos;b&apos;);</div><div class="line">    push(&apos;c&apos;);</div><div class="line"></div><div class="line">    while(!is_empty())</div><div class="line">    putchar(pop());</div><div class="line">    putchar(&apos;\n&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p><p>无形当中，我们又抛出了几个问题，不过下面我会一一进行解答。</p><p>首先说为什么 #include <stdio.h> 是用角括号，而 #include “stack.h” 用引号？</stdio.h></p><p>对于用角括号包含的头文件来说，gcc 首先查找 -I 选项指定的目录，然后查找系统的头文件目录，而对于 引号 包含的头文件，gcc 首先<strong>查找这个头文件的当前文件所在的目录</strong>，然后<strong>查找 -I 选项指定的目录，然后查找系统的头文件目录</strong></p><p>比如说，我们三个文件都放在同一个目录下面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> jianran@jianran:~/桌面/x86HB$ tree</div><div class="line">.</div><div class="line">├── main.c</div><div class="line">├── stack.c</div><div class="line">└── stack.h</div><div class="line">0 directories, 3 files</div></pre></td></tr></table></figure></p><p>则可以用 gcc -c main.c 编译，gcc 会自动在 main.c 所在的目录中找到 stack.h。加入我们把 stack.h 和 stack.h 移动到一个子目录下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">jianran@jianran:~/桌面/x86HB$ tree</div><div class="line">.</div><div class="line">├── main.c</div><div class="line">└── stack</div><div class="line">    ├── stack.c</div><div class="line">    └── stack.h</div><div class="line">1 directory, 3 files</div></pre></td></tr></table></figure></p><p>如果像这样一样，我们就必须给 -I 指定参数 gcc -c main.c -Istack, 让我们去告诉 gcc 头文件要到子目录 stack 中找。</p><p>在 #include 预处理指示中可以使用相对路径，比如 #include “stack/stack.h”，那么就不需要加 -Istack 选项了，同时我们应该注意的是，相对路径是相对与当前工作目录的路径，而不是当前文件所在路径</p><p>接着我们继续来回到 stack.h 中我们又看到两个新的预处理命令 #ifndef STACK_H 和 #endif，意思是说，如果 STACK_H  这个宏没有定义过，那么从 #ifndef 到 #endif 之间的代码就包含在预处理的输出结果中，否则这段代码就不会出现在预处理的结果当中。如果在包含这个头文件时 STACK_H 这个宏已经定义了，则相当于这个头文件里面什么都没有，只是包含了一个空文件。这个有什么用呢？</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#include &quot;stack.h&quot;</div><div class="line">#include &quot;stack.h&quot;</div><div class="line"> </div><div class="line">int main(void)&#123;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>第一次包含 stack.h 时并没有定义 STACK_H 这个宏，因此头文件的内容包含在预处理的输出结果中，处理完的结果就像如下代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#define STACK_H</div><div class="line"></div><div class="line">extern void push(char);</div><div class="line">extern char pop(void);</div><div class="line">extern int is_empty(void);</div><div class="line">#include &quot;stack.h&quot;</div><div class="line"></div><div class="line"></div><div class="line">int main(void)&#123;</div><div class="line">    push(&apos;a&apos;);</div><div class="line">    push(&apos;b&apos;);</div><div class="line">    push(&apos;c&apos;);</div><div class="line"></div><div class="line">    while(!is_empty())</div><div class="line">    putchar(pop());</div><div class="line">    putchar(&apos;\n&apos;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p><p>当我们继续处理 第二个 #include “stack.h” 的时候，因为我们已经定义过了 STACK_H, stack.h 在这一次就被看成了一个空文件。这种保护头文件的写法称为 Header Guard 以后我们写的每个头文件都要加上 Header Guard</p><hr><p>接下来我们总结一下包含头文件主要有的问题：</p><ol><li>预处理编译的速度变慢，要处理很多本来不需要处理的代码。</li><li>如果不小心出现 foo.h 包含 bar.h 、 bar.h 又包含 foo.h 的情况，就陷入死循环。一般编译器都会规定一个包含层次的上限，超过这个上限就会报错</li><li>头文件里面有些代码是不允许被重复出现的，虽然变量和函数允许被多次声明，但是头文件中一些代码是不允许多次出现的，比如用 teypef 定义一个类型名，在一个编译单元只允许定义一次。</li></ol><p>还有一个问题，既然要 #include 头文件，那我不如直接在 main.c 中 #include “stack.h” 得了。这样 stack.c 和 main.c 合并成一个编译单元了，就算我们用 gcc main.c -o main 命令也是可以编译通过了，这样岂不是更加简单吗？</p><p>假如又有一个 foo.c（main.c 要用到 foo.c) 也要用 stack.c 这个模块怎么办？如果再让 foo.c 也 #include “stack.c” 就相当与 push、pop、is_empty 这三个函数 在 main.c 和 foo.c 都有了定义，那么mian.c 和 foo.c 在一起 就不能编译通过, 如果采用头文件的方法，只需要定义一次就全部搞定了。</p><hr><p>写 .c 文件和 头文件时应该遵循以下原则:</p><ul><li><p>.c 文件中可以有变量或函数定义，而 .h 文件中应该只有函数或变量声明而没有定义</p></li><li><p>不要把一个 .c 文件包含到另外一个 .c 文件中</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;我们这一篇继续讨论，前面关于 stack.c 和 main.c 的讨论。stack.c 这个模块封装了 top 和 stack 两个变量，导出了 push、pop、pop、is_empty 三个函数接口，已经设计的比较完善。但是使用这个模块的每一个 .c 文件都要写三个函数
       
     
     </summary>
