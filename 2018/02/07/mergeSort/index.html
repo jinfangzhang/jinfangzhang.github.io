@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="数据结构与算法," />
 
 
 
@@ -105,12 +105,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="JianRan">
-<meta property="og:url" content="http://yoursite.com/tags/Android/index.html">
+<meta name="description" content="归并排序算是比较高级的排序，采用分而治之算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。对于几乎有序的数组，插入排序用于拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序。
+分治算法的基本思想是将一个规模为$N$的问题分解为$K$个规">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mergeSort">
+<meta property="og:url" content="http://yoursite.com/2018/02/07/mergeSort/index.html">
 <meta property="og:site_name" content="JianRan">
+<meta property="og:description" content="归并排序算是比较高级的排序，采用分而治之算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。对于几乎有序的数组，插入排序用于拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序。
+分治算法的基本思想是将一个规模为$N$的问题分解为$K$个规">
+<meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/mergeSort%E5%92%8CInsertionSort.png">
+<meta property="og:updated_time" content="2018-02-07T04:02:41.465Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JianRan">
+<meta name="twitter:title" content="mergeSort">
+<meta name="twitter:description" content="归并排序算是比较高级的排序，采用分而治之算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。对于几乎有序的数组，插入排序用于拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序。
+分治算法的基本思想是将一个规模为$N$的问题分解为$K$个规">
+<meta name="twitter:image" content="http://p3o1bechg.bkt.clouddn.com/mergeSort%E5%92%8CInsertionSort.png">
 
 
 
@@ -144,7 +153,7 @@
 
 
 
-  <title>标签: Android | JianRan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>mergeSort | JianRan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -163,7 +172,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,194 +300,189 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Android<small>标签</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/07/mergeSort/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/09/05/Adapter设计模式与-ListView-和-RecylerView/" itemprop="url">
-              
-                <span itemprop="name">Adapter设计模式与 ListView 和 RecylerView</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">mergeSort</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-05T20:09:08+08:00"
-              content="2017-09-05" >
-          09-05
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-07T12:01:32+08:00">
+                2018-02-07
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2018-2/" itemprop="url" rel="index">
+                    <span itemprop="name">2018-2</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/04/Fragment详解——管理Fragment/" itemprop="url">
-              
-                <span itemprop="name">Fragment详解——管理Fragment</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-04T20:09:14+08:00"
-              content="2017-09-04" >
-          09-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/21/Fragment详解——基本使用/" itemprop="url">
-              
-                <span itemprop="name">Fragment详解——基本使用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-21T18:38:04+08:00"
-              content="2017-07-21" >
-          07-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/07/21/Fragment详解（一）/" itemprop="url">
-              
-                <span itemprop="name">Fragment详解——生命周期</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-21T11:38:23+08:00"
-              content="2017-07-21" >
-          07-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/04/Bitmap——-Android-高效加载图片/" itemprop="url">
-              
-                <span itemprop="name">Bitmap—— Android 高效加载图片</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-04T14:26:25+08:00"
-              content="2017-04-04" >
-          04-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/12/郭大神带我看ListView源码/" itemprop="url">
-              
-                <span itemprop="name">郭大神带我看ListView源码</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-12T23:34:24+08:00"
-              content="2017-03-12" >
-          03-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>归并排序算是比较高级的排序，采用分而治之算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。对于几乎有序的数组，插入排序用于拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序。</p>
+<p>分治算法的基本思想是将一个规模为$N$的问题分解为$K$个规模较小的子问题，这些子问题相互独立且与原问题性质相同。求出子问题的解，就可得到原问题的解。</p>
+<p>分治算法的一般步骤：</p>
+<ol>
+<li><p>分解，将要解决的问题划分成若干规模较小的同类问题</p>
+</li>
+<li><p>求解，当子问题划分足够小时，用较简单的方法解决</p>
+</li>
+<li><p>合并，按原问题的要求，将子问题的解逐层合并构成原问题的解</p>
+</li>
+</ol>
+<p>归并排序是分之思想的一个典型体现，主要思想是：把问题分解成对两部分已经排好序的序列进行排序。</p>
+<p>这里我们采用递归的方式逐步实现该算法。</p>
+<p>还记得我们创建的工具中的排序模板吗？$void(*sort)(T[\ ],\ int)$,因为要将问题划分成两部分，为此我们有必要规定一个明确的范围，就像下面这个样子一样。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">    __mergeSort(arr, <span class="number">0</span>, n - <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>$mergeSort$要对一个规模为 n 的 数组arr 进行排序，实质上是通过$__mergeSort$ 在<strong>[ 0, n - 1 ]</strong> 范围内对 arr 进行排序，当然，也可以理解成在<strong>[ 0, n ）</strong> 这个范围内。但我们应该去保证这个定义的正确性，从这点出发很多问题将被简化。</p>
+<p>终止条件是递归算法整体退出的唯一出口，即便是终止条件，也应该去维护 $__mergeSort$ 要返回一个指定区间的有序数组的基本条件。基于<em>当数组只含一个元素是有序的</em> 的认识。对于终止条件就可以是当区间只含有一个元素时，应该终止算法。</p>
+<p>那么我的算法就是下面<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">void</span> __mergeSort(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</div><div class="line">    <span class="keyword">if</span>(l &gt;= r)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> mi = (l+r)/<span class="number">2</span>;</div><div class="line">    __mergeSort(arr, l, mi);</div><div class="line">    __mergeSort(arr, mi + <span class="number">1</span>, r);</div><div class="line"></div><div class="line">    __merge(arr, l, mi, r);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这个方法中，我们将 <strong>[l, r]</strong> 划分成两个范围 <strong>[l, (l+r)/2]</strong> 和 <strong>[l, (l+r)/2 + 1]</strong> 并对他们排序，之后再将这两部分进行合并得出结果。同时当数组只含有一个元素时，直接返回不需要任何处理，因为当数组只含一个元素的，他怎么都是有序的。</p>
+<p>所以$__merge$ 只需要将这两个有序区间合并即可,在阅读下面算法的时候，要时刻注意定义的保持性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">void __merge(T arr[],int l, int mi, int r)&#123;</div><div class="line">    </div><div class="line">    T aux[r-l + 1]; </div><div class="line">    for(int i = l; i &lt;= r;i++)&#123;</div><div class="line">        aux[i - l] = arr[i];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    int j = mi - l + 1;</div><div class="line">    int i = l -l;</div><div class="line">    </div><div class="line"></div><div class="line">    for(int k = l; k &lt;= r;k++)&#123;</div><div class="line">        if(i+l &gt; mi )&#123;</div><div class="line">            arr[k] = aux[j];</div><div class="line">            j++;</div><div class="line">        &#125;else if(j+l &gt; r)&#123;</div><div class="line">            arr[k] = aux[i];</div><div class="line">            i++;</div><div class="line">        &#125;else if(aux[i] &lt; aux[j])&#123;</div><div class="line">            arr[k] = aux[i];</div><div class="line">            i++;</div><div class="line">        &#125;else&#123;</div><div class="line">            arr[k] = aux[j];</div><div class="line">            j++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后用实际的例子来感受一下$O(log^n)$和$O(n^2)$算法的差距。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">int main()&#123;</div><div class="line">    int n = 100000;</div><div class="line">    </div><div class="line">    cout&lt;&lt;&quot;Test for random array, size = &quot;&lt;&lt;n&lt;&lt;&quot;, random range [0, &quot;&lt;&lt;n&lt;&lt;&quot;]&quot;&lt;&lt;endl;</div><div class="line">    int* arr1 = SortTestHelper::generateRandomArray(n,0,n);</div><div class="line">    int* arr2 = SortTestHelper::copyIntArray(arr1, n);</div><div class="line"></div><div class="line">    SortTestHelper::testSort(&quot;Insertion Sort&quot;, insertionSort, arr1, n);</div><div class="line">    SortTestHelper::testSort(&quot;Merge Sort&quot;,     mergeSort,arr2, n);</div><div class="line"></div><div class="line">    cout&lt;&lt;endl;</div><div class="line">    delete[] arr1;</div><div class="line">    delete[] arr2;</div><div class="line"></div><div class="line">    cout&lt;&lt;endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://p3o1bechg.bkt.clouddn.com/mergeSort%E5%92%8CInsertionSort.png" alt="MergeSort和InsertionSort的比较"></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构与算法/" rel="tag"># 数据结构与算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/06/log005/" rel="next" title="log005">
+                <i class="fa fa-chevron-left"></i> log005
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -698,6 +702,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-06T15:57:36.336Z</updated>
+  <updated>2018-02-07T04:02:41.465Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mergeSort</title>
+    <link href="http://yoursite.com/2018/02/07/mergeSort/"/>
+    <id>http://yoursite.com/2018/02/07/mergeSort/</id>
+    <published>2018-02-07T04:01:32.000Z</published>
+    <updated>2018-02-07T04:02:41.465Z</updated>
+    
+    <content type="html"><![CDATA[<p>归并排序算是比较高级的排序，采用分而治之算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。对于几乎有序的数组，插入排序用于拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序。</p><p>分治算法的基本思想是将一个规模为$N$的问题分解为$K$个规模较小的子问题，这些子问题相互独立且与原问题性质相同。求出子问题的解，就可得到原问题的解。</p><p>分治算法的一般步骤：</p><ol><li><p>分解，将要解决的问题划分成若干规模较小的同类问题</p></li><li><p>求解，当子问题划分足够小时，用较简单的方法解决</p></li><li><p>合并，按原问题的要求，将子问题的解逐层合并构成原问题的解</p></li></ol><p>归并排序是分之思想的一个典型体现，主要思想是：把问题分解成对两部分已经排好序的序列进行排序。</p><p>这里我们采用递归的方式逐步实现该算法。</p><p>还记得我们创建的工具中的排序模板吗？$void(*sort)(T[\ ],\ int)$,因为要将问题划分成两部分，为此我们有必要规定一个明确的范围，就像下面这个样子一样。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">    __mergeSort(arr, <span class="number">0</span>, n - <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>$mergeSort$要对一个规模为 n 的 数组arr 进行排序，实质上是通过$__mergeSort$ 在<strong>[ 0, n - 1 ]</strong> 范围内对 arr 进行排序，当然，也可以理解成在<strong>[ 0, n ）</strong> 这个范围内。但我们应该去保证这个定义的正确性，从这点出发很多问题将被简化。</p><p>终止条件是递归算法整体退出的唯一出口，即便是终止条件，也应该去维护 $__mergeSort$ 要返回一个指定区间的有序数组的基本条件。基于<em>当数组只含一个元素是有序的</em> 的认识。对于终止条件就可以是当区间只含有一个元素时，应该终止算法。</p><p>那么我的算法就是下面<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">void</span> __mergeSort(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</div><div class="line">    <span class="keyword">if</span>(l &gt;= r)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> mi = (l+r)/<span class="number">2</span>;</div><div class="line">    __mergeSort(arr, l, mi);</div><div class="line">    __mergeSort(arr, mi + <span class="number">1</span>, r);</div><div class="line"></div><div class="line">    __merge(arr, l, mi, r);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p><p>在这个方法中，我们将 <strong>[l, r]</strong> 划分成两个范围 <strong>[l, (l+r)/2]</strong> 和 <strong>[l, (l+r)/2 + 1]</strong> 并对他们排序，之后再将这两部分进行合并得出结果。同时当数组只含有一个元素时，直接返回不需要任何处理，因为当数组只含一个元素的，他怎么都是有序的。</p><p>所以$__merge$ 只需要将这两个有序区间合并即可,在阅读下面算法的时候，要时刻注意定义的保持性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">void __merge(T arr[],int l, int mi, int r)&#123;</div><div class="line">    </div><div class="line">    T aux[r-l + 1]; </div><div class="line">    for(int i = l; i &lt;= r;i++)&#123;</div><div class="line">        aux[i - l] = arr[i];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    int j = mi - l + 1;</div><div class="line">    int i = l -l;</div><div class="line">    </div><div class="line"></div><div class="line">    for(int k = l; k &lt;= r;k++)&#123;</div><div class="line">        if(i+l &gt; mi )&#123;</div><div class="line">            arr[k] = aux[j];</div><div class="line">            j++;</div><div class="line">        &#125;else if(j+l &gt; r)&#123;</div><div class="line">            arr[k] = aux[i];</div><div class="line">            i++;</div><div class="line">        &#125;else if(aux[i] &lt; aux[j])&#123;</div><div class="line">            arr[k] = aux[i];</div><div class="line">            i++;</div><div class="line">        &#125;else&#123;</div><div class="line">            arr[k] = aux[j];</div><div class="line">            j++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p><p>最后用实际的例子来感受一下$O(log^n)$和$O(n^2)$算法的差距。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">int main()&#123;</div><div class="line">    int n = 100000;</div><div class="line">    </div><div class="line">    cout&lt;&lt;&quot;Test for random array, size = &quot;&lt;&lt;n&lt;&lt;&quot;, random range [0, &quot;&lt;&lt;n&lt;&lt;&quot;]&quot;&lt;&lt;endl;</div><div class="line">    int* arr1 = SortTestHelper::generateRandomArray(n,0,n);</div><div class="line">    int* arr2 = SortTestHelper::copyIntArray(arr1, n);</div><div class="line"></div><div class="line">    SortTestHelper::testSort(&quot;Insertion Sort&quot;, insertionSort, arr1, n);</div><div class="line">    SortTestHelper::testSort(&quot;Merge Sort&quot;,     mergeSort,arr2, n);</div><div class="line"></div><div class="line">    cout&lt;&lt;endl;</div><div class="line">    delete[] arr1;</div><div class="line">    delete[] arr2;</div><div class="line"></div><div class="line">    cout&lt;&lt;endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p><img src="http://p3o1bechg.bkt.clouddn.com/mergeSort%E5%92%8CInsertionSort.png" alt="MergeSort和InsertionSort的比较"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;归并排序算是比较高级的排序，采用分而治之算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。对于几乎有序的数组，插入排序用于拥有 $O(n)$ 级别的算法
+      
+    
+    </summary>
+    
+      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
+    
+    
+      <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>log005</title>
@@ -504,32 +529,6 @@
       
       
         &lt;p&gt;我们这一篇继续讨论，前面关于 stack.c 和 main.c 的讨论。stack.c 这个模块封装了 top 和 stack 两个变量，导出了 push、pop、pop、is_empty 三个函数接口，已经设计的比较完善。但是使用这个模块的每一个 .c 文件都要写三个函数
-      
-    
-    </summary>
-    
-      <category term="2017-6" scheme="http://yoursite.com/categories/2017-6/"/>
-    
-    
-      <category term="C语言" scheme="http://yoursite.com/tags/C%E8%AF%AD%E8%A8%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C语言剖析————标识符的链接属性</title>
-    <link href="http://yoursite.com/2017/06/08/C%E8%AF%AD%E8%A8%80%E5%89%96%E6%9E%90%E2%80%94%E2%80%94%E2%80%94%E2%80%94%E6%A0%87%E8%AF%86%E7%AC%A6%E7%9A%84%E9%93%BE%E6%8E%A5%E5%B1%9E%E6%80%A7/"/>
-    <id>http://yoursite.com/2017/06/08/C语言剖析————标识符的链接属性/</id>
-    <published>2017-06-08T09:35:13.000Z</published>
-    <updated>2017-06-08T09:35:49.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul><li><p>外部链接（External Linkage），一个标识符在不同的编译单元中可能被声明多次，当这些编译单元链接到可执行时，如果这些声明都代表同一个变量或函数（即代表同一个内存地址），则这个标识符具有 External Linkage。具有 External Linkage 的标识符编译后在目标文件中是全局符号。</p></li><li><p>内部链接（Internal Linkage），一个标识符在某个编译单元中可能被声明多次，这些声明都代表同一个内存地址，但如果这个标识符在不同的编译单元中被声明多次，在链接时这些声明就不代表同一个内存地址，这样的标示具有 Internal Linkage。也就是说在链接时不做符号解析</p></li><li><p>无链接属性（No Linkage）。除以上情况之外的标识符都属于 No Linkage， 例如函数的局部变量，以及不表示变量和函数的其他标示符。除了函数、全局变量、静态变量之外的标识符在编译时不会变成符号，所以没有链接属性</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;外部链接（External Linkage），一个标识符在不同的编译单元中可能被声明多次，当这些编译单元链接到可执行时，如果这些声明都代表同一个变量或函数（即代表同一个内存地址），则这个标识符具有 External Linkage。具有 External 
       
     
     </summary>
