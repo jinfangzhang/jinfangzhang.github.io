@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title><![CDATA[mergesSortAdvance]]></title>
+      <url>http://yoursite.com/2018/02/08/mergesSortAdvance/</url>
+      <content type="html"><![CDATA[<p>对于<a href="https://jinfangzhang.github.io/2018/02/07/mergeSort/" target="_blank" rel="external">之前的归并排序</a>的文章，刻意的留了一部分，单独拿出来说下。这部分还是很有趣和重要的一块。不记得算法的同志得自己去回顾一下。</p>
+<h2 id="第一个优化"><a href="#第一个优化" class="headerlink" title="第一个优化"></a><strong>第一个优化</strong></h2><p>在几乎所有采用分而治之思想的算法中，当问题规模被分解到某种程度时，可以采用插入排序，将这些近乎有序的数组进行排序。</p>
+<p>我们对应优化的点在于不在让问题规模分解成1为止，而是当问题规模减小到<strong>X</strong>(某个未知数）的时候，采用插入排序。为此我们重载了一个insertionSort，如下。这里不妨分析下这个重载后的算法定义是什么</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertionSort</span><span class="params">(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = l + <span class="number">1</span>; i &lt;= r; i++)&#123;</div><div class="line">        T e = arr[i];</div><div class="line">        <span class="keyword">int</span> j;</div><div class="line">        <span class="keyword">for</span>(j = i - <span class="number">1</span>; j&gt;=l; j--)&#123;</div><div class="line">            <span class="keyword">if</span>(e &lt; arr[j])</div><div class="line">                arr[j+<span class="number">1</span>] = arr[j];</div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        arr[j+<span class="number">1</span>] = e;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>归并排序的优化。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">void</span> __mergeSort(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</div><div class="line">    <span class="keyword">if</span>(r-l &lt;= <span class="number">15</span>)&#123;</div><div class="line">        insertionSort(arr,l,r);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">        </div><div class="line">    </div><div class="line">    <span class="keyword">int</span> mi = (l+r)/<span class="number">2</span>;</div><div class="line">    __mergeSort(arr, l, mi);</div><div class="line">    __mergeSort(arr, mi + <span class="number">1</span>, r);</div><div class="line"></div><div class="line">    __merge(arr, l, mi, r);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>结果<br><img src="http://p3o1bechg.bkt.clouddn.com/mergeSort_advance&amp;&amp;mergeSort.png" alt="比较结果"></p>
+<h2 id="第二个优化"><a href="#第二个优化" class="headerlink" title="第二个优化"></a>第二个优化</h2><p>除了要测试无序数组外，还要测试几乎有序的数组。其实不需要测试就已经很明白，对于几乎有序的数组插入排序是$O(n)$的时间复杂度，而即便是优化过的归并排序，也不过是$O(nlog^n)$。</p>
+<p>我在这里的修改很简单。</p>
+<p>就是对于$merge$算法而言，如果第二部分的第一个元素大于或等于第一部分的第最后一个元素，就说明这个数组是有序的，直接返回即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">void __mergeSort(T arr[], int l, int r)&#123;</div><div class="line">    if(r-l &lt;= 15)&#123;</div><div class="line">        insertionSort(arr,l,r);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">        </div><div class="line">    </div><div class="line">    int mi = (l+r)/2;</div><div class="line">    __mergeSort(arr, l, mi);</div><div class="line">    __mergeSort(arr, mi + 1, r);</div><div class="line"></div><div class="line">    //加了一个if判断</div><div class="line">    if(arr[mi] &gt; arr[mi + 1])</div><div class="line">        __merge(arr, l, mi, r);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>尽管最终依然无法优于在几乎有序数组中的插入排序，但是已经是在同一个数量级上面了。<br><img src="http://p3o1bechg.bkt.clouddn.com/mergeSort%E4%BC%98%E5%8C%96%E4%BA%8C.png" alt="比较结果"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-2 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据结构与算法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[log006]]></title>
       <url>http://yoursite.com/2018/02/08/log006/</url>
       <content type="html"><![CDATA[<p>总的来说，今天的效率好了很多。几乎在战斗的时候，都属于认真状态。但是错过了本可以完成所有今天任务的机会。</p>
