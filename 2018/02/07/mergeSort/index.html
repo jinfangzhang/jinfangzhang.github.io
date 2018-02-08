@@ -105,20 +105,20 @@
 
 
 
-<meta name="description" content="归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序作为分而治之算法的子过程。
-分治算法的基本思想是将一个规模为$N">
+<meta name="description" content="2018.2.7 初稿
+2018.2.8 修改归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，我们可以采用插入排序作为分而治之算">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mergeSort">
 <meta property="og:url" content="http://yoursite.com/2018/02/07/mergeSort/index.html">
 <meta property="og:site_name" content="JianRan">
-<meta property="og:description" content="归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序作为分而治之算法的子过程。
-分治算法的基本思想是将一个规模为$N">
+<meta property="og:description" content="2018.2.7 初稿
+2018.2.8 修改归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，我们可以采用插入排序作为分而治之算">
 <meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/mergeSort%E5%92%8CInsertionSort.png">
-<meta property="og:updated_time" content="2018-02-07T04:33:18.548Z">
+<meta property="og:updated_time" content="2018-02-08T01:45:56.070Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mergeSort">
-<meta name="twitter:description" content="归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序作为分而治之算法的子过程。
-分治算法的基本思想是将一个规模为$N">
+<meta name="twitter:description" content="2018.2.7 初稿
+2018.2.8 修改归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，我们可以采用插入排序作为分而治之算">
 <meta name="twitter:image" content="http://p3o1bechg.bkt.clouddn.com/mergeSort%E5%92%8CInsertionSort.png">
 
 
@@ -401,7 +401,8 @@
       
 
       
-        <p>归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，可以采用插入排序作为分而治之算法的子过程。</p>
+        <p>2018.2.7 初稿</p>
+<h2 id="2018-2-8-修改"><a href="#2018-2-8-修改" class="headerlink" title="2018.2.8 修改"></a>2018.2.8 修改</h2><p>归并排序算是比较高级的排序，采用分而治之的算法思想，相较插入排序和选择排序这类采用减而治之思想的算法。分而治之的思想可以更快使问题规模下降，进而求解。当问题规模开始下降，那么也意味着该问题的有序性正在变得越来越强。在对于几乎有序的数组，插入排序拥有 $O(n)$ 级别的算法复杂度。 换言之，当问题规模下降到某一程度时，我们可以采用插入排序作为分而治之算法的子过程。</p>
 <p>分治算法的基本思想是将一个规模为$N$的问题分解为$K$个规模较小的子问题，这些子问题相互独立且与原问题性质相同。求出子问题的解，就可得到原问题的解。</p>
 <p>分治算法的一般步骤：</p>
 <ol>
@@ -417,12 +418,13 @@
 <p>还记得我们创建的工具中的排序模板吗？$void(*sort)(T[\ ],\ int)$,因为要将问题划分成两部分，为此我们有必要规定一个明确的范围，就像下面这个样子一样。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">    __mergeSort(arr, <span class="number">0</span>, n - <span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>$mergeSort$要对一个规模为 n 的 数组arr 进行排序，实质上是通过$\_\_mergeSort$ 在<strong>[ 0, n - 1 ]</strong> 范围内对 arr 进行排序，当然，也可以理解成在<strong>[ 0, n ）</strong> 这个范围内。但我们应该去保证这个定义的正确性与不变性，从这点出发，很多问题将被简化。</p>
-<p>终止条件是递归算法整体退出的唯一出口，即便是终止条件，也应该去维护 $\_\_mergeSort$ 要返回一个指定区间的有序数组的基本条件。基于<em>当数组只含一个元素是有序的</em> 的认识。对于终止条件就可以是<strong>当区间只含有一个元素时，应该终止算法</strong>。</p>
+<p>终止条件是递归算法整体退出的唯一出口，即便是终止条件，也应该去维护 $\_\_mergeSort$ 要返回一个指定区间的有序数组的基本条件。同时基于<em>当数组只含一个元素是有序的</em> 的认识。对于终止条件就可以是<strong>当区间只含有一个元素时，应该终止算法</strong>。</p>
 <p>那么我的算法就是下面<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">void</span> __mergeSort(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</div><div class="line">    <span class="keyword">if</span>(l &gt;= r)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> mi = (l+r)/<span class="number">2</span>;</div><div class="line">    __mergeSort(arr, l, mi);</div><div class="line">    __mergeSort(arr, mi + <span class="number">1</span>, r);</div><div class="line"></div><div class="line">    __merge(arr, l, mi, r);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>在这个方法中，我们将 <strong>[l, r]</strong> 划分成两个范围 <strong>[l, (l+r)/2]</strong> 和 <strong>[l, (l+r)/2 + 1]</strong> 并对他们排序，之后再将这两部分进行合并得出结果。同时当数组只含有一个元素时，直接返回，不需要任何处理，因为当数组只含一个元素的，他怎么都是有序的。</p>
-<p>所以$\_\_merge$ 只需要将这两个有序区间合并即可,在阅读下面算法的时候，要时刻注意定义的保持性。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">void</span> __merge(T arr[],<span class="keyword">int</span> l, <span class="keyword">int</span> mi, <span class="keyword">int</span> r)&#123;</div><div class="line">    </div><div class="line">    T aux[r-l + <span class="number">1</span>]; </div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = l; i &lt;= r;i++)&#123;</div><div class="line">        aux[i - l] = arr[i];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> j = mi - l + <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> i = l -l;</div><div class="line">    </div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> k = l; k &lt;= r;k++)&#123;</div><div class="line">        <span class="keyword">if</span>(i+l &gt; mi )&#123;</div><div class="line">            arr[k] = aux[j];</div><div class="line">            j++;</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(j+l &gt; r)&#123;</div><div class="line">            arr[k] = aux[i];</div><div class="line">            i++;</div><div class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(aux[i] &lt; aux[j])&#123;</div><div class="line">            arr[k] = aux[i];</div><div class="line">            i++;</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            arr[k] = aux[j];</div><div class="line">            j++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这个方法中，我们将 <strong>[l, r]</strong> 划分成两个范围 <strong>[l, (l+r)/2]</strong> 和 <strong>[l, (l+r)/2 + 1]</strong> 并对他们排序，之后再将这两部分进行合并得出结果。同时当数组只含有一个元素时，直接返回，不需要任何处理，因为当数组只含一个元素，他怎么都是有序的。</p>
+<p>所以$\_\_merge$ 只需要将这两个有序区间合并即可,在阅读下面算法的时候，要时刻注意定义的保持性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">void __merge(T arr[],int l, int mi, int r)&#123;</div><div class="line">    </div><div class="line">    //1</div><div class="line">    T aux[r-l + 1]; </div><div class="line">    for(int i = l; i &lt;= r;i++)&#123;</div><div class="line">        aux[i - l] = arr[i];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //2</div><div class="line">    int j = mi - l + 1;</div><div class="line">    int i = l -l;</div><div class="line">    </div><div class="line">    //3</div><div class="line">    for(int k = l; k &lt;= r;k++)&#123;</div><div class="line">        if(i+l &gt; mi )&#123;</div><div class="line">            arr[k] = aux[j];</div><div class="line">            j++;</div><div class="line">        &#125;else if(j+l &gt; r)&#123;</div><div class="line">            arr[k] = aux[i];</div><div class="line">            i++;</div><div class="line">        &#125;else if(aux[i] &lt; aux[j])&#123;</div><div class="line">            arr[k] = aux[i];</div><div class="line">            i++;</div><div class="line">        &#125;else&#123;</div><div class="line">            arr[k] = aux[j];</div><div class="line">            j++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在 $1$ 这个标记处，我们对arr 满足<strong>[l, r]</strong>这个区间的数进行复制，在这部分数当中，里面包含了两部分<strong>[l, mi]</strong> 和 <strong>[mi+1, r]</strong>。紧接着，我们在 $2$ 这个标记处，将 j 指向 <strong>aux</strong> 第二部分的首元素，将 i 指向 <strong>aux</strong> 第一部分的首元素。之后，我们通过<strong>K</strong> 依次遍历，最终得到有序数组。</p>
 <p>最后用实际的例子来感受一下$O(log^n)$和$O(n^2)$算法的差距。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> n = <span class="number">100000</span>;</div><div class="line">    </div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"Test for random array, size = "</span>&lt;&lt;n&lt;&lt;<span class="string">", random range [0, "</span>&lt;&lt;n&lt;&lt;<span class="string">"]"</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">int</span>* arr1 = SortTestHelper::generateRandomArray(n,<span class="number">0</span>,n);</div><div class="line">    <span class="keyword">int</span>* arr2 = SortTestHelper::copyIntArray(arr1, n);</div><div class="line"></div><div class="line">    SortTestHelper::testSort(<span class="string">"Insertion Sort"</span>, insertionSort, arr1, n);</div><div class="line">    SortTestHelper::testSort(<span class="string">"Merge Sort"</span>,     mergeSort,arr2, n);</div><div class="line"></div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">delete</span>[] arr1;</div><div class="line">    <span class="keyword">delete</span>[] arr2;</div><div class="line"></div><div class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">int main()&#123;</div><div class="line">    int n = 100000;</div><div class="line">    </div><div class="line">    cout&lt;&lt;&quot;Test for random array, size = &quot;&lt;&lt;n&lt;&lt;&quot;, random range [0, &quot;&lt;&lt;n&lt;&lt;&quot;]&quot;&lt;&lt;endl;</div><div class="line">    int* arr1 = SortTestHelper::generateRandomArray(n,0,n);</div><div class="line">    int* arr2 = SortTestHelper::copyIntArray(arr1, n);</div><div class="line"></div><div class="line">    SortTestHelper::testSort(&quot;Insertion Sort&quot;, insertionSort, arr1, n);</div><div class="line">    SortTestHelper::testSort(&quot;Merge Sort&quot;,     mergeSort,arr2, n);</div><div class="line"></div><div class="line">    cout&lt;&lt;endl;</div><div class="line">    delete[] arr1;</div><div class="line">    delete[] arr2;</div><div class="line"></div><div class="line">    cout&lt;&lt;endl;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><img src="http://p3o1bechg.bkt.clouddn.com/mergeSort%E5%92%8CInsertionSort.png" alt="MergeSort和InsertionSort的比较"></p>
 
       
@@ -514,8 +516,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -579,6 +590,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2018-2-8-修改"><span class="nav-number">1.</span> <span class="nav-text">2018.2.8 修改</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
