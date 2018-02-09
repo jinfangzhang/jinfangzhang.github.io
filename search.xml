@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title><![CDATA[log007]]></title>
+      <url>http://yoursite.com/2018/02/09/log007/</url>
+      <content type="html"><![CDATA[<p>技术方面并没有提升多少，但自己意识到了通识教育的重要性。随着自身的发展，技术已经不再成为短板。</p>
+<p>现阶段的主要目标还是技术。不过看一些小说的时间，可以变成另外一些特定的书籍。</p>
+<p>再次下定义，纯粹的知识没有任何意义，纯粹的思想同样也是。需要更多的文化点缀。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-2 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Log </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[mergesSortAdvance]]></title>
       <url>http://yoursite.com/2018/02/08/mergesSortAdvance/</url>
       <content type="html"><![CDATA[<p>对于<a href="https://jinfangzhang.github.io/2018/02/07/mergeSort/" target="_blank" rel="external">之前的归并排序</a>的文章，刻意的留了一部分，单独拿出来说下。这部分还是很有趣和重要的一块。不记得算法的同志得自己去回顾一下。</p>

@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="Android," />
+  <meta name="keywords" content="Log," />
 
 
 
@@ -105,22 +105,22 @@
 
 
 
-<meta name="description" content="在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。
-##FragmentManager
-它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Frag">
+<meta name="description" content="技术方面并没有提升多少，但自己意识到了通识教育的重要性。随着自身的发展，技术已经不再成为短板。
+现阶段的主要目标还是技术。不过看一些小说的时间，可以变成另外一些特定的书籍。
+再次下定义，纯粹的知识没有任何意义，纯粹的思想同样也是。需要更多的文化点缀。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Fragment详解——管理Fragment">
-<meta property="og:url" content="http://yoursite.com/2017/09/04/Fragment详解——管理Fragment/index.html">
+<meta property="og:title" content="log007">
+<meta property="og:url" content="http://yoursite.com/2018/02/09/log007/index.html">
 <meta property="og:site_name" content="JianRan">
-<meta property="og:description" content="在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。
-##FragmentManager
-它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Frag">
-<meta property="og:updated_time" content="2017-09-04T12:13:02.000Z">
+<meta property="og:description" content="技术方面并没有提升多少，但自己意识到了通识教育的重要性。随着自身的发展，技术已经不再成为短板。
+现阶段的主要目标还是技术。不过看一些小说的时间，可以变成另外一些特定的书籍。
+再次下定义，纯粹的知识没有任何意义，纯粹的思想同样也是。需要更多的文化点缀。">
+<meta property="og:updated_time" content="2018-02-09T00:58:46.007Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fragment详解——管理Fragment">
-<meta name="twitter:description" content="在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。
-##FragmentManager
-它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Frag">
+<meta name="twitter:title" content="log007">
+<meta name="twitter:description" content="技术方面并没有提升多少，但自己意识到了通识教育的重要性。随着自身的发展，技术已经不再成为短板。
+现阶段的主要目标还是技术。不过看一些小说的时间，可以变成另外一些特定的书籍。
+再次下定义，纯粹的知识没有任何意义，纯粹的思想同样也是。需要更多的文化点缀。">
 
 
 
@@ -154,7 +154,7 @@
 
 
 
-  <title>Fragment详解——管理Fragment | JianRan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>log007 | JianRan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -315,7 +315,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/Fragment详解——管理Fragment/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/log007/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="JianRan">
@@ -332,7 +332,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Fragment详解——管理Fragment</h1>
+          <h1 class="post-title" itemprop="name headline">log007</h1>
         
 
         <div class="post-meta">
@@ -344,8 +344,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-04T20:09:14+08:00">
-                2017-09-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-09T01:50:08+08:00">
+                2018-02-09
               </time>
             
 
@@ -367,8 +367,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/2017-9/" itemprop="url" rel="index">
-                    <span itemprop="name">2017-9</span>
+                  <a href="/categories/2018-2/" itemprop="url" rel="index">
+                    <span itemprop="name">2018-2</span>
                   </a>
                 </span>
 
@@ -402,32 +402,9 @@
       
 
       
-        <p>在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。</p>
-<p>##FragmentManager</p>
-<p>它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Fragment 进行相关操作。获取 FragmentManager 是 Activity 本身的一个方法的结果（getFragmentManager）。仔细思考其中的道理，不难想清楚，对于 Activity 而言它本身是可以依赖多个 Fragment，如果对于每个Fragment单独操作，不免费事费力，不如提供一个统一的一个接口来进行使用。</p>
-<p>常用的方法如下：</p>
-<ol>
-<li>findFragmentById()<br>根据 ID 来获取对应的 Fragment 实例，主要使用在静态绑定中</li>
-<li>findFragmentByTag()<br>意思基本和上面相同</li>
-<li>beginTransaction()<br>开启一个事务</li>
-</ol>
-<p>##FragmentTransaction</p>
-<p>常用方法如下：</p>
-<ol>
-<li><p>add(int containerViewId, Fragment fragment, String tag)<br>将一个fragment实例添加到Activity的最上层 </p>
-</li>
-<li><p>remove(Fragment fragment)<br>将一个fragment实例从Activity的fragment队列中删除  </p>
-</li>
-<li><p>replace(int containerViewId, Fragment fragment)<br>替换 containerViewId 中的 fragment 实例，注意，它首先把 containerViewId 中所有 fragment 删除，然后再 add 进去当前的 fragment  </p>
-</li>
-</ol>
-<p>##有关回滚——FragmentTransaction</p>
-<p>上面简单记录了一个相关的主要方法，现在我们来简单说一个回滚功能。要实现回滚只需要 commit() 和 addToBackStack(String tag)这个两个方法，每次在commit()之前，使用<strong>addToBackStack()</strong>将其添加到回退栈中。需要回退的时候只需要使用 popBackStack() 方法即可，回退的单位是以一次 commit() 为主。</p>
-<blockquote>
-<p>另外补充说明一下，FragmentManager 还提供了监听回退栈的方法<br>FragmentManager::addOnBackStackChangedListener(listener);//添加监听器<br>FragmentManager::removeOnBackStackChangedListener(listener);//移除监听器 </p>
-<p>不过,这里你们要注意理解为什么 FragmentManager 提供监听回退栈的方法。</p>
-</blockquote>
-<p>##That’s All</p>
+        <p>技术方面并没有提升多少，但自己意识到了通识教育的重要性。随着自身的发展，技术已经不再成为短板。</p>
+<p>现阶段的主要目标还是技术。不过看一些小说的时间，可以变成另外一些特定的书籍。</p>
+<p>再次下定义，纯粹的知识没有任何意义，纯粹的思想同样也是。需要更多的文化点缀。</p>
 
       
     </div>
@@ -445,7 +422,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Android/" rel="tag"># Android</a>
+            <a href="/tags/Log/" rel="tag"># Log</a>
           
         </div>
       
@@ -458,8 +435,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/21/Fragment详解——基本使用/" rel="next" title="Fragment详解——基本使用">
-                <i class="fa fa-chevron-left"></i> Fragment详解——基本使用
+              <a href="/2018/02/08/mergesSortAdvance/" rel="next" title="mergesSortAdvance">
+                <i class="fa fa-chevron-left"></i> mergesSortAdvance
               </a>
             
           </div>
@@ -467,10 +444,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/05/Adapter设计模式与-ListView-和-RecylerView/" rel="prev" title="Adapter设计模式与 ListView 和 RecylerView">
-                Adapter设计模式与 ListView 和 RecylerView <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
