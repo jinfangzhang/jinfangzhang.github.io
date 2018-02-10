@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-09T00:58:46.007Z</updated>
+  <updated>2018-02-10T02:32:44.284Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>log008</title>
+    <link href="http://yoursite.com/2018/02/10/log008/"/>
+    <id>http://yoursite.com/2018/02/10/log008/</id>
+    <published>2018-02-09T16:32:02.000Z</published>
+    <updated>2018-02-10T02:32:44.284Z</updated>
+    
+    <content type="html"><![CDATA[<p>重心持续的转移，并不意味比之前懒散。但要去做什么最近一直在思考。希望短时间内可以想出。</p><p>每次的任务不要给自己太过于紧张。</p><p>英语应该保持警惕。一不注意它，就有点松动的迹象。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;重心持续的转移，并不意味比之前懒散。但要去做什么最近一直在思考。希望短时间内可以想出。&lt;/p&gt;
+&lt;p&gt;每次的任务不要给自己太过于紧张。&lt;/p&gt;
+&lt;p&gt;英语应该保持警惕。一不注意它，就有点松动的迹象。&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
+    
+    
+      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
   
   <entry>
     <title>log007</title>
@@ -509,32 +537,6 @@
       
         &lt;p&gt;我们先从一个总览的角度去理解什么是「 静态 」添加 Fragment 和「 动态 」添加 Fragment？&lt;/p&gt;
 &lt;p&gt;先让我们来看一个图片，关系显然易见，对于 Fragment 来说他是 Activity 与 View 中间用来衔接的。 Activity 使用 Fra
-      
-    
-    </summary>
-    
-      <category term="2017-7" scheme="http://yoursite.com/categories/2017-7/"/>
-    
-    
-      <category term="Android" scheme="http://yoursite.com/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Fragment详解——生命周期</title>
-    <link href="http://yoursite.com/2017/07/21/Fragment%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://yoursite.com/2017/07/21/Fragment详解（一）/</id>
-    <published>2017-07-21T03:38:23.000Z</published>
-    <updated>2017-07-21T08:12:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这是关于Fragment的生命周期图，简单理解下，同时下面是Fragment与Activity生命周期对比</p><p><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fhrbuh1lqfj30k10npq52.jpg" alt=""></p><hr><p>接下来我们逐个对方法解释：<br><strong>onAttach:</strong> onAttach()方法与Activity关联之后调用，也就是在执行了 「setContentView（）」这个方法之后，就和 fragment 建立了联系。</p><p><strong>onCreate:</strong> fragment 初次创建时调用，尽管他看起来非常像 Activty 的 onCreate 。此时 Activity 还没有建立完成，因为我们的 Fragment 也是 Activity 的一部分，所以在这里你想获取一些关于 Activity 中的一些资源，将会获取不到。</p><p><strong>onCreateView:</strong> 在这个 fragment构造它的布局时进行调用。在这里返回此Fragment的一个视图层次结构。同时使用 LayoutInflater 的 inflater() 方法来构造实图，代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public View onCreateView(LayoutInflater inflater, ViewGroup container,  </div><div class="line">                         Bundle savedInstanceState) &#123;  </div><div class="line">    return inflater.inflate(R.layout.fragment3, container, false);  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p><p><strong>onActivityCreated:</strong>在 Activity 的 onCreate 完成之后会调用这个函数，所以这个时候 Activity 已经创建完毕，在这个方法当中可以获取 Activity 的所有资源的。 </p><p><strong>onStart:</strong>当到 onStart() 时, Fragment 对用户就是可见的了，但是这个时候用户还没有和 Fragment 交互。在生命周期中也可以看到，Fragment 的 onStart 与 Activity 的 onStart 是绑定着的。</p><p><strong>onResume:</strong>这是 Fragment 与用户交互之前进行的最后一个回调。这个方法执行结束之后，就可以与 Fragment 进行交互了</p><p>onPause：此回调与 Activity 的 onPause() 相绑定，与 Activity 的 onPause() 意义一样。</p><p><strong>onStop:</strong>这个也和 onPause 相同就不解释了。</p><p><strong>onDestroyView:</strong> 如果 Fragment 即将被结束或者保存，那么撤销方向上面的下一个回调将会是该方法。这个方法会将在 onCreateView 中创建的视图与这个 Fragment 分离。下次这个 Fragment 若要显示，那么将会重新创建视图。</p><p><strong>onDestroy:</strong>当这个fragment不再使用时调用。需要注意的是，它即使经过了onDestroy()阶段，但仍然能从Activity中找到，因为它还没有Detach。</p><p><strong>onDetach:</strong>Fragment生命周期中最后一个回调是onDetach()。调用它以后，Fragment就不再与Activity相绑定，它也不再拥有视图层次结构，它的所有资源都将被释放。</p><hr><p>总结:<br>在这里简单总结以下 Fragment 过程。<br>大概可以分为两类: 第一类是 Fragment 与 Activity 建立联系，第二类是 Fragment 与 View 建立联系。<br>过程总结如下:<br>1、与 Activyt 建立联系<br>2、与 View 建立联系<br>3、与 用户 进行交互<br>4、与 View 失去联系<br>5、与 Activity 失去联系</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;这是关于Fragment的生命周期图，简单理解下，同时下面是Fragment与Activity生命周期对比&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://ww1.sinaimg.cn/large/006o5OgAly1fhrbuh1lqfj30k10npq52.jpg&quot; 
       
     
     </summary>
