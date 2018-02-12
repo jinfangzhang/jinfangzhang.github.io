@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-10T02:32:44.284Z</updated>
+  <updated>2018-02-12T09:16:33.337Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,93 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>小程序结构</title>
+    <link href="http://yoursite.com/2018/02/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/"/>
+    <id>http://yoursite.com/2018/02/12/小程序结构/</id>
+    <published>2018-02-12T09:02:42.000Z</published>
+    <updated>2018-02-12T09:16:33.337Z</updated>
+    
+    <content type="html"><![CDATA[<p>在创建了一个小程序项目之后，可能在这个项目里会看见不同类型的文件。这些文件分别是</p><ol><li><p>.json 后缀的 JSON 配置文件</p></li><li><p>.wxml 后缀的 WXML 模板文件</p></li><li><p>.wxss 后缀的 WXSS 样式文件</p></li><li><p>.js 后缀的 JS 脚本逻辑文件</p></li></ol><p>初看结构十分类似 HTML + CSS + JS 三剑客，进一步了解后他们的作用也大抵相同。在小程序总体结构上，分成两部分。一部分是全局文件，都是以<code>app</code>开头，承载整个小程序的全局信息,例如 <code>app.json</code>, <code>app.wxss</code>, <code>app.js</code>。另一部分是局部文件，具体到每个一个页面都拥有自己的一套配置信息，局部文件的优先级会大于全局文件。例如 <code>index.wxml</code>, <code>index.wxss</code>, <code>index.js</code>, <code>index.json</code></p><p>下面我们以这样一个目录结构来依次介绍</p><p><img src="http://p3o1bechg.bkt.clouddn.com/Fj5LUc4w_wTHXa7QCyMSGwcbivc1" alt="tree"></p><p>先忽略掉 typinggs 目录。</p><h2 id="JSON配置"><a href="#JSON配置" class="headerlink" title="JSON配置"></a><strong>JSON配置</strong></h2><p>从项目根目录，我们依次看到 app.json, project.config.json 和 index.json。我们依次来说明用途。</p><p><strong>app.json</strong> 是对当前小程序的全局配置，包括了<strong>小程序的所有页面路径</strong>，<strong>界面表现</strong>， <strong>网络超时时间</strong>， <strong>底部tab</strong> 等信息。结构如下：</p><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "pages":[</div><div class="line">    ...</div><div class="line">  ],</div><div class="line">  "window":&#123;</div><div class="line">    ...</div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure><p><strong>project.config.json</strong> 是对于微信开发者工具一些个性化配置。当你换了一台电脑或者重新安装工具时，你只要载入同一个项目的代码。开发者工具就会根据这些配置进行恢复。</p><p><strong>index.json</strong> 去设置一个页面的配置，当 app.json 配置了属性，而 index.json 没有配置就默认使用 app.json 的。当两者都配置了，则使用 index.json 的 </p><h2 id="WXML-WXSS-JS"><a href="#WXML-WXSS-JS" class="headerlink" title="WXML WXSS JS"></a><strong>WXML WXSS JS</strong></h2><p>它其实类似 HTML + CSS + JS 这个，只不过他们都有一些细微的差距。</p><p>WXML 于 HTML 的差别，我们直接用微信文档中的一段话。</p><ol><li><p>标签名字有点不一样 往往写 HTML 的时候，经常会用到的标签是 div, p, span，开发者在写一个页面的时候可以根据这些基础的标签组合出不一样的组件，例如日历、弹窗等等。换个思路，既然大家都需要这些组件，为什么我们不能把这些常用的组件包装起来，大大提高我们的开发效率。 从上边的例子可以看到，小程序的 WXML 用的标签是 view, button, text 等等，这些标签就是小程序给开发者包装好的基本能力，我们还提供了地图、视频、音频等等组件能力 更多详细的组件讲述参考下个章节 小程序的能力</p></li><li><p>多了一些 wx:if 这样的属性以及 \{\{ \}\} 这样的表达式 在网页的一般开发流程中，我们通常会通过 JS 操作 DOM (对应 HTML 的描述产生的树)，以引起界面的一些变化响应用户的行为。例如，用户点击某个按钮的时候，JS 会记录一些状态到 JS 变量里边，同时通过 DOM API 操控 DOM 的属性或者行为，进而引起界面一些变化。当项目越来越大的时候，你的代码会充斥着非常多的界面交互逻辑和程序的各种状态变量，显然这不是一个很好的开发模式，因此就有了 MVVM 的开发模式(例如 React, Vue)，提倡把渲染和逻辑分离。简单来说就是不要再让 JS 直接操控 DOM，JS只需要管理状态即可，然后再通过一种模板语法来描述状态和界面结构的关系即可。 小程序的框架也是用到了这个思路，如果你需要把一个 Hello World 的字符串显示在界面上。 WXML 是这么写 :</p></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;text&gt;&lt;/text&gt;</div></pre></td></tr></table></figure><p>JS 只需要管理状态即可:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">this.setData(&#123; msg: &quot;Hello World&quot; &#125;)</div></pre></td></tr></table></figure></p><p>通过 \{\{ \}\} 的语法把一个变量绑定到界面上，我们称为数据绑定。仅仅通过数据绑定还不够完整的描述状态和界面的关系，还需要 if/else, for等控制能力，在小程序里边，这些控制能力都用 wx: 开头的属性来表达。 更详细的文档可以参考 WXML</p><p>WXSS 具有CSS大部分特性，除此也做了一些扩充和修改。增加了尺寸单位 rpx，提供了全局样式和局部样式，此外仅支持 css 部分选择器</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在创建了一个小程序项目之后，可能在这个项目里会看见不同类型的文件。这些文件分别是&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;.json 后缀的 JSON 配置文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;.wxml 后缀的 WXML 模板文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;.wxss 
+      
+    
+    </summary>
+    
+      <category term="2018-02" scheme="http://yoursite.com/categories/2018-02/"/>
+    
+    
+      <category term="小程序" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>log010</title>
+    <link href="http://yoursite.com/2018/02/12/log010/"/>
+    <id>http://yoursite.com/2018/02/12/log010/</id>
+    <published>2018-02-11T16:50:39.000Z</published>
+    <updated>2018-02-12T09:00:14.846Z</updated>
+    
+    <content type="html"><![CDATA[<p>找不到顺手的图床插件，干脆自动动手写了一个。尽管用的他们的sdk，但好歹是自己给自己写的第一个东西,值得纪念。</p><p>帮同学解决了技术上面的小问题，还是挺开心的。</p><p>对于英语的执行力依然很差，需要提高！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;找不到顺手的图床插件，干脆自动动手写了一个。尽管用的他们的sdk，但好歹是自己给自己写的第一个东西,值得纪念。&lt;/p&gt;
+&lt;p&gt;帮同学解决了技术上面的小问题，还是挺开心的。&lt;/p&gt;
+&lt;p&gt;对于英语的执行力依然很差，需要提高！&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
+    
+    
+      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>log009</title>
+    <link href="http://yoursite.com/2018/02/11/log009/"/>
+    <id>http://yoursite.com/2018/02/11/log009/</id>
+    <published>2018-02-10T16:59:26.000Z</published>
+    <updated>2018-02-11T07:00:07.739Z</updated>
+    
+    <content type="html"><![CDATA[<p>对于自己的未来规划，有了一个方向。重新定义了，我目前处于的阶段，大学沉淀期。</p><p>总体计划按目标完成。</p><p>作息再次修改成，24点准时睡觉，7点起床.</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;对于自己的未来规划，有了一个方向。重新定义了，我目前处于的阶段，大学沉淀期。&lt;/p&gt;
+&lt;p&gt;总体计划按目标完成。&lt;/p&gt;
+&lt;p&gt;作息再次修改成，24点准时睡觉，7点起床.&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
+    
+    
+      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
   
   <entry>
     <title>log008</title>
@@ -463,88 +550,6 @@
     
     
       <category term="操作系统" scheme="http://yoursite.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Adapter设计模式与 ListView 和 RecylerView</title>
-    <link href="http://yoursite.com/2017/09/05/Adapter%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B8%8E-ListView-%E5%92%8C-RecylerView/"/>
-    <id>http://yoursite.com/2017/09/05/Adapter设计模式与-ListView-和-RecylerView/</id>
-    <published>2017-09-05T12:09:08.000Z</published>
-    <updated>2017-09-05T12:11:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>永远不做超出当前认知的事情</p></blockquote><p>简单谈谈 Adapter设计模式，及其在 Android 中的简单应用，尝试着去理解这些设计。</p><p> Adapter模式的<strong>定义：</strong>适配器模式把一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配的问题而无法一起工作的两个类能够一起工作。</p><p> Adapter模式 换句话说，就像条想要给手机充电的USB线，光有USB插头是无法插到插座上给手机充电的，需要连接个充电头才可以实现。那么这个充电头就是 Adapter。提供了一个转换接头，让USB接口与插座完全解耦，两者之间没有任何联系。在代码中实现其实就是在这二者中间加入了一个类获取其他可以实现这种功能的代码。</p><p> 比较经典的是 ListView 和 RecylerView 的 Adapter 类，两者的结构完全相同。</p><p> 首先，ListView 和 RecylerView 直接需要View的引用，及其View的数量等信息，但是我们能提供的只能是什么信息都没有的View 和 独立的一堆信息，这个工作如果直接传给 ListView 和 RecylerView 他们来做，就会直接耦合在一起，ListView 和 RecylerView 将会过于臃肿，结构混乱。</p><p> 我们做的事情是把对于他们而言，他们所需要的信息由Adapter直接提供。而 Adapter的具体细节他们不需要知道了。我们把 信息全部传递给 Adapter，让它进行内部的组合，组合处合理的信息即可。</p><blockquote><p>说白了就是USB接口和充电头之间的关系</p></blockquote><h2 id="两种不同的实现方式"><a href="#两种不同的实现方式" class="headerlink" title="两种不同的实现方式"></a>两种不同的实现方式</h2><p><strong>类适配器模式</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//USB</div><div class="line">public class USB&#123;</div><div class="line"></div><div class="line">    //使用USB传输电能</div><div class="line">    public void usbEnergy()&#123;&#125;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">//转换头</div><div class="line">public  interface TransHead&#123;</div><div class="line"></div><div class="line">    //使用插头传输电能</div><div class="line">    public void usbEnergy;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public class EnergyAdapter extends USB implements TransHead&#123;</div><div class="line"></div><div class="line">    public void usbEnergy()&#123;</div><div class="line">        usbEnergy()&#123;&#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure><p><strong>对象适配器模式</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class EnergyAdapter implements TransHead&#123;</div><div class="line">    USB usb;</div><div class="line">    </div><div class="line">    EnergyAdapter(USB usb)&#123;</div><div class="line">        this.usb = usb;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void usbEnergy()&#123;</div><div class="line">        usb.usbEnergy();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="That’s-All"><a href="#That’s-All" class="headerlink" title="That’s All"></a>That’s All</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;永远不做超出当前认知的事情&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;简单谈谈 Adapter设计模式，及其在 Android 中的简单应用，尝试着去理解这些设计。&lt;/p&gt;
-&lt;p&gt; Adapter模式的&lt;strong&gt;定义：&lt;/strong&gt;适配器
-      
-    
-    </summary>
-    
-      <category term="2017-9" scheme="http://yoursite.com/categories/2017-9/"/>
-    
-    
-      <category term="Android" scheme="http://yoursite.com/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Fragment详解——管理Fragment</title>
-    <link href="http://yoursite.com/2017/09/04/Fragment%E8%AF%A6%E8%A7%A3%E2%80%94%E2%80%94%E7%AE%A1%E7%90%86Fragment/"/>
-    <id>http://yoursite.com/2017/09/04/Fragment详解——管理Fragment/</id>
-    <published>2017-09-04T12:09:14.000Z</published>
-    <updated>2017-09-04T12:13:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。</p><p>##FragmentManager</p><p>它的作用是对Fragment的状态进行保存与恢复。对 Fragment 的一些管理操作都被封装到这个类当中，最让我们熟知的用法，想必是获取一个 FragmentManager 实例，进而开启一个事务对 Fragment 进行相关操作。获取 FragmentManager 是 Activity 本身的一个方法的结果（getFragmentManager）。仔细思考其中的道理，不难想清楚，对于 Activity 而言它本身是可以依赖多个 Fragment，如果对于每个Fragment单独操作，不免费事费力，不如提供一个统一的一个接口来进行使用。</p><p>常用的方法如下：</p><ol><li>findFragmentById()<br>根据 ID 来获取对应的 Fragment 实例，主要使用在静态绑定中</li><li>findFragmentByTag()<br>意思基本和上面相同</li><li>beginTransaction()<br>开启一个事务</li></ol><p>##FragmentTransaction</p><p>常用方法如下：</p><ol><li><p>add(int containerViewId, Fragment fragment, String tag)<br>将一个fragment实例添加到Activity的最上层 </p></li><li><p>remove(Fragment fragment)<br>将一个fragment实例从Activity的fragment队列中删除  </p></li><li><p>replace(int containerViewId, Fragment fragment)<br>替换 containerViewId 中的 fragment 实例，注意，它首先把 containerViewId 中所有 fragment 删除，然后再 add 进去当前的 fragment  </p></li></ol><p>##有关回滚——FragmentTransaction</p><p>上面简单记录了一个相关的主要方法，现在我们来简单说一个回滚功能。要实现回滚只需要 commit() 和 addToBackStack(String tag)这个两个方法，每次在commit()之前，使用<strong>addToBackStack()</strong>将其添加到回退栈中。需要回退的时候只需要使用 popBackStack() 方法即可，回退的单位是以一次 commit() 为主。</p><blockquote><p>另外补充说明一下，FragmentManager 还提供了监听回退栈的方法<br>FragmentManager::addOnBackStackChangedListener(listener);//添加监听器<br>FragmentManager::removeOnBackStackChangedListener(listener);//移除监听器 </p><p>不过,这里你们要注意理解为什么 FragmentManager 提供监听回退栈的方法。</p></blockquote><p>##That’s All</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;在之前的文章当中，我们总览性的了解到 Fragment 的基本使用和用途。一些最为基础的知识已经学习完毕。接下来我们就要深入到更加具体的内容来进行学习。&lt;/p&gt;
-&lt;p&gt;##FragmentManager&lt;/p&gt;
-&lt;p&gt;它的作用是对Fragment的状态进行保存与恢复。对 F
-      
-    
-    </summary>
-    
-      <category term="2017-9" scheme="http://yoursite.com/categories/2017-9/"/>
-    
-    
-      <category term="Android" scheme="http://yoursite.com/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Fragment详解——基本使用</title>
-    <link href="http://yoursite.com/2017/07/21/Fragment%E8%AF%A6%E8%A7%A3%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/"/>
-    <id>http://yoursite.com/2017/07/21/Fragment详解——基本使用/</id>
-    <published>2017-07-21T10:38:04.000Z</published>
-    <updated>2017-07-21T10:38:45.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>我们先从一个总览的角度去理解什么是「 静态 」添加 Fragment 和「 动态 」添加 Fragment？</p><p>先让我们来看一个图片，关系显然易见，对于 Fragment 来说他是 Activity 与 View 中间用来衔接的。 Activity 使用 Fragment 的形式是通过控件的形式来进行使用的，对于静和动态两种不同的形式，是对于 Activity 与 Fragment 之间这一层关系来说。写死了，那就说明是「 静态 」，运行时添加的，那就说明是「 动态 」。关系理清楚了，对于 Fragment 的使用方式也容易记忆并且使用了，具体的一些其他细节会在下面写出并且说明。<br><img src="http://ww1.sinaimg.cn/large/006o5OgAly1fhrlstqlzkj30ks0bq74c.jpg" alt=""></p><p>##公共资源的准备</p><p>上面说了，对于静态和动态两种方式使用 Fragment，主要差别在于 Activity 与 Fragment的关系是否是可以活动的。而 Fragment 与 View 的关系自然是一一对应的。一个 Fragment 操作一个 View 的业务逻辑。</p><p>在这里我们可以简单思考一下，因为 Fragment 的存在 Activity 与 View 彻底解耦，任何 View 可以随意结合任何一个 Activty，使用更加灵活。并且一个好消息是  创建一个 Fragment 的消耗很小，虽然 Fragment 本身也有很多的 Bug 存在，但是与之也有对应的解决方案，同时 Google 也在慢慢修改中。</p><p><strong>让我们开始:</strong><br>1、创建第一个 fragmeng_1.xml, 代码如下:<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"</div><div class="line">    android:layout_width="match_parent"</div><div class="line">    android:layout_height="match_parent"</div><div class="line">    android:background="#00ff00" &gt;</div><div class="line"></div><div class="line">    &lt;TextView</div><div class="line">        android:layout_width="wrap_content"</div><div class="line">        android:layout_height="wrap_content"</div><div class="line">        android:text="This is fragment 1"</div><div class="line">        android:textColor="#000000"</div><div class="line">        android:textSize="25sp" /&gt;</div><div class="line"></div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure></p><p>2、创建第二个 fragment_2.xml，代码如下</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;  </div><div class="line">    android:layout_width=&quot;match_parent&quot;  </div><div class="line">    android:layout_height=&quot;match_parent&quot;  </div><div class="line">    android:background=&quot;#ffff00&quot; &gt;  </div><div class="line">  </div><div class="line">    &lt;TextView  </div><div class="line">        android:layout_width=&quot;wrap_content&quot;  </div><div class="line">        android:layout_height=&quot;wrap_content&quot;  </div><div class="line">        android:text=&quot;This is fragment 2&quot;  </div><div class="line">        android:textColor=&quot;#000000&quot;  </div><div class="line">        android:textSize=&quot;25sp&quot; /&gt;  </div><div class="line">  </div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure><p>3、连续创建两个 Fragment 类，并且将 fragment_1.xml 和 fragment_2.xml与之进行绑定。<br>代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class Fragment1 extends Fragment &#123;  </div><div class="line">    @Override  </div><div class="line">    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) &#123;  </div><div class="line">        return inflater.inflate(R.layout.fragment_1, container, false);  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">public class Fragment2 extends Fragment &#123;  </div><div class="line">    @Override  </div><div class="line">    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) &#123;  </div><div class="line">        return inflater.inflate(R.layout.fragment2_, container, false);  </div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure><p>到此我们已经将xml 与 Fragment 一一对应。</p><p>##静态绑定</p><p>这个是直接把 Activity 与 Fragment 固定，通过 fragment 控件写死的，在之下的代码中需要注意的是，name 属性代表的是与这个控件进行绑定的 Fragment 的全类名。同时必须要有唯一标识符，这个用属性 id 或者 tag 来进行表示即可。<br>代码如下:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">&lt;--!activity_main.xml--&gt;</div><div class="line"></div><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    tools:context=&quot;jinfangzhang.github.fragmentdemo.MainActivity&quot;&gt;</div><div class="line"></div><div class="line">    &lt;fragment</div><div class="line">        android:tag=&quot;@+id/fragment1&quot;</div><div class="line">        android:name=&quot;jinfangzhang.github.fragmentdemo.Fragment_1&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_weight=&quot;1&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        /&gt;</div><div class="line">    &lt;fragment</div><div class="line">        android:id=&quot;@+id/fragment2&quot;</div><div class="line">        android:name=&quot;jinfangzhang.github.fragmentdemo.Fragment_2&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_weight=&quot;1&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        /&gt;</div><div class="line"></div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure><p>Activity中onCreate函数什么都没有写。</p><p>##动态绑定</p><p>activity_main.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    android:orientation=&quot;vertical&quot; android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;&gt;</div><div class="line"></div><div class="line">    &lt;Button</div><div class="line">        android:id=&quot;@+id/button_1&quot;</div><div class="line">        android:layout_width=&quot;wrap_content&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;Button</div><div class="line">        android:id=&quot;@+id/button_2&quot;</div><div class="line">        android:layout_width=&quot;wrap_content&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot; /&gt;</div><div class="line"></div><div class="line">    &lt;FrameLayout</div><div class="line">        android:id=&quot;@+id/fragment_container&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;/&gt;</div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure></p><p>对于 Activity 中的方法如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">    super.onCreate(savedInstanceState);</div><div class="line">    setContentView(R.layout.activity_main_2);</div><div class="line">    Log.e(&quot;Activity&quot;,&quot;Activity---onCreate()&quot;);</div><div class="line">    Button btnLoadFrag1 = (Button)findViewById(R.id.button_1);</div><div class="line">    btnLoadFrag1.setOnClickListener(new View.OnClickListener() &#123;</div><div class="line">        @Override</div><div class="line">        public void onClick(View v) &#123;</div><div class="line">            FragmentManager manager = getFragmentManager();</div><div class="line">            FragmentTransaction transaction = manager.beginTransaction();</div><div class="line">            Fragment_1 fragment1 = new Fragment_1();</div><div class="line"></div><div class="line">            transaction.replace(R.id.fragment_container,fragment1);</div><div class="line">            transaction.commit();</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    Button btnLoagFrag2 = (Button)findViewById(R.id.button_2);</div><div class="line">    btnLoagFrag2.setOnClickListener(new View.OnClickListener() &#123;</div><div class="line">        @Override</div><div class="line">        public void onClick(View v) &#123;</div><div class="line">            FragmentManager manager = getFragmentManager();</div><div class="line">            FragmentTransaction transaction = manager.beginTransaction();</div><div class="line">            Fragment_2 fragment2 = new Fragment_2();</div><div class="line">            transaction.replace(R.id.fragment_container, fragment2);</div><div class="line">            transaction.commit();</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p><p>这里主要分为四步：<br>1、获取 FragmentManager 对象，在 v4 包里面使用的是 getSupportFragmentManager() 获得，原生使用 getFragmentManager().</p><blockquote><p>对于原生和 v4 的使用，其实差别就在 Activity 继承是什么，如果你的 Fragment 继承来自 v4，那么 Activity 应该继承 FragmentActivity，而如果是原生，就什么都不要动了</p></blockquote><p>2、通过 Manager 对象获取并且开启一个事务。<br>3、向容器内加入Fragment，一般使用add或者replace方法实现，需要传入容器的id和Fragment的实例。<br>4、提交事务，调用commit方法提交。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;我们先从一个总览的角度去理解什么是「 静态 」添加 Fragment 和「 动态 」添加 Fragment？&lt;/p&gt;
-&lt;p&gt;先让我们来看一个图片，关系显然易见，对于 Fragment 来说他是 Activity 与 View 中间用来衔接的。 Activity 使用 Fra
-      
-    
-    </summary>
-    
-      <category term="2017-7" scheme="http://yoursite.com/categories/2017-7/"/>
-    
-    
-      <category term="Android" scheme="http://yoursite.com/tags/Android/"/>
     
   </entry>
   
