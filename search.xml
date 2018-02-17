@@ -4,6 +4,38 @@
   
     
     <entry>
+      <title><![CDATA[SharedPreferences]]></title>
+      <url>http://yoursite.com/2018/02/17/SharedPreferences/</url>
+      <content type="html"><![CDATA[<p>如果想保存相对较小键值对集合，应该使用SharedPerference</p>
+<h2 id="获取共享首选项句柄"><a href="#获取共享首选项句柄" class="headerlink" title="获取共享首选项句柄"></a><strong>获取共享首选项句柄</strong></h2><ul>
+<li><p>getSharedPerferences() –如果需要指定文件名称，应该使用这个方法,第一个参数指定文件名称，第二个阐述文件权限。MODE_PRIVATE(Defalut)，仅能被创建者访问。还有MODE_WORLD_READABLE和MODE_WORLD_WRITEABLE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Context context = getActivity(); </div><div class="line">SharedPreferences sharedPreference =    context.getSharedPreferences(</div><div class="line">       getString(R.string.preference_file_key), Context.MODE_PRIVATE);</div></pre></td></tr></table></figure>
+</li>
+<li><p>getPreferences() – 如果您只需使用 Activity 的一个共享首选项，请从 Activity 中使用此方法。 因为此方法会检索属于该 Activity 的默认共享首选项文件，您无需提供名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="写入共享首选项"><a href="#写入共享首选项" class="headerlink" title="写入共享首选项"></a><strong>写入共享首选项</strong></h2><p>通过SharedPreferences引用调用edit() 来创建一个 SharedPreferences.Editor。使用putXXX() 来写入键和值，然后，调用 commit() 以保存所做的更改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);</div><div class="line">SharedPreferences.Editor editor = sharedPref.edit();</div><div class="line">editor.putInt(getString(R.string.saved_high_score), newHighScore);</div><div class="line">editor.commit();</div></pre></td></tr></table></figure></p>
+<h2 id="读取信息"><a href="#读取信息" class="headerlink" title="读取信息"></a><strong>读取信息</strong></h2><p>通过SharedPreferences引用的getXXX() 方法，去获取你想要减的值，并且根据需要提空，在键不存在的情况下返回默认值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);</div><div class="line">int defaultValue = getResources().getInteger(R.string.saved_high_score_default);</div><div class="line">long highScore = sharedPref.getInt(getString(R.string.saved_high_score), defaultValue);</div></pre></td></tr></table></figure>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-2 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Android </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[log012]]></title>
       <url>http://yoursite.com/2018/02/15/log012/</url>
       <content type="html"><![CDATA[<p>对于英语的学习，将会专注于英语流利说</p>
