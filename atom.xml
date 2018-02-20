@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-02-17T02:50:01.376Z</updated>
+  <updated>2018-02-20T02:18:22.689Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>log013</title>
+    <link href="http://yoursite.com/2018/02/20/log013/"/>
+    <id>http://yoursite.com/2018/02/20/log013/</id>
+    <published>2018-02-20T02:17:43.000Z</published>
+    <updated>2018-02-20T02:18:22.689Z</updated>
+    
+    <content type="html"><![CDATA[<p>这几天大部分时间都花在陪家人身上，对于一些项目时间难免有些不够，但依然会做，</p><p>log 已经中断了几天，还包括英语。</p><p>只能说自己的时间安排不恰当，有很大的调整空间</p><p>计划到开学之前，基本学完20小时的go语言</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;这几天大部分时间都花在陪家人身上，对于一些项目时间难免有些不够，但依然会做，&lt;/p&gt;
+&lt;p&gt;log 已经中断了几天，还包括英语。&lt;/p&gt;
+&lt;p&gt;只能说自己的时间安排不恰当，有很大的调整空间&lt;/p&gt;
+&lt;p&gt;计划到开学之前，基本学完20小时的go语言&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
+    
+    
+      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
   
   <entry>
     <title>SharedPreferences</title>
@@ -520,31 +549,6 @@
       
       
         &lt;p&gt;订阅得到的专栏也有一年时间了，但他们多是碎片话的知识，我至今累计订阅的5个专栏，一个专栏一年至少365篇文章，5个就是将近1600篇文章，每一篇文章都具有一个观点，或者说几篇文章一个系列。庞大的知识，经过一次阅读也就一些产生共鸣的些许文章有影响，说收获的话还真说不上来，可能
-      
-    
-    </summary>
-    
-      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
-    
-    
-      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>log000</title>
-    <link href="http://yoursite.com/2018/02/01/log000/"/>
-    <id>http://yoursite.com/2018/02/01/log000/</id>
-    <published>2018-02-01T09:49:04.000Z</published>
-    <updated>2018-02-01T09:53:38.300Z</updated>
-    
-    <content type="html"><![CDATA[<p>起源是在Yotube上面看到有很多人在拍<code>vlog</code>，于是乎，就联想到现在的状况。订阅了三个按年付费的知识付费栏目，基本上都是日更，刚开始可能会觉的很新鲜，但是随着时间的推移，自己每天需要的做的事情，也慢慢开始变得多起来。有时，真的只能记住一些花一天绝大部分时间z在做的事情。现在每天要干的事情，有学英语、学技术、写项目、练太极、看书、看日常订阅的专栏。如果你稍微偷懒或者不注意，时间就悄悄的溜走了。索性，直接给自己开一个活动，用来记录一天自己的成长与发生的事情～。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;起源是在Yotube上面看到有很多人在拍&lt;code&gt;vlog&lt;/code&gt;，于是乎，就联想到现在的状况。订阅了三个按年付费的知识付费栏目，基本上都是日更，刚开始可能会觉的很新鲜，但是随着时间的推移，自己每天需要的做的事情，也慢慢开始变得多起来。有时，真的只能记住一些花一天绝
       
     
     </summary>
