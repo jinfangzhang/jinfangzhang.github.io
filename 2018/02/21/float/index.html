@@ -94,7 +94,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="程序," />
 
 
 
@@ -105,12 +105,36 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="JianRan">
-<meta property="og:url" content="http://yoursite.com/archives/2017/10/index.html">
+<meta name="description" content="浮点数总是给我一种朦朦胧胧的感觉，知道它描述的数字有偏差，知道它在C语言中不能和整数型直接转换，却始终不敢拍着胸膛说“我懂了”。float的种种疑惑和仅停留在可以表达小数的认识上。
+
+我们需要先了解一下计算机的浮点数表示法。在 C 语言中计算机的浮点数用的是 IEEE 754 标准
+IEEE 754标准中规定float单精度浮点数在机器中表示用 
+
+用 1 位表示数字的符号 S (Sign)
+用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浮点数">
+<meta property="og:url" content="http://yoursite.com/2018/02/21/float/index.html">
 <meta property="og:site_name" content="JianRan">
+<meta property="og:description" content="浮点数总是给我一种朦朦胧胧的感觉，知道它描述的数字有偏差，知道它在C语言中不能和整数型直接转换，却始终不敢拍着胸膛说“我懂了”。float的种种疑惑和仅停留在可以表达小数的认识上。
+
+我们需要先了解一下计算机的浮点数表示法。在 C 语言中计算机的浮点数用的是 IEEE 754 标准
+IEEE 754标准中规定float单精度浮点数在机器中表示用 
+
+用 1 位表示数字的符号 S (Sign)
+用">
+<meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/FhyIhmiWMhg9CXzHfIvwVzmKEzXI">
+<meta property="og:updated_time" content="2018-02-21T04:03:41.989Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JianRan">
+<meta name="twitter:title" content="浮点数">
+<meta name="twitter:description" content="浮点数总是给我一种朦朦胧胧的感觉，知道它描述的数字有偏差，知道它在C语言中不能和整数型直接转换，却始终不敢拍着胸膛说“我懂了”。float的种种疑惑和仅停留在可以表达小数的认识上。
+
+我们需要先了解一下计算机的浮点数表示法。在 C 语言中计算机的浮点数用的是 IEEE 754 标准
+IEEE 754标准中规定float单精度浮点数在机器中表示用 
+
+用 1 位表示数字的符号 S (Sign)
+用">
+<meta name="twitter:image" content="http://p3o1bechg.bkt.clouddn.com/FhyIhmiWMhg9CXzHfIvwVzmKEzXI">
 
 
 
@@ -144,7 +168,7 @@
 
 
 
-  <title>归档 | JianRan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>浮点数 | JianRan</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -163,7 +187,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-archive">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -291,73 +315,200 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-         
-          
-        好! 目前共计 56 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/21/float/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JianRan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JianRan">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/10/13/心态前言/" itemprop="url">
-              
-                <span itemprop="name">心态前言</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">浮点数</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-13T01:44:56+08:00"
-              content="2017-10-13" >
-          10-13
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T12:02:21+08:00">
+                2018-02-21
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/2018-2/" itemprop="url" rel="index">
+                    <span itemprop="name">2018-2</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>浮点数总是给我一种朦朦胧胧的感觉，知道它描述的数字有偏差，知道它在C语言中不能和整数型直接转换，却始终不敢拍着胸膛说“我懂了”。float的种种疑惑和仅停留在可以表达小数的认识上。</p>
+<hr>
+<p>我们需要先了解一下计算机的浮点数表示法。在 C 语言中计算机的浮点数用的是 IEEE 754 标准</p>
+<p>IEEE 754标准中规定float单精度浮点数在机器中表示用 </p>
+<ul>
+<li>用 1 位表示数字的符号 S (Sign)</li>
+<li>用 8 位来表示指数 E (Exponent)</li>
+<li>用23 位来表示尾数 M (Mantissa)</li>
+</ul>
+<p>对于double双精度浮点数</p>
+<ul>
+<li>用 1 位表示符号 S (Sign)</li>
+<li>用 11 位表示指数 E (Exponent)</li>
+<li>用 52 位表示尾数 M (Mantissa)</li>
+</ul>
+<p>IEEE 浮点值的格式如下图所示:<br><img src="http://p3o1bechg.bkt.clouddn.com/FhyIhmiWMhg9CXzHfIvwVzmKEzXI" alt="IEEE 754"></p>
+<p>这里我们以32位为例，来展示计算公式<br>$$(-1)^S <em> (1 + \frac{M}{2^{\textrm{23}}}) </em> 2^{\textrm{(E - 127)}}$$</p>
+<p>让我们更进步的解释一下浮点数的三段各部分的意思</p>
+<ul>
+<li><p>第一段是符号位。</p>
+</li>
+<li><p>第二段是指数位，对于任何数ｘ，其都可以找到一个ｎ，使得$2^n&lt;=x&lt;=2^{n+1} $，比如，拿３来说，因为$2^1&lt;3&lt;2^2$,所以 $n=1$，同时，为了表示 0.00x 这样的数，所以需要有负数。8个比特位，总共能表示 255 个数字，为了表示负数,也就是在[-127,128]这个区间中，才有$2^{\textrm{(E - 127)}}$</p>
+</li>
+<li>第三段叫做偏移量会更准确一些，如果没有所谓的偏移量，我们展示的将是一个$2^{\textrm{(E - 127)}}$,精简一点也就是$2^x$，不如说这个数字就是一个基值，我们将会在这个基值上面再进行偏移，偏移的总量同样是$2^x$。偏移量为23位，就是说把这段数字分为了$2^{23}$份，展开公式会更好的展示出来</li>
+</ul>
+<p>$$(-1)^S<em>(1 </em> 2^{E - 127} + \frac{M}{2^{23}} * 2^{E - 127})$$</p>
+<p>正因为我们是在$2^x$的基础上偏移$\frac{M}{2^{23}}$,难免会有些数字无法完全吻合，只能依靠近似数来模拟。偏差由此而来。</p>
+<p>为了更好的理解我们来拿3.14来看看</p>
+<ol>
+<li>3.14是正数，S的值为1</li>
+<li>$2^1 &lt; 3.14 &lt; 2^2$ 所以$E - 127 = 1$,E 等于128</li>
+<li>$(3.14 - 2^1)/2^1 = 0.57$, $\frac{M}{2^{23}} = 0.57$ ，求出来的M不是一个整数，到这里就出现了精度问题</li>
+</ol>
+<p>这里可以看出，计算浮点数的计算量还是很大的，如果没有硬件的直接支持对于计算机的消耗可想而知。同样依照这样的一条思路，也可以事先算好这么一个对应规格的浮点数，去和其他数字进行运算。曾经的<strong>魔数</strong>就是一个典型的例子。</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/程序/" rel="tag"># 程序</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/21/log014/" rel="next" title="log014">
+                <i class="fa fa-chevron-left"></i> log014
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -577,6 +728,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
