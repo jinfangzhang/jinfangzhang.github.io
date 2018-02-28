@@ -4,6 +4,69 @@
   
     
     <entry>
+      <title><![CDATA[内建容器(一)]]></title>
+      <url>http://yoursite.com/2018/02/28/go-inner-container-1/</url>
+      <content type="html"><![CDATA[<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a><strong>数组</strong></h2><p>数组是值类型，也就是说传递的时候，是通过拷贝的方式，进行传递</p>
+<h3 id="定义数组"><a href="#定义数组" class="headerlink" title="定义数组"></a><strong>定义数组</strong></h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr [<span class="number">5</span>]<span class="keyword">int</span>  </div><div class="line">arr2 := [<span class="number">3</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;   <span class="comment">//如果使用 : 去定义数组，那么必须赋初值</span></div><div class="line">arr3 := [...]<span class="keyword">int</span>&#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>&#125;    <span class="comment">//让系统自己识别，有几个数字</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> grid [<span class="number">4</span>][<span class="number">5</span>]<span class="keyword">int</span>      <span class="comment">//定义多维数组</span></div></pre></td></tr></table></figure>
+<h3 id="遍历数组"><a href="#遍历数组" class="headerlink" title="遍历数组"></a><strong>遍历数组</strong></h3><p>最基本的形式<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> i := <span class="number">0</span> ; i &lt; <span class="built_in">len</span>(arr); i++ &#123;</div><div class="line">    fmt.Println(arr[i])</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>使用 <strong>range</strong><br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> i , v : = <span class="keyword">range</span> arr &#123;   <span class="comment">//i 是数组的下表， v 是数组的值</span></div><div class="line">    fmt.Println(i, v)</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a><strong>注意</strong></h3><ul>
+<li><p><strong>[10]int</strong> 和 <strong>[20]int</strong> 是不同的类型</p>
+</li>
+<li><p>[]int 和 [5]int 代表完全不同的含义，前者表示切片，后者才表示数组</p>
+</li>
+<li><p>数组是值类型</p>
+</li>
+<li><p>它不像C，数组头指针并不代表数组的地址</p>
+</li>
+</ul>
+<p><strong>go语言中不直接使用数组</strong></p>
+<h2 id="Slice"><a href="#Slice" class="headerlink" title="Slice"></a><strong>Slice</strong></h2><h3 id="Slice-是什么"><a href="#Slice-是什么" class="headerlink" title="Slice 是什么"></a><strong>Slice 是什么</strong></h3><p>Slice 是 数组 的一个 View<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">arr := [...]<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;  <span class="comment">//数组</span></div><div class="line">s := arr[<span class="number">2</span>:<span class="number">6</span>]   <span class="comment">//slice     s =&gt; 2,3,4,5  [2,6)</span></div></pre></td></tr></table></figure></p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a><strong>基本用法</strong></h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">arr := [...]<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;  <span class="comment">//数组</span></div><div class="line">s := arr[<span class="number">2</span>:<span class="number">6</span>]   <span class="comment">//slice     s =&gt; 2,3,4,5  [2,6)</span></div><div class="line">s1 := arr[:<span class="number">6</span>]   <span class="comment">//slice     s =&gt; 0,1,2,3,4,5  [0,6)</span></div><div class="line">s2 := arr[<span class="number">2</span>:]   <span class="comment">//slice     s =&gt; 2,3,4,5,6,7,8  [2, len(arr) )</span></div><div class="line">s3 := arr[:]   <span class="comment">//slice     s =&gt; 0,1,2,3,4,5,6,7,8  [0,len(arr) )</span></div></pre></td></tr></table></figure>
+<p>s[0] 代表当前Slice 的第一个数组</p>
+<p><strong>可以通过修改Slice中的值去修改原来数组当中的值</strong></p>
+<h3 id="进一步操作"><a href="#进一步操作" class="headerlink" title="进一步操作"></a><strong>进一步操作</strong></h3><p>下面的Slice 的都是投影同一个数组的arr<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">arr := [...]<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;  <span class="comment">//数组</span></div><div class="line">s := arr[:]     <span class="comment">//  0,1,2,3,4,5,6,7,8</span></div><div class="line">s = s[:<span class="number">5</span>]     <span class="comment">//    0,1,2,3,4</span></div><div class="line">s = s[<span class="number">2</span>:]     <span class="comment">//    2,3,4</span></div></pre></td></tr></table></figure></p>
+<p>试图理解一下，下面这些代码<br><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">arr := [...]<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;  <span class="comment">//数组</span></div><div class="line">s1 := arr[<span class="number">2</span>,<span class="number">6</span>]  <span class="comment">//2,3,4,5</span></div><div class="line"><span class="comment">//s1 只有四个数字</span></div><div class="line">s2 := s1[<span class="number">3</span>,<span class="number">5</span>]   <span class="comment">//5,6   s[3]    s[4]</span></div><div class="line">fmt.Println(s1[<span class="number">4</span>]   <span class="comment">//error 直接取是取不出来的</span></div></pre></td></tr></table></figure></p>
+<p>为了正确理解上面代码，我们有必要深入了解一下slice</p>
+<p><img src="http://p3o1bechg.bkt.clouddn.com/FnsLz75IFKrn5b9r1Mc6Ji94k0IP" alt="slice"></p>
+<ul>
+<li><p>slice中一个ptr的指针，指向slice开头的那一个元素</p>
+</li>
+<li><p>len是slice的大小，通过下标的方式，只能访问到len以内的元素</p>
+</li>
+<li><p>cap是从slice第一个元素到投影数组的最后一个元素的大小，在cap范围内的，可以通过再切片来访问到</p>
+</li>
+</ul>
+<p><strong>为此，我们可以通过 len() 和 cap() 方法获取该slice的值</strong></p>
+<h3 id="向Slice添加元素"><a href="#向Slice添加元素" class="headerlink" title="向Slice添加元素"></a><strong>向Slice添加元素</strong></h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">arr := [...]<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>&#125;</div><div class="line">s1 := arr[<span class="number">2</span>:<span class="number">6</span>]</div><div class="line">s2 := s1[<span class="number">3</span>:<span class="number">5</span>]</div><div class="line">s3 := <span class="built_in">append</span>(s2,<span class="number">10</span>)</div><div class="line">s4 := <span class="built_in">append</span>(s3,<span class="number">11</span>)</div><div class="line">s5 := <span class="built_in">append</span>(s4,<span class="number">12</span>)</div></pre></td></tr></table></figure>
+<p>进过上面代码之后，arr最后会是多少</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">s1  <span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span></div><div class="line">s2  <span class="number">5</span>,<span class="number">6</span></div><div class="line">s3  <span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span></div><div class="line">s4  <span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span>,<span class="number">11</span></div><div class="line">s5  <span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span></div><div class="line"></div><div class="line">arr <span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">10</span></div></pre></td></tr></table></figure>
+<p>s4,s5 当中的 11 和 12 去哪里了？</p>
+<p>他们的视图已经不是原来的arr，而是一个新数组，因为已经超过了 s2 的 cap，系统重新开一个更大cap的数组</p>
+<h3 id="slice的创建"><a href="#slice的创建" class="headerlink" title="slice的创建"></a><strong>slice的创建</strong></h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> s []<span class="keyword">int</span> <span class="comment">//len=0 cap=0   s = nil</span></div><div class="line"></div><div class="line"><span class="comment">//先建立了一个arr，他的值为2,4,6,8</span></div><div class="line"><span class="comment">//再创建了一个slice的视图</span></div><div class="line">s1 := []<span class="keyword">int</span>&#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>&#125;</div><div class="line"></div><div class="line">s2 := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">16</span>)   <span class="comment">//len(s2) = 16 cap(s2) = 16</span></div><div class="line"></div><div class="line">s3 := <span class="built_in">make</span>([]<span class="keyword">int</span>, <span class="number">16</span>,<span class="number">32</span>) <span class="comment">//len(s3) = 16 cap(s3) = 32</span></div></pre></td></tr></table></figure>
+<p><strong>slice 的复制</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">copy(s2,s1)//把s1的内容拷贝到s2当中</div><div class="line">//s2  [2,4,6,8,0,0,0,0,0,0,0,0,0,0,0,0]</div></pre></td></tr></table></figure>
+<p><strong>slice 的 删除</strong></p>
+<p>系统没有内建函数，但是我们可以通过append来</p>
+<p>如果我们想删除 s2 中的8的话<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// s2   [2,4,6,8,0,0,0,0,0,0,0,0,0,0,0,0]</div><div class="line">append(s2[:3], s2[4:])</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-2 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> go </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[extends和implements的一些思考]]></title>
       <url>http://yoursite.com/2018/02/27/extends%E5%92%8Cimplements%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/</url>
       <content type="html"><![CDATA[<h2 id="extends-amp-implements"><a href="#extends-amp-implements" class="headerlink" title="extends &amp; implements"></a><strong>extends &amp; implements</strong></h2><p>继承和接口，在 java 中简单来说就是 extend 和 implements。继承从语义上来说，就是会得到父类的一些东西（方法，参数），无论你是否愿意。而接口，它本身就是空的，并不会得到什么东西，我画了个图来更加的感受一下</p>
