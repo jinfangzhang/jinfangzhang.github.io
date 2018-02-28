@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[内建容器(一)]]></title>
+      <title><![CDATA[内建容器]]></title>
       <url>http://yoursite.com/2018/02/28/go-inner-container-1/</url>
       <content type="html"><![CDATA[<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a><strong>数组</strong></h2><p>数组是值类型，也就是说传递的时候，是通过拷贝的方式，进行传递</p>
 <h3 id="定义数组"><a href="#定义数组" class="headerlink" title="定义数组"></a><strong>定义数组</strong></h3><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> arr [<span class="number">5</span>]<span class="keyword">int</span>  </div><div class="line">arr2 := [<span class="number">3</span>]<span class="keyword">int</span>&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>&#125;   <span class="comment">//如果使用 : 去定义数组，那么必须赋初值</span></div><div class="line">arr3 := [...]<span class="keyword">int</span>&#123;<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>&#125;    <span class="comment">//让系统自己识别，有几个数字</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> grid [<span class="number">4</span>][<span class="number">5</span>]<span class="keyword">int</span>      <span class="comment">//定义多维数组</span></div></pre></td></tr></table></figure>
