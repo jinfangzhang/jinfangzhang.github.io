@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[go_object_oriented]]></title>
+      <title><![CDATA[go|面向「对象」]]></title>
       <url>http://yoursite.com/2018/03/01/go-object-oriented/</url>
       <content type="html"><![CDATA[<p>go语言仅支持封装，不支持继承和多态，所以go语言没有class 只有struct</p>
 <h2 id="结构的定义"><a href="#结构的定义" class="headerlink" title="结构的定义"></a><strong>结构的定义</strong></h2><figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">type</span> treeNode <span class="keyword">struct</span>&#123;</div><div class="line">    left, right *treeNode</div><div class="line">    value <span class="keyword">int</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
