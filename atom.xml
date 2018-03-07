@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-05T00:56:04.298Z</updated>
+  <updated>2018-03-07T14:52:52.295Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>bc</title>
+    <link href="http://yoursite.com/2018/03/07/bc/"/>
+    <id>http://yoursite.com/2018/03/07/bc/</id>
+    <published>2018-03-07T14:52:21.000Z</published>
+    <updated>2018-03-07T14:52:52.295Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://p3o1bechg.bkt.clouddn.com/Fv_QSoyue5IJ3yWu09eKsa7E1Hpu" alt="tiobe_2018_3"></p><ol><li><p>Java    </p></li><li><p>C</p></li><li><p>C++</p></li><li><p>Python  解释型计算机程序设计语言<br>Python具有丰富和强大的库。它常被昵称为胶水语言，能够把用其他语言制作的各种模块（尤其是C/C++）很轻松地联结在一起。常见的一种应用情形是，使用Python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，性能要求特别高，就可以用C/C++重写，而后封装为Python可以调用的扩展类库。</p></li><li><p>C#   是微软公司发布的一种面向对象的、运行于.NET Framework之上的高级程序设计语言</p></li><li><p>Visual Basic .NET<br>是基于微软.NET Framework之上的面向对象的编程语言.<br>其在调试时是以解释型语言方式运作,而输出为EXE程序是是以编译型语言方式运作</p></li><li><p>PHP（超文本预处理器）<br>Web开发领域<br>PHP是将程序嵌入到HTML（标准通用标记语言下的一个应用）文档中去执行，执行效率比完全生成HTML标记的CGI要高许多；PHP还可以执行编译后代码，编译可以达到加密和优化代码运行，使代码运行更快。</p></li><li><p>JS</p></li><li><p>Delphi/Object Pascal<br>Delphi本身是极其优秀的编译器，比C++易学，比VB强大</p></li><li><p>Ruby（一种面向对象程序设计的脚本语言）<br>是一种通用的、解释的编程语言。<br>减少编程时候的不必要的琐碎时间，令编写程序的人高兴<br>适合于快速开发，一般开发效率是JAVA的5倍</p></li></ol><ol><li><p>SQL</p></li><li><p>Visual Basic</p></li><li><p>R<br>R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p></li><li><p>PL/SQL</p></li><li><p>Assembly language</p></li><li><p>Swift</p></li><li><p>Perl<br>Perl借取了C、sed、awk、shell 脚本语言以及很多其他程序语言的特性，其中最重要的特性是它内部集成了正则表达式的功能，以及巨大的第三方代码库CPAN。简而言之，Perl像C一样强大，像awk、sed等脚本描述语言一样方便，被Perl语言爱好者称之为“一种拥有各种语言功能的梦幻脚本语言”、“Unix 中的王牌工具”。</p></li><li><p>Go</p></li><li><p>MATLAB</p></li><li><p>Object-C</p></li></ol><p>Clojure是一种运行在Java平台上的 Lisp 方言，Lisp是一种以表达性和功能强大著称的编程语言</p><p>Lisp<br>Prolog<br>Scheme</p><p>Scheme<br>Groovy是一种基于JVM（Java虚拟机）的敏捷开发语言</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;http://p3o1bechg.bkt.clouddn.com/Fv_QSoyue5IJ3yWu09eKsa7E1Hpu&quot; alt=&quot;tiobe_2018_3&quot;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Java    &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;C&lt;
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>log016</title>
@@ -532,34 +557,6 @@
     
     
       <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>log006</title>
-    <link href="http://yoursite.com/2018/02/08/log006/"/>
-    <id>http://yoursite.com/2018/02/08/log006/</id>
-    <published>2018-02-07T17:23:49.000Z</published>
-    <updated>2018-02-07T17:27:34.399Z</updated>
-    
-    <content type="html"><![CDATA[<p>总的来说，今天的效率好了很多。几乎在战斗的时候，都属于认真状态。但是错过了本可以完成所有今天任务的机会。</p><p>对于娱乐，应该先把主要任务完成。</p><p>休息的话，现在改成以15分钟为一个单位进行休息。</p><p>自己的身体终究还是适应了晚睡，所以作息，往后顺延一个小时，说不出呢还是7点起床呢～。哈哈哈</p><p>新的一天加油。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;总的来说，今天的效率好了很多。几乎在战斗的时候，都属于认真状态。但是错过了本可以完成所有今天任务的机会。&lt;/p&gt;
-&lt;p&gt;对于娱乐，应该先把主要任务完成。&lt;/p&gt;
-&lt;p&gt;休息的话，现在改成以15分钟为一个单位进行休息。&lt;/p&gt;
-&lt;p&gt;自己的身体终究还是适应了晚睡，所以作息，往
-      
-    
-    </summary>
-    
-      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
-    
-    
-      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
     
   </entry>
   

@@ -4,6 +4,62 @@
   
     
     <entry>
+      <title><![CDATA[bc]]></title>
+      <url>http://yoursite.com/2018/03/07/bc/</url>
+      <content type="html"><![CDATA[<p><img src="http://p3o1bechg.bkt.clouddn.com/Fv_QSoyue5IJ3yWu09eKsa7E1Hpu" alt="tiobe_2018_3"></p>
+<ol>
+<li><p>Java    </p>
+</li>
+<li><p>C</p>
+</li>
+<li><p>C++</p>
+</li>
+<li><p>Python  解释型计算机程序设计语言<br>Python具有丰富和强大的库。它常被昵称为胶水语言，能够把用其他语言制作的各种模块（尤其是C/C++）很轻松地联结在一起。常见的一种应用情形是，使用Python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，性能要求特别高，就可以用C/C++重写，而后封装为Python可以调用的扩展类库。</p>
+</li>
+<li><p>C#   是微软公司发布的一种面向对象的、运行于.NET Framework之上的高级程序设计语言</p>
+</li>
+<li><p>Visual Basic .NET<br>是基于微软.NET Framework之上的面向对象的编程语言.<br>其在调试时是以解释型语言方式运作,而输出为EXE程序是是以编译型语言方式运作</p>
+</li>
+<li><p>PHP（超文本预处理器）<br>Web开发领域<br>PHP是将程序嵌入到HTML（标准通用标记语言下的一个应用）文档中去执行，执行效率比完全生成HTML标记的CGI要高许多；PHP还可以执行编译后代码，编译可以达到加密和优化代码运行，使代码运行更快。</p>
+</li>
+<li><p>JS</p>
+</li>
+<li><p>Delphi/Object Pascal<br>Delphi本身是极其优秀的编译器，比C++易学，比VB强大</p>
+</li>
+<li><p>Ruby（一种面向对象程序设计的脚本语言）<br>是一种通用的、解释的编程语言。<br>减少编程时候的不必要的琐碎时间，令编写程序的人高兴<br>适合于快速开发，一般开发效率是JAVA的5倍</p>
+</li>
+</ol>
+<ol>
+<li><p>SQL</p>
+</li>
+<li><p>Visual Basic</p>
+</li>
+<li><p>R<br>R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
+</li>
+<li><p>PL/SQL</p>
+</li>
+<li><p>Assembly language</p>
+</li>
+<li><p>Swift</p>
+</li>
+<li><p>Perl<br>Perl借取了C、sed、awk、shell 脚本语言以及很多其他程序语言的特性，其中最重要的特性是它内部集成了正则表达式的功能，以及巨大的第三方代码库CPAN。简而言之，Perl像C一样强大，像awk、sed等脚本描述语言一样方便，被Perl语言爱好者称之为“一种拥有各种语言功能的梦幻脚本语言”、“Unix 中的王牌工具”。</p>
+</li>
+<li><p>Go</p>
+</li>
+<li><p>MATLAB</p>
+</li>
+<li><p>Object-C</p>
+</li>
+</ol>
+<p>Clojure是一种运行在Java平台上的 Lisp 方言，Lisp是一种以表达性和功能强大著称的编程语言</p>
+<p>Lisp<br>Prolog<br>Scheme</p>
+<p>Scheme<br>Groovy是一种基于JVM（Java虚拟机）的敏捷开发语言</p>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[log016]]></title>
       <url>http://yoursite.com/2018/03/05/log016/</url>
       <content type="html"><![CDATA[<p>开学第一周要给假期做一个收尾工作，主要包括，数据结构2篇文章，学校相关的两篇文章，一篇自我成长记录的日记。</p>
