@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-05T00:56:04.298Z</updated>
+  <updated>2018-03-09T01:39:44.115Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>log017</title>
+    <link href="http://yoursite.com/2018/03/09/log017/"/>
+    <id>http://yoursite.com/2018/03/09/log017/</id>
+    <published>2018-03-09T01:39:00.000Z</published>
+    <updated>2018-03-09T01:39:44.115Z</updated>
+    
+    <content type="html"><![CDATA[<p>开学一周，基本给假期收了一个尾。中断了好久的日志，从今天开始要一天不落。</p><p>相信经过一年的学习，英语可以达到与人交流的水平～～</p><p>晚上基本 11 点之后就不干什么活了，看会书，等到 12 点左右就睡觉，保证每天 7-8 小时的睡眠时间。早上7点起床，看会得到就准备开始今天的生活。</p><p>每天的早餐也列入计划当中。</p><p>总的来说，一切都步入正轨。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;开学一周，基本给假期收了一个尾。中断了好久的日志，从今天开始要一天不落。&lt;/p&gt;
+&lt;p&gt;相信经过一年的学习，英语可以达到与人交流的水平～～&lt;/p&gt;
+&lt;p&gt;晚上基本 11 点之后就不干什么活了，看会书，等到 12 点左右就睡觉，保证每天 7-8 小时的睡眠时间。早上7点起床，
+      
+    
+    </summary>
+    
+      <category term="2018-3" scheme="http://yoursite.com/categories/2018-3/"/>
+    
+    
+      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
   
   <entry>
     <title>log016</title>
@@ -532,34 +559,6 @@
     
     
       <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>log006</title>
-    <link href="http://yoursite.com/2018/02/08/log006/"/>
-    <id>http://yoursite.com/2018/02/08/log006/</id>
-    <published>2018-02-07T17:23:49.000Z</published>
-    <updated>2018-02-07T17:27:34.399Z</updated>
-    
-    <content type="html"><![CDATA[<p>总的来说，今天的效率好了很多。几乎在战斗的时候，都属于认真状态。但是错过了本可以完成所有今天任务的机会。</p><p>对于娱乐，应该先把主要任务完成。</p><p>休息的话，现在改成以15分钟为一个单位进行休息。</p><p>自己的身体终究还是适应了晚睡，所以作息，往后顺延一个小时，说不出呢还是7点起床呢～。哈哈哈</p><p>新的一天加油。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;总的来说，今天的效率好了很多。几乎在战斗的时候，都属于认真状态。但是错过了本可以完成所有今天任务的机会。&lt;/p&gt;
-&lt;p&gt;对于娱乐，应该先把主要任务完成。&lt;/p&gt;
-&lt;p&gt;休息的话，现在改成以15分钟为一个单位进行休息。&lt;/p&gt;
-&lt;p&gt;自己的身体终究还是适应了晚睡，所以作息，往
-      
-    
-    </summary>
-    
-      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
-    
-    
-      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
     
   </entry>
   
