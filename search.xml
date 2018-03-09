@@ -4,6 +4,32 @@
   
     
     <entry>
+      <title><![CDATA[快速排序之后的优化(一)]]></title>
+      <url>http://yoursite.com/2018/03/09/quickSortAdvance/</url>
+      <content type="html"><![CDATA[<p>像往常一样，在了解了算法的基本思想之后。我们来看看有哪些地方值得我们优化</p>
+<h2 id="第一个优化"><a href="#第一个优化" class="headerlink" title="第一个优化"></a>第一个优化</h2><p>因为在上一篇中实现的是一个递归算法，对于所有的递归算法而言，当数组规模变得足够小的时候，我们可以采用插入排序进行优化，和归并排序的第一个优化相同，具体去看<a href="https://jinfangzhang.github.io/2018/02/08/mergesSortAdvance/" target="_blank" rel="external">那一篇文章</a></p>
+<h2 id="第二个优化"><a href="#第二个优化" class="headerlink" title="第二个优化"></a>第二个优化</h2><p>这里我们主要来解释一下第二个优化。都知道归并排序和快速排序都使用递归算法进行实现。归并排序每次向下递归，数组规模会被稳定的平分成两份，最终会有 $log_2^n$ 层，它被分成的规模永远是恒定的。而对于快速排序来，他同样也会被分为两块，但是被分的大小完全是随机，不均等的两块。想一种最糟糕的情况，对于一个近乎有序的数组，这个算法瞬间将退化成 $n^2$ 级别的算法。</p>
+<p>要解决这种情况也很简单，使分界点更加随机，在快速排序中，分界点也就是每一块最左端的元素。我们随机和其他元素交换一下位置即可。</p>
+<p>虽然对于最坏情况依然会退化成$n^2$级别，但能保证在99.999%的情况下，依然是$log^n$级别的算法。</p>
+<p>具体代码就不贴了～～。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-3 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据结构与算法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[log017]]></title>
       <url>http://yoursite.com/2018/03/09/log017/</url>
       <content type="html"><![CDATA[<p>开学一周，基本给假期收了一个尾。中断了好久的日志，从今天开始要一天不落。</p>
@@ -638,7 +664,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[mergesSortAdvance]]></title>
+      <title><![CDATA[归并排序之后的优化]]></title>
       <url>http://yoursite.com/2018/02/08/mergesSortAdvance/</url>
       <content type="html"><![CDATA[<p>对于<a href="https://jinfangzhang.github.io/2018/02/07/mergeSort/" target="_blank" rel="external">之前的归并排序</a>的文章，刻意的留了一部分，单独拿出来说下。这部分还是很有趣和重要的一块。不记得算法的同志得自己去回顾一下。</p>
 <h2 id="第一个优化"><a href="#第一个优化" class="headerlink" title="第一个优化"></a><strong>第一个优化</strong></h2><p>在几乎所有采用分而治之思想的算法中，当问题规模被分解到某种程度时，可以采用插入排序，将这些近乎有序的数组进行排序。</p>

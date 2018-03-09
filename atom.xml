@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-09T01:39:44.115Z</updated>
+  <updated>2018-03-09T02:40:27.497Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>快速排序之后的优化(一)</title>
+    <link href="http://yoursite.com/2018/03/09/quickSortAdvance/"/>
+    <id>http://yoursite.com/2018/03/09/quickSortAdvance/</id>
+    <published>2018-03-09T02:39:34.000Z</published>
+    <updated>2018-03-09T02:40:27.497Z</updated>
+    
+    <content type="html"><![CDATA[<p>像往常一样，在了解了算法的基本思想之后。我们来看看有哪些地方值得我们优化</p><h2 id="第一个优化"><a href="#第一个优化" class="headerlink" title="第一个优化"></a>第一个优化</h2><p>因为在上一篇中实现的是一个递归算法，对于所有的递归算法而言，当数组规模变得足够小的时候，我们可以采用插入排序进行优化，和归并排序的第一个优化相同，具体去看<a href="https://jinfangzhang.github.io/2018/02/08/mergesSortAdvance/" target="_blank" rel="external">那一篇文章</a></p><h2 id="第二个优化"><a href="#第二个优化" class="headerlink" title="第二个优化"></a>第二个优化</h2><p>这里我们主要来解释一下第二个优化。都知道归并排序和快速排序都使用递归算法进行实现。归并排序每次向下递归，数组规模会被稳定的平分成两份，最终会有 $log_2^n$ 层，它被分成的规模永远是恒定的。而对于快速排序来，他同样也会被分为两块，但是被分的大小完全是随机，不均等的两块。想一种最糟糕的情况，对于一个近乎有序的数组，这个算法瞬间将退化成 $n^2$ 级别的算法。</p><p>要解决这种情况也很简单，使分界点更加随机，在快速排序中，分界点也就是每一块最左端的元素。我们随机和其他元素交换一下位置即可。</p><p>虽然对于最坏情况依然会退化成$n^2$级别，但能保证在99.999%的情况下，依然是$log^n$级别的算法。</p><p>具体代码就不贴了～～。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;像往常一样，在了解了算法的基本思想之后。我们来看看有哪些地方值得我们优化&lt;/p&gt;
+&lt;h2 id=&quot;第一个优化&quot;&gt;&lt;a href=&quot;#第一个优化&quot; class=&quot;headerlink&quot; title=&quot;第一个优化&quot;&gt;&lt;/a&gt;第一个优化&lt;/h2&gt;&lt;p&gt;因为在上一篇中实现的是一个递
+      
+    
+    </summary>
+    
+      <category term="2018-3" scheme="http://yoursite.com/categories/2018-3/"/>
+    
+    
+      <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>log017</title>
@@ -534,31 +560,6 @@
     
     
       <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>mergesSortAdvance</title>
-    <link href="http://yoursite.com/2018/02/08/mergesSortAdvance/"/>
-    <id>http://yoursite.com/2018/02/08/mergesSortAdvance/</id>
-    <published>2018-02-08T03:12:18.000Z</published>
-    <updated>2018-02-08T03:13:26.164Z</updated>
-    
-    <content type="html"><![CDATA[<p>对于<a href="https://jinfangzhang.github.io/2018/02/07/mergeSort/" target="_blank" rel="external">之前的归并排序</a>的文章，刻意的留了一部分，单独拿出来说下。这部分还是很有趣和重要的一块。不记得算法的同志得自己去回顾一下。</p><h2 id="第一个优化"><a href="#第一个优化" class="headerlink" title="第一个优化"></a><strong>第一个优化</strong></h2><p>在几乎所有采用分而治之思想的算法中，当问题规模被分解到某种程度时，可以采用插入排序，将这些近乎有序的数组进行排序。</p><p>我们对应优化的点在于不在让问题规模分解成1为止，而是当问题规模减小到<strong>X</strong>(某个未知数）的时候，采用插入排序。为此我们重载了一个insertionSort，如下。这里不妨分析下这个重载后的算法定义是什么</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">insertionSort</span><span class="params">(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = l + <span class="number">1</span>; i &lt;= r; i++)&#123;</div><div class="line">        T e = arr[i];</div><div class="line">        <span class="keyword">int</span> j;</div><div class="line">        <span class="keyword">for</span>(j = i - <span class="number">1</span>; j&gt;=l; j--)&#123;</div><div class="line">            <span class="keyword">if</span>(e &lt; arr[j])</div><div class="line">                arr[j+<span class="number">1</span>] = arr[j];</div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        arr[j+<span class="number">1</span>] = e;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>归并排序的优化。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">void</span> __mergeSort(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</div><div class="line">    <span class="keyword">if</span>(r-l &lt;= <span class="number">15</span>)&#123;</div><div class="line">        insertionSort(arr,l,r);</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">        </div><div class="line">    </div><div class="line">    <span class="keyword">int</span> mi = (l+r)/<span class="number">2</span>;</div><div class="line">    __mergeSort(arr, l, mi);</div><div class="line">    __mergeSort(arr, mi + <span class="number">1</span>, r);</div><div class="line"></div><div class="line">    __merge(arr, l, mi, r);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p><p>结果<br><img src="http://p3o1bechg.bkt.clouddn.com/mergeSort_advance&amp;&amp;mergeSort.png" alt="比较结果"></p><h2 id="第二个优化"><a href="#第二个优化" class="headerlink" title="第二个优化"></a>第二个优化</h2><p>除了要测试无序数组外，还要测试几乎有序的数组。其实不需要测试就已经很明白，对于几乎有序的数组插入排序是$O(n)$的时间复杂度，而即便是优化过的归并排序，也不过是$O(nlog^n)$。</p><p>我在这里的修改很简单。</p><p>就是对于$merge$算法而言，如果第二部分的第一个元素大于或等于第一部分的第最后一个元素，就说明这个数组是有序的，直接返回即可。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">template&lt;typename T&gt;</div><div class="line">void __mergeSort(T arr[], int l, int r)&#123;</div><div class="line">    if(r-l &lt;= 15)&#123;</div><div class="line">        insertionSort(arr,l,r);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">        </div><div class="line">    </div><div class="line">    int mi = (l+r)/2;</div><div class="line">    __mergeSort(arr, l, mi);</div><div class="line">    __mergeSort(arr, mi + 1, r);</div><div class="line"></div><div class="line">    //加了一个if判断</div><div class="line">    if(arr[mi] &gt; arr[mi + 1])</div><div class="line">        __merge(arr, l, mi, r);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>尽管最终依然无法优于在几乎有序数组中的插入排序，但是已经是在同一个数量级上面了。<br><img src="http://p3o1bechg.bkt.clouddn.com/mergeSort%E4%BC%98%E5%8C%96%E4%BA%8C.png" alt="比较结果"></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;对于&lt;a href=&quot;https://jinfangzhang.github.io/2018/02/07/mergeSort/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;之前的归并排序&lt;/a&gt;的文章，刻意的留了一部分，单独拿出来说下。这部分还是很有趣和
-      
-    
-    </summary>
-    
-      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
-    
-    
-      <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
