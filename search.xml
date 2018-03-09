@@ -4,62 +4,6 @@
   
     
     <entry>
-      <title><![CDATA[bc]]></title>
-      <url>http://yoursite.com/2018/03/07/bc/</url>
-      <content type="html"><![CDATA[<p><img src="http://p3o1bechg.bkt.clouddn.com/Fv_QSoyue5IJ3yWu09eKsa7E1Hpu" alt="tiobe_2018_3"></p>
-<ol>
-<li><p>Java    </p>
-</li>
-<li><p>C</p>
-</li>
-<li><p>C++</p>
-</li>
-<li><p>Python  解释型计算机程序设计语言<br>Python具有丰富和强大的库。它常被昵称为胶水语言，能够把用其他语言制作的各种模块（尤其是C/C++）很轻松地联结在一起。常见的一种应用情形是，使用Python快速生成程序的原型（有时甚至是程序的最终界面），然后对其中有特别要求的部分，用更合适的语言改写，比如3D游戏中的图形渲染模块，性能要求特别高，就可以用C/C++重写，而后封装为Python可以调用的扩展类库。</p>
-</li>
-<li><p>C#   是微软公司发布的一种面向对象的、运行于.NET Framework之上的高级程序设计语言</p>
-</li>
-<li><p>Visual Basic .NET<br>是基于微软.NET Framework之上的面向对象的编程语言.<br>其在调试时是以解释型语言方式运作,而输出为EXE程序是是以编译型语言方式运作</p>
-</li>
-<li><p>PHP（超文本预处理器）<br>Web开发领域<br>PHP是将程序嵌入到HTML（标准通用标记语言下的一个应用）文档中去执行，执行效率比完全生成HTML标记的CGI要高许多；PHP还可以执行编译后代码，编译可以达到加密和优化代码运行，使代码运行更快。</p>
-</li>
-<li><p>JS</p>
-</li>
-<li><p>Delphi/Object Pascal<br>Delphi本身是极其优秀的编译器，比C++易学，比VB强大</p>
-</li>
-<li><p>Ruby（一种面向对象程序设计的脚本语言）<br>是一种通用的、解释的编程语言。<br>减少编程时候的不必要的琐碎时间，令编写程序的人高兴<br>适合于快速开发，一般开发效率是JAVA的5倍</p>
-</li>
-</ol>
-<ol>
-<li><p>SQL</p>
-</li>
-<li><p>Visual Basic</p>
-</li>
-<li><p>R<br>R是用于统计分析、绘图的语言和操作环境。R是属于GNU系统的一个自由、免费、源代码开放的软件，它是一个用于统计计算和统计制图的优秀工具。</p>
-</li>
-<li><p>PL/SQL</p>
-</li>
-<li><p>Assembly language</p>
-</li>
-<li><p>Swift</p>
-</li>
-<li><p>Perl<br>Perl借取了C、sed、awk、shell 脚本语言以及很多其他程序语言的特性，其中最重要的特性是它内部集成了正则表达式的功能，以及巨大的第三方代码库CPAN。简而言之，Perl像C一样强大，像awk、sed等脚本描述语言一样方便，被Perl语言爱好者称之为“一种拥有各种语言功能的梦幻脚本语言”、“Unix 中的王牌工具”。</p>
-</li>
-<li><p>Go</p>
-</li>
-<li><p>MATLAB</p>
-</li>
-<li><p>Object-C</p>
-</li>
-</ol>
-<p>Clojure是一种运行在Java平台上的 Lisp 方言，Lisp是一种以表达性和功能强大著称的编程语言</p>
-<p>Lisp<br>Prolog<br>Scheme</p>
-<p>Scheme<br>Groovy是一种基于JVM（Java虚拟机）的敏捷开发语言</p>
-]]></content>
-      
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[log016]]></title>
       <url>http://yoursite.com/2018/03/05/log016/</url>
       <content type="html"><![CDATA[<p>开学第一周要给假期做一个收尾工作，主要包括，数据结构2篇文章，学校相关的两篇文章，一篇自我成长记录的日记。</p>
@@ -85,18 +29,18 @@
     <entry>
       <title><![CDATA[QucikSort]]></title>
       <url>http://yoursite.com/2018/03/03/quciksort-1/</url>
-      <content type="html"><![CDATA[<p>2018.3.3 初稿</p>
+      <content type="html"><![CDATA[<p>2018.3.3 初稿<br>2018.3.9 修改</p>
 <hr>
-<p>快速排序，也叫做轴点排序。它和归并排序都属于分治算法，并且算法复杂度都在 $nlog^n$ 这个级别。和之前的插入排序、选择排序、归并排序，还有之后会说到的堆排序，每一个都是非常有代表性的思想，不管怎么说都应该去熟练的掌握这些思想。</p>
-<p>同一种算法思想，每种不同的定义都意味着一种不太相同的解法，但这只区分在具体实现层次，对于更高层级的算法思想内还是相同的。随着算法复杂度的增加，定义的重要性也会随着增加。简单的算法稍加思考就可以得出结论，甚至都没有感觉到定义的存在，但在之后的y中，你会越来越感到定义的重要性。它不仅仅可以使你的思路明确，还会简化很多问题。</p>
+<p>快速排序，也叫做轴点排序。它和归并排序都属于分治算法，并且算法复杂度都在 $nlog^n$ 这个级别。和之前的插入排序、选择排序、归并排序，还有之后会说到的堆排序，其中每一个都是非常有代表性的思想，不管怎么说都应该去熟练的掌握这些思想。</p>
+<p>同一种算法思想，每种不同的定义都意味着一种不太相同的解法，但这只区分在具体实现层次，对于更高层级的算法思想内还是相同的。随着算法复杂度的增加，定义的重要性也会随之增加。简单的算法稍加思考就可以得出结论，甚至都没有感觉到定义的存在，但在之后的算法中，会越来越感到定义的重要性。它不仅仅可以使你的思路明确，还会简化很多问题。</p>
 <p>下面去具体感受一下快速排序的思想</p>
 <h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a><strong>基本思想</strong></h2><blockquote>
-<p> 将要排序的数据分割成独立的两部分，对于要排序元素的前面都比该元素要小，在其后面都比它要大。</p>
+<p> 将要排序的数据将会分割成独立的两部分，对于要排序元素的前面的元素都比它小，其后面都比它大。</p>
 </blockquote>
-<p>更明确点说是，经过排序之后，要排序的元素将会放置到他应该放的位置，同时在这个元素前面都是比它小的元素，在它后面都是比它大的元素。之后对分出来的两部分再进行如此算法。把这个过程叫做 <strong>partition</strong></p>
+<p>更明确点说，是经过排序之后，要排序的元素将会放置到他应该放的位置，同时在这个元素前面都是比它小的元素，在它后面都是比它大的元素。之后对分出来的两部分再进行如此算法。把这个过程叫做 <strong>partition</strong></p>
 <p>我们需要一个变量 v 来记录当前排序的元素，也就是说排序结束后一定会放到正确位置上的元素。还需要一个变量 j 来区分，比 v 小的部分和比 v 大的部分之间的分界点。最后用变量 i 来确定当前正在比较的对象。基本概念结合下图来理解</p>
 <p><img src="http://p3o1bechg.bkt.clouddn.com/Fo0AqY1xFLGG-4gjyjvEFB-P6BLc" alt="图片"></p>
-<p>我们维护了<strong>[ l + 1, j ]</strong> 和 <strong>[ j + 1, i )</strong> 这两个范围。当正在比较的对象 <strong>大于</strong> v 时，仅需要将 i 往后移动一个位置即可，当 <strong>小于</strong> v 时，我们需要和 j + 1 位置上的元素换一下位置，并且更新 j 的位置，进行 + 1 操作。直到最后，所有元素比较完成之后，我们只需要和 j 位置的元素交换一下位置。</p>
+<p>我们维护了<strong>[ l + 1, j ]</strong> 和 <strong>[ j + 1, i )</strong> 这两个范围。当正在比较的对象 <strong>大于</strong> v 时，仅需要将 i 往后移动一个位置，将其归入<strong>[ j + 1, i )</strong>这个范文 。当 <strong>小于</strong> v 时，我们需要和 j + 1 位置上的元素换一下位置，并且更新 j 的位置，进行 + 1 操作。直到最后，所有元素比较完成之后，我们只需要和 j 位置的元素交换一下位置。</p>
 <p><img src="http://p3o1bechg.bkt.clouddn.com/FkNkkW8niJQuEp2UAZz-Ne2gz7tl" alt="finish"></p>
 <h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a><strong>算法实现</strong></h2><p>定义 quickSort，它将对大小为 n 的 arr 数组进行排序。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(T arr[], <span class="keyword">int</span> n )</span></span>&#123;</div><div class="line">    __quickSort(arr, <span class="number">0</span> , n - <span class="number">1</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -105,6 +49,9 @@
 <p>定义 partition ，是对 [ l , r ] 这个区间进行排序<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; </div><div class="line"><span class="keyword">int</span> __partition(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</div><div class="line">    T v = arr[l];</div><div class="line">    <span class="keyword">int</span> j = l;</div><div class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = l + <span class="number">1</span>; i &lt;= r; i++)&#123;</div><div class="line">        <span class="keyword">if</span>(arr[i] &gt; v)&#123;</div><div class="line">            <span class="comment">//什么都不做</span></div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            j++</div><div class="line">            swap(arr[j], arr[i]);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    swap(arr[l], arr[j]);</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> j ;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>来和我们已经优化过的归并排序作一下比较，不同机器结果可能会有比较大的差异，不过我们后续还是会继续优化快速排序的。</p>
 <p><img src="http://p3o1bechg.bkt.clouddn.com/FowPOx1pPvtaCDsparO7LlRcQrdb" alt="result"></p>
+<hr>
+<p>从理论上来说，QuickSort 要比 MergeSort 快 30% 左右，但是结果并非如此，我多次尝试结果都没有太大的变化，最后找到问题所在，是 <strong>swap函数</strong>执行时间过长，这会说到C++的泛型问题，在之后会写一篇文章，这里只需手动写一个swap函数即可<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">T tmp = arr[j];</div><div class="line">arr[j] = arr[i];</div><div class="line">arr[i] = tmp;</div></pre></td></tr></table></figure></p>
+<p>修改之后的结果是（好了很多）<br><img src="http://p3o1bechg.bkt.clouddn.com/FuaQJ1sKjj27owKi6FhEz7L0PbP5" alt="fixed"></p>
 ]]></content>
       
         <categories>
