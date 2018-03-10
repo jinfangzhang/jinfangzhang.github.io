@@ -4,6 +4,30 @@
   
     
     <entry>
+      <title><![CDATA[log018]]></title>
+      <url>http://yoursite.com/2018/03/10/log018/</url>
+      <content type="html"><![CDATA[<p>算是第一天，开了一个好头。</p>
+<p>如果非要说缺点，那就是在休息上面花费了过多的时间。那些时间都是可以拿来做更重要的事情的。</p>
+<p>运动虽然够了，但是水分严重缺失。</p>
+<p>晚饭目前应该想点办法去高效的解决。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-3 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Log </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[快速排序之后的优化(一)]]></title>
       <url>http://yoursite.com/2018/03/09/quickSortAdvance/</url>
       <content type="html"><![CDATA[<p>像往常一样，在了解了算法的基本思想之后。我们来看看有哪些地方值得我们优化</p>
