@@ -106,23 +106,20 @@
 
 
 <meta name="description" content="extends &amp;amp; implements继承和接口，在 java 中简单来说就是 extend 和 implements。继承从语义上来说，就是会得到父类的一些东西（方法，参数），无论你是否愿意。而接口，它本身就是空的，并不会得到什么东西，我画了个图来更加的感受一下
- 
-当我们使用 extends 的时候，子类会得到一些具体实现的代码。这样做有好有坏，好的地方上，我们可以提高的代码的复用性">
+        当我们使用 extends 的时候，子类会得到一些具体实现的代码。这样做有好有坏，好的地方上，我们可以提高的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="extends和implements的一些思考">
 <meta property="og:url" content="http://yoursite.com/2018/02/27/extends和implements的一些思考/index.html">
 <meta property="og:site_name" content="JianRan">
 <meta property="og:description" content="extends &amp;amp; implements继承和接口，在 java 中简单来说就是 extend 和 implements。继承从语义上来说，就是会得到父类的一些东西（方法，参数），无论你是否愿意。而接口，它本身就是空的，并不会得到什么东西，我画了个图来更加的感受一下
- 
-当我们使用 extends 的时候，子类会得到一些具体实现的代码。这样做有好有坏，好的地方上，我们可以提高的代码的复用性">
+        当我们使用 extends 的时候，子类会得到一些具体实现的代码。这样做有好有坏，好的地方上，我们可以提高的">
 <meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/FnaG4YHoc8Gei1MR50NsTqI4fCWO">
 <meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/FoJK7B-8HZD49aOVrEnIZIQ-tHAr">
-<meta property="og:updated_time" content="2018-02-27T09:37:01.285Z">
+<meta property="og:updated_time" content="2018-03-10T01:14:13.079Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="extends和implements的一些思考">
 <meta name="twitter:description" content="extends &amp;amp; implements继承和接口，在 java 中简单来说就是 extend 和 implements。继承从语义上来说，就是会得到父类的一些东西（方法，参数），无论你是否愿意。而接口，它本身就是空的，并不会得到什么东西，我画了个图来更加的感受一下
- 
-当我们使用 extends 的时候，子类会得到一些具体实现的代码。这样做有好有坏，好的地方上，我们可以提高的代码的复用性">
+        当我们使用 extends 的时候，子类会得到一些具体实现的代码。这样做有好有坏，好的地方上，我们可以提高的">
 <meta name="twitter:image" content="http://p3o1bechg.bkt.clouddn.com/FnaG4YHoc8Gei1MR50NsTqI4fCWO">
 
 
@@ -406,16 +403,16 @@
 
       
         <h2 id="extends-amp-implements"><a href="#extends-amp-implements" class="headerlink" title="extends &amp; implements"></a><strong>extends &amp; implements</strong></h2><p>继承和接口，在 java 中简单来说就是 extend 和 implements。继承从语义上来说，就是会得到父类的一些东西（方法，参数），无论你是否愿意。而接口，它本身就是空的，并不会得到什么东西，我画了个图来更加的感受一下</p>
-<p><img src="http://p3o1bechg.bkt.clouddn.com/FnaG4YHoc8Gei1MR50NsTqI4fCWO" alt="extends"> <img src="http://p3o1bechg.bkt.clouddn.com/FoJK7B-8HZD49aOVrEnIZIQ-tHAr" alt="implements"></p>
-<p>当我们使用 extends 的时候，子类会得到一些具体实现的代码。这样做有好有坏，好的地方上，我们可以提高的代码的复用性，使我们不需要去重复的去写一些代码。坏的地方，就是增加了耦合，强制我们去依赖细节。</p>
+<p><figure class="half"><br>    <img src="http://p3o1bechg.bkt.clouddn.com/FnaG4YHoc8Gei1MR50NsTqI4fCWO"><br>    <img divstyle="float:none;clear:both;" src="http://p3o1bechg.bkt.clouddn.com/FoJK7B-8HZD49aOVrEnIZIQ-tHAr"><br></figure><br>当我们使用 extends 的时候，子类会得到一些具体实现的代码。这样做有好有坏，好的地方上，我们可以提高的代码的复用性，使我们不需要去重复的去写一些代码。坏的地方，就是增加了耦合，强制我们去依赖细节。</p>
 <p>使用 implements 的时候，有点反过来的味道。我们操作的永远会是interface或者 abstract 的子类。也就是在抽象层次上进行操作。这样我们会更少的去依赖细节，增加可拓展性。</p>
+<p>extends 也可以理解成面向抽象进行操作，只不过它拥有一些细节而已，extends 和 implements 都可以看成面向抽象，具体其实就要你的具体业务了。</p>
 <p>在写代码的过程中，时刻要应对的变化。我们所创造的系统应该更加的容易的扩展，而不是每次都去修改原先的代码，这样对系统无论是安全性还是维护成本来说，都是应该尽量避免的行为。虽然无法预测未来的事情，但我们至少可以掌控当下写的内容。</p>
 <h2 id="尽量遵循一些原则"><a href="#尽量遵循一些原则" class="headerlink" title="尽量遵循一些原则"></a><strong>尽量遵循一些原则</strong></h2><p>在设计写代码时，我们应该尽可能的避免直接依赖细节，尽可能的操作抽象，尤其是在写框架的时候。我们<strong>应该针对接口编程，而不是针对特定的实现</strong>。</p>
 <p>应该去尽量<strong>使用组合</strong>，这里举一个例子</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Class Duck&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</div><div class="line">        ....    <span class="comment">// 具体代码</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>如果想去修改fly中的方法，除了覆写别无它法，而且覆写的成本会很高，如果换一种方式。我们只需要去改变Flayable的变量值即可。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Class Duck&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> Flyable flyBehavior</span></div><div class="line">    <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span>&#123;</div><div class="line">        flyBehavior.fly();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>除以上以外，我们应该去<strong>隔离变化</strong>。</p>
+<p>除以上以外，我们应该去<strong>隔离变化</strong>，其实从某种意义上来说面向抽象是就是一种隔离变化的方法。</p>
 
       
     </div>
@@ -535,7 +532,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
