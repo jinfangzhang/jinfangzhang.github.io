@@ -4,6 +4,40 @@
   
     
     <entry>
+      <title><![CDATA[快速排序|二路快排]]></title>
+      <url>http://yoursite.com/2018/03/11/quickSort-2/</url>
+      <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a><strong>问题</strong></h2><p>之前，讨论了一下快速排序的优化问题，主要是在两方面上，当递归的数据规模足够小的时候和递归的数组规模不平衡的问题。</p>
+<p>当数组足够小时，可以采用插入排序进行优化，这是对于所有递归排序算法都可以优化的事情。</p>
+<p>导致数组规模不平均一部分是数据源的问题，我们使用随机化的方式解决。这次我们依然来说数组规模不平均，之前讨论的在重复数据很少的情况下，但是当重复元素很多的情况下呢？</p>
+<p>假设我们产生了1000000的数据，这些数据范围全部都在 [0,10] 这个区间当中。其中必然拥有及其大量的相同元素。之前为了找到一个合适的位置以合理的区分开 <code>&gt;V</code> 和 <code>&lt;=V</code> 或者是  <code>=&gt;V</code> 和 <code>&lt;V</code>区间， 使他们尽可能的分成平均的两份。但就现在的情况来说，正因为拥有大量的重复元素，无论是让<code>&gt;V区间</code> 还是 <code>&lt;V小于区间</code> 让他们任何一个去包含 <code>=V</code> 这种情况的数据，都将引起不平衡。更何况还是在重复数据如此之多的情况下，随机的那个点，只要有一点不平衡的，都将会导致极度的不平衡现象。这里举一个例子进行实验。 </p>
+<p><img src="http://p3o1bechg.bkt.clouddn.com/Fmyqxki4--Squgf8L8zJaDMDm-K9" alt="1"></p>
+<p>最终，在对含有大量重复元素进行排序时，快速排序退化成了$n^2$级别。</p>
+<p>为了解决如此问题，我们换一种思路来实现，这就是我们的二路排序。</p>
+<h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a><strong>算法实现</strong></h2><p>现在区间分成如下所示两个部分，我们依然用最左侧元素为中心，同样也叫 V 。对于 <code>小于V</code>这部分，用 i 来标示这个区间，i 具体指向这个区间的下一个。同样用 j 来标示 <code>大于V</code>这部分，同样 j 也是指向这个区间的下一个。有一点不同的是，对于<code>小于V</code>这部分来说，是向后延伸，而<code>大于V</code>是向前衍生。</p>
+<p>我们首先从 i 出发，当出现<code>小于V</code>时候，i 直接向后移动，直到遇到不满足<code>小于V时</code>，开始转向 j，当出现<code>大于V</code>时候，j 直接向前移动，直至不满足<code>大于V</code>为止。此时，交换 i 和 j 的位置，以此往复，直到 <code>i &gt; j</code> 时停止。</p>
+<p><img src="http://p3o1bechg.bkt.clouddn.com/Fmt_y-7dHlrp-opofkYRQbVzV5Lq" alt="erlu"></p>
+<p>这里可能会有疑惑，那么为什么不是<code>小于等于V</code> 和 <code>大于等于V</code> 呢？你不妨按照这种情况对 1,0,0,0,0,0,0,0  这样的数组做实行一下，你会发现这样又会出现极度不平衡的现象。</p>
+<p>现在来进行代码实现。总的结构都一样，不同只是 partition 里面的算法不同。这里唯一要一点要注意的是对于 i 和 j 的初值，和定义之间的关系。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">int</span> _partition2(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</div><div class="line"></div><div class="line">    swap( arr[l] , arr[rand()%(r-l+<span class="number">1</span>)+l] );</div><div class="line">    T v = arr[l];</div><div class="line"></div><div class="line">    <span class="comment">// arr[l+1...i) &lt;= v; arr(j...r] &gt;= v</span></div><div class="line">    <span class="keyword">int</span> i = l+<span class="number">1</span>, j = r;</div><div class="line">    <span class="keyword">while</span>( <span class="literal">true</span> )&#123;</div><div class="line">        <span class="keyword">while</span>( i &lt;= r &amp;&amp; arr[i] &lt; v )</div><div class="line">            i ++;</div><div class="line"></div><div class="line">        <span class="keyword">while</span>( j &gt;= l+<span class="number">1</span> &amp;&amp; arr[j] &gt; v )</div><div class="line">            j --;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>( i &gt; j )</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        swap( arr[i] , arr[j] );</div><div class="line">        i ++;</div><div class="line">        j --;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    swap( arr[l] , arr[j]);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> j;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果,最终好了很多。<br><img src="http://p3o1bechg.bkt.clouddn.com/Fpsf6m-2bi8I2Pip8f8ERyuAnSY9" alt="--"></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 2018-3 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> 数据结构与算法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[log019]]></title>
       <url>http://yoursite.com/2018/03/10/log019/</url>
       <content type="html"><![CDATA[<p>没有完成今天的任务，对这一周总的来说，大的事情都已经做完。也算是新一年的准备工作已经完毕。</p>
@@ -51,7 +85,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[快速排序之后的优化(一)]]></title>
+      <title><![CDATA[快速排序|优化(一)]]></title>
       <url>http://yoursite.com/2018/03/09/quickSortAdvance/</url>
       <content type="html"><![CDATA[<p>像往常一样，在了解了算法的基本思想之后。我们来看看有哪些地方值得我们优化</p>
 <h2 id="第一个优化"><a href="#第一个优化" class="headerlink" title="第一个优化"></a>第一个优化</h2><p>因为在上一篇中实现的是一个递归算法，对于所有的递归算法而言，当数组规模变得足够小的时候，我们可以采用插入排序进行优化，和归并排序的第一个优化相同，具体去看<a href="https://jinfangzhang.github.io/2018/02/08/mergesSortAdvance/" target="_blank" rel="external">那一篇文章</a></p>

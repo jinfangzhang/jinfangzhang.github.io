@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-11T01:15:19.407Z</updated>
+  <updated>2018-03-11T03:09:48.369Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>快速排序|二路快排</title>
+    <link href="http://yoursite.com/2018/03/11/quickSort-2/"/>
+    <id>http://yoursite.com/2018/03/11/quickSort-2/</id>
+    <published>2018-03-11T03:08:07.000Z</published>
+    <updated>2018-03-11T03:09:48.369Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a><strong>问题</strong></h2><p>之前，讨论了一下快速排序的优化问题，主要是在两方面上，当递归的数据规模足够小的时候和递归的数组规模不平衡的问题。</p><p>当数组足够小时，可以采用插入排序进行优化，这是对于所有递归排序算法都可以优化的事情。</p><p>导致数组规模不平均一部分是数据源的问题，我们使用随机化的方式解决。这次我们依然来说数组规模不平均，之前讨论的在重复数据很少的情况下，但是当重复元素很多的情况下呢？</p><p>假设我们产生了1000000的数据，这些数据范围全部都在 [0,10] 这个区间当中。其中必然拥有及其大量的相同元素。之前为了找到一个合适的位置以合理的区分开 <code>&gt;V</code> 和 <code>&lt;=V</code> 或者是  <code>=&gt;V</code> 和 <code>&lt;V</code>区间， 使他们尽可能的分成平均的两份。但就现在的情况来说，正因为拥有大量的重复元素，无论是让<code>&gt;V区间</code> 还是 <code>&lt;V小于区间</code> 让他们任何一个去包含 <code>=V</code> 这种情况的数据，都将引起不平衡。更何况还是在重复数据如此之多的情况下，随机的那个点，只要有一点不平衡的，都将会导致极度的不平衡现象。这里举一个例子进行实验。 </p><p><img src="http://p3o1bechg.bkt.clouddn.com/Fmyqxki4--Squgf8L8zJaDMDm-K9" alt="1"></p><p>最终，在对含有大量重复元素进行排序时，快速排序退化成了$n^2$级别。</p><p>为了解决如此问题，我们换一种思路来实现，这就是我们的二路排序。</p><h2 id="算法实现"><a href="#算法实现" class="headerlink" title="算法实现"></a><strong>算法实现</strong></h2><p>现在区间分成如下所示两个部分，我们依然用最左侧元素为中心，同样也叫 V 。对于 <code>小于V</code>这部分，用 i 来标示这个区间，i 具体指向这个区间的下一个。同样用 j 来标示 <code>大于V</code>这部分，同样 j 也是指向这个区间的下一个。有一点不同的是，对于<code>小于V</code>这部分来说，是向后延伸，而<code>大于V</code>是向前衍生。</p><p>我们首先从 i 出发，当出现<code>小于V</code>时候，i 直接向后移动，直到遇到不满足<code>小于V时</code>，开始转向 j，当出现<code>大于V</code>时候，j 直接向前移动，直至不满足<code>大于V</code>为止。此时，交换 i 和 j 的位置，以此往复，直到 <code>i &gt; j</code> 时停止。</p><p><img src="http://p3o1bechg.bkt.clouddn.com/Fmt_y-7dHlrp-opofkYRQbVzV5Lq" alt="erlu"></p><p>这里可能会有疑惑，那么为什么不是<code>小于等于V</code> 和 <code>大于等于V</code> 呢？你不妨按照这种情况对 1,0,0,0,0,0,0,0  这样的数组做实行一下，你会发现这样又会出现极度不平衡的现象。</p><p>现在来进行代码实现。总的结构都一样，不同只是 partition 里面的算法不同。这里唯一要一点要注意的是对于 i 和 j 的初值，和定义之间的关系。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="keyword">int</span> _partition2(T arr[], <span class="keyword">int</span> l, <span class="keyword">int</span> r)&#123;</div><div class="line"></div><div class="line">    swap( arr[l] , arr[rand()%(r-l+<span class="number">1</span>)+l] );</div><div class="line">    T v = arr[l];</div><div class="line"></div><div class="line">    <span class="comment">// arr[l+1...i) &lt;= v; arr(j...r] &gt;= v</span></div><div class="line">    <span class="keyword">int</span> i = l+<span class="number">1</span>, j = r;</div><div class="line">    <span class="keyword">while</span>( <span class="literal">true</span> )&#123;</div><div class="line">        <span class="keyword">while</span>( i &lt;= r &amp;&amp; arr[i] &lt; v )</div><div class="line">            i ++;</div><div class="line"></div><div class="line">        <span class="keyword">while</span>( j &gt;= l+<span class="number">1</span> &amp;&amp; arr[j] &gt; v )</div><div class="line">            j --;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>( i &gt; j )</div><div class="line">            <span class="keyword">break</span>;</div><div class="line"></div><div class="line">        swap( arr[i] , arr[j] );</div><div class="line">        i ++;</div><div class="line">        j --;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    swap( arr[l] , arr[j]);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> j;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>结果,最终好了很多。<br><img src="http://p3o1bechg.bkt.clouddn.com/Fpsf6m-2bi8I2Pip8f8ERyuAnSY9" alt="--"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;&lt;strong&gt;问题&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;之前，讨论了一下快速排序的优化问题，主要是在两方面上，当递归的数据规模足够小的时候和递归的数组规模不平衡的
+      
+    
+    </summary>
+    
+      <category term="2018-3" scheme="http://yoursite.com/categories/2018-3/"/>
+    
+    
+      <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>log019</title>
@@ -73,11 +98,11 @@
   </entry>
   
   <entry>
-    <title>快速排序之后的优化(一)</title>
+    <title>快速排序|优化(一)</title>
     <link href="http://yoursite.com/2018/03/09/quickSortAdvance/"/>
     <id>http://yoursite.com/2018/03/09/quickSortAdvance/</id>
     <published>2018-03-09T02:39:34.000Z</published>
-    <updated>2018-03-09T02:40:27.497Z</updated>
+    <updated>2018-03-11T03:09:07.599Z</updated>
     
     <content type="html"><![CDATA[<p>像往常一样，在了解了算法的基本思想之后。我们来看看有哪些地方值得我们优化</p><h2 id="第一个优化"><a href="#第一个优化" class="headerlink" title="第一个优化"></a>第一个优化</h2><p>因为在上一篇中实现的是一个递归算法，对于所有的递归算法而言，当数组规模变得足够小的时候，我们可以采用插入排序进行优化，和归并排序的第一个优化相同，具体去看<a href="https://jinfangzhang.github.io/2018/02/08/mergesSortAdvance/" target="_blank" rel="external">那一篇文章</a></p><h2 id="第二个优化"><a href="#第二个优化" class="headerlink" title="第二个优化"></a>第二个优化</h2><p>这里我们主要来解释一下第二个优化。都知道归并排序和快速排序都使用递归算法进行实现。归并排序每次向下递归，数组规模会被稳定的平分成两份，最终会有 $log_2^n$ 层，它被分成的规模永远是恒定的。而对于快速排序来，他同样也会被分为两块，但是被分的大小完全是随机，不均等的两块。想一种最糟糕的情况，对于一个近乎有序的数组，这个算法瞬间将退化成 $n^2$ 级别的算法。</p><p>要解决这种情况也很简单，使分界点更加随机，在快速排序中，分界点也就是每一块最左端的元素。我们随机和其他元素交换一下位置即可。</p><p>虽然对于最坏情况依然会退化成$n^2$级别，但能保证在99.999%的情况下，依然是$log^n$级别的算法。</p><p>具体代码就不贴了～～。</p>]]></content>
     
@@ -524,34 +549,6 @@
         &lt;p&gt;找不到顺手的图床插件，干脆自动动手写了一个。尽管用的他们的sdk，但好歹是自己给自己写的第一个东西,值得纪念。&lt;/p&gt;
 &lt;p&gt;帮同学解决了技术上面的小问题，还是挺开心的。&lt;/p&gt;
 &lt;p&gt;对于英语的执行力依然很差，需要提高！&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
-    
-    
-      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>log009</title>
-    <link href="http://yoursite.com/2018/02/11/log009/"/>
-    <id>http://yoursite.com/2018/02/11/log009/</id>
-    <published>2018-02-10T16:59:26.000Z</published>
-    <updated>2018-02-11T07:00:07.739Z</updated>
-    
-    <content type="html"><![CDATA[<p>对于自己的未来规划，有了一个方向。重新定义了，我目前处于的阶段，大学沉淀期。</p><p>总体计划按目标完成。</p><p>作息再次修改成，24点准时睡觉，7点起床.</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;对于自己的未来规划，有了一个方向。重新定义了，我目前处于的阶段，大学沉淀期。&lt;/p&gt;
-&lt;p&gt;总体计划按目标完成。&lt;/p&gt;
-&lt;p&gt;作息再次修改成，24点准时睡觉，7点起床.&lt;/p&gt;
 
       
     
