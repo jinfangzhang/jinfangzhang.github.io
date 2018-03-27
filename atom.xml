@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-22T09:58:35.992Z</updated>
+  <updated>2018-03-27T13:23:18.318Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>heap_1</title>
+    <link href="http://yoursite.com/2018/03/27/heap-1/"/>
+    <id>http://yoursite.com/2018/03/27/heap-1/</id>
+    <published>2018-03-27T13:21:55.000Z</published>
+    <updated>2018-03-27T13:23:18.318Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="为什么使用堆"><a href="#为什么使用堆" class="headerlink" title="为什么使用堆"></a><strong>为什么使用堆</strong></h2><p>堆是一种特别的数据结构，由其衍生出来的应用有很多，比较典型的是叫做优先队列的应用。堆的一个很大的特点，就是其动态性，可以依靠简单的交换来维持堆的性质。</p><blockquote><p>总的来说，由于个人眼界问题，对于堆的认识还不深刻，这一部分等到以后，有足够学识之后再来补充</p></blockquote><h2 id="堆的定义"><a href="#堆的定义" class="headerlink" title="堆的定义"></a><strong>堆的定义</strong></h2><p>堆总体思想其实就是树，其中二叉堆是一个较为经典的实现，当然在一个二叉树的基础上还要满足一些条件才可以被称之为一个堆：</p><ol><li><p>树中任何一个节点的值(根节点除外)，总是不大于其父节点的值</p></li><li><p>是一个完全二叉树</p></li></ol><p>依照这样的定义实现的堆，会发现，根节点的元素是其堆中所有元素最大的那一个。所以，这样的一个堆可以称为最大堆或者说大顶堆，相反也有最小堆和小顶堆之说。在下面我们描述的全都采用大顶堆来进行描述。</p><h2 id="堆的经典实现"><a href="#堆的经典实现" class="headerlink" title="堆的经典实现"></a><strong>堆的经典实现</strong></h2><p><img src="http://p3o1bechg.bkt.clouddn.com/FtLkd8QGI86QM-_jUE0QiJly8VRQ" alt="-"></p><p>当看到上面这个堆的图时，很容易就可以联想到使用树来进行实现，但是，对于堆来说，还有一种较为经典的、使用数组来实现的方法。</p><p>也正因为堆是一个完全树，依据其特性，才能够使用数组来进行实现。</p><p>数据依然是上图，如果我们从根节点开始标号，每一层，从左往右依次标号，最终标完之后，是这样的。</p><p><img src="http://p3o1bechg.bkt.clouddn.com/FmMrwbNJIMQJFjgwDQ8lWX3sjI6O" alt="-"></p><p>上面的图有这样几条规则。      </p><pre><code>1. parent(i)  = i / 22. left child(i) = 2 * i3. right child(i)= 2 * i + 1</code></pre><p>如果我们要按照起始节点为 0 开始标记的，规则就需要稍微进行变动一下。影响并不大，但从1开始标记的话，会更容易理解一些。</p><p><img src="http://p3o1bechg.bkt.clouddn.com/FreC4JkRFIid7xCCx9WWOYC9M4cT" alt="-"></p><p>规则:</p><pre><code>1. parent(i)  = (i - 1) / 22. left child(i) = 2 * i + 13. right child(i)= 2 * i + 2</code></pre><h2 id="堆的实现"><a href="#堆的实现" class="headerlink" title="堆的实现"></a><strong>堆的实现</strong></h2><p>使用第一种方式，来进行实现。毕竟是一种数据结构，先简单搭建骨架。并且说明一点的是，堆只有两种对外的操作，一种是插入数据，另一种是取出当前最大的元素。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//基本骨架</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Item&gt;</div><div class="line"><span class="keyword">class</span> Heap</div><div class="line">&#123;</div><div class="line">  <span class="keyword">private</span>:</div><div class="line">    Item *data;</div><div class="line">    <span class="keyword">int</span> count;</div><div class="line">    <span class="keyword">int</span> capacity;</div><div class="line"></div><div class="line">  <span class="keyword">public</span>:</div><div class="line">    Heap(<span class="keyword">int</span> n)</div><div class="line">    &#123;</div><div class="line">        data = <span class="keyword">new</span> Item[n] count = <span class="number">0</span>;</div><div class="line">        capacity = n;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~Heap()</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">delete</span>[] data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">bool</span> isEmpty&#123;</div><div class="line">        <span class="keyword">return</span> count == <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure><p>因为堆需要时刻动态维护堆的定义，当添加一个元素在其数组末尾或取出根元素时，极有可能破坏了堆的定义，为此，衍生出了两种操作，shiftDown 和 shiftUp</p><h2 id="shiftUp"><a href="#shiftUp" class="headerlink" title="shiftUp"></a><strong>shiftUp</strong></h2><p>当数组在尾部插入一个数据时，我们需要对那个元素做 shiftUp 操作，使整个堆的意义再次成立。</p><p><img src="http://p3o1bechg.bkt.clouddn.com/FrxZu9YDpjru8oQfyOyPYILBT43S" alt="-"></p><p>图中我们插入了数值为52的元素。</p><p>对于52来说，它需要不断的和其父节点比较，如果52更大则交换位置，之后继续比较直至不可以交换。到此时位置，堆的定义将继续维持。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">shiftUp</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123; </div><div class="line">    <span class="keyword">while</span>(data[i] &gt; data[i/<span class="number">2</span>] &amp;&amp; i &gt; <span class="number">1</span>)&#123;</div><div class="line">        swap(data[i],data[i/<span class="number">2</span>]);</div><div class="line">        i = i/<span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>intsert算法</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Item item)</span></span>&#123;</div><div class="line">    data[count+<span class="number">1</span>] = item;</div><div class="line">    count++;</div><div class="line">    shiftUp(count+<span class="number">1</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="shiftDown"><a href="#shiftDown" class="headerlink" title="shiftDown"></a><strong>shiftDown</strong></h2><p>当取走根元素的之后，为了保证它依然是一棵树，我们把最后一个元素放置于根的位置，对根进行 shiftDown 操作，来维持堆的定义。</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">shiftDown</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    <span class="comment">//是否有子节点</span></div><div class="line">    <span class="keyword">while</span>(<span class="number">2</span>*i &lt;= count )&#123;</div><div class="line">        <span class="keyword">int</span> j = <span class="number">2</span>*i;</div><div class="line">        <span class="comment">//有右节点的同时右节点更大。</span></div><div class="line">        <span class="keyword">if</span>( j + <span class="number">1</span> &lt;= count &amp;&amp; data[j+<span class="number">1</span>] &gt; data[j])</div><div class="line">            j++;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(data[i] &lt; data[j])</div><div class="line">            j = j;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">break</span>;</div><div class="line">            </div><div class="line">        swap(data[i],data[j]);</div><div class="line">        i = j;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>extractMax<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Item extractMax()&#123;</div><div class="line">    Item ret = data[1];</div><div class="line"></div><div class="line">    swap( data[1] , data[count] );</div><div class="line">    count --;</div><div class="line">    shiftDown(1);</div><div class="line"></div><div class="line">    return ret;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;为什么使用堆&quot;&gt;&lt;a href=&quot;#为什么使用堆&quot; class=&quot;headerlink&quot; title=&quot;为什么使用堆&quot;&gt;&lt;/a&gt;&lt;strong&gt;为什么使用堆&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;堆是一种特别的数据结构，由其衍生出来的应用有很多，比较典型的是叫做优先队列
+      
+    
+    </summary>
+    
+      <category term="2018-3" scheme="http://yoursite.com/categories/2018-3/"/>
+    
+    
+      <category term="数据结构与算法" scheme="http://yoursite.com/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>log0000000</title>
+    <link href="http://yoursite.com/2018/03/23/log0000000/"/>
+    <id>http://yoursite.com/2018/03/23/log0000000/</id>
+    <published>2018-03-23T08:30:31.000Z</published>
+    <updated>2018-03-23T08:30:31.360Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>快速排序|二路快排、三路排序</title>
@@ -493,65 +532,6 @@
         &lt;p&gt;重新确定英语的学习方式，应该渗透到每天的生活中。学习计划将要重新安排，一切以两个小时为单位， 每过两小时就学半个小时英语。其实就是以2.5小时为一个单位。&lt;/p&gt;
 &lt;p&gt;确定未来一定会考人类的最高学历&lt;/p&gt;
 &lt;p&gt;10点过后，不再学习&lt;strong&gt;英语流利说&lt;/stro
-      
-    
-    </summary>
-    
-      <category term="2018-2" scheme="http://yoursite.com/categories/2018-2/"/>
-    
-    
-      <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小程序结构</title>
-    <link href="http://yoursite.com/2018/02/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/"/>
-    <id>http://yoursite.com/2018/02/12/小程序结构/</id>
-    <published>2018-02-12T09:02:42.000Z</published>
-    <updated>2018-02-12T09:21:37.971Z</updated>
-    
-    <content type="html"><![CDATA[<p>在创建了一个小程序项目之后，可能在这个项目里会看见不同类型的文件。这些文件分别是</p><ol><li><p>.json 后缀的 JSON 配置文件</p></li><li><p>.wxml 后缀的 WXML 模板文件</p></li><li><p>.wxss 后缀的 WXSS 样式文件</p></li><li><p>.js 后缀的 JS 脚本逻辑文件</p></li></ol><p>初看结构十分类似 HTML + CSS + JS 三剑客，进一步了解后他们的作用也大抵相同。在小程序总体结构上，分成两部分。一部分是全局文件，都是以<code>app</code>开头，承载整个小程序的全局信息,例如 <code>app.json</code>, <code>app.wxss</code>, <code>app.js</code>。另一部分是局部文件，具体到每个一个页面都拥有自己的一套配置信息，局部文件的优先级会大于全局文件。例如 <code>index.wxml</code>, <code>index.wxss</code>, <code>index.js</code>, <code>index.json</code></p><p>下面我们以这样一个目录结构来依次介绍</p><p><img src="http://p3o1bechg.bkt.clouddn.com/Fj5LUc4w_wTHXa7QCyMSGwcbivc1" alt="tree"></p><p>先忽略掉 typinggs 目录。</p><h2 id="JSON配置"><a href="#JSON配置" class="headerlink" title="JSON配置"></a><strong>JSON配置</strong></h2><p>从项目根目录，我们依次看到 app.json, project.config.json 和 index.json。我们依次来说明用途。</p><p><strong>app.json</strong> 是对当前小程序的全局配置，包括了<strong>小程序的所有页面路径</strong>，<strong>界面表现</strong>， <strong>网络超时时间</strong>， <strong>底部tab</strong> 等信息。结构如下：</p><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "pages":[</div><div class="line">    ...</div><div class="line">  ],</div><div class="line">  "window":&#123;</div><div class="line">    ...</div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure><p><strong>project.config.json</strong> 是对于微信开发者工具一些个性化配置。当你换了一台电脑或者重新安装工具时，你只要载入同一个项目的代码。开发者工具就会根据这些配置进行恢复。</p><p><strong>index.json</strong> 去设置一个页面的配置，当 app.json 配置了属性，而 index.json 没有配置就默认使用 app.json 的。当两者都配置了，则使用 index.json 的 </p><h2 id="WXML-WXSS-JS"><a href="#WXML-WXSS-JS" class="headerlink" title="WXML WXSS JS"></a><strong>WXML WXSS JS</strong></h2><p>它其实类似 HTML + CSS + JS 这个，只不过他们都有一些细微的差距。</p><p>WXML 于 HTML 的差别，我们直接用微信文档中的一段话。</p><ol><li><p>标签名字有点不一样 往往写 HTML 的时候，经常会用到的标签是 div, p, span，开发者在写一个页面的时候可以根据这些基础的标签组合出不一样的组件，例如日历、弹窗等等。换个思路，既然大家都需要这些组件，为什么我们不能把这些常用的组件包装起来，大大提高我们的开发效率。 从上边的例子可以看到，小程序的 WXML 用的标签是 view, button, text 等等，这些标签就是小程序给开发者包装好的基本能力，我们还提供了地图、视频、音频等等组件能力 更多详细的组件讲述参考下个章节 小程序的能力</p></li><li><p>多了一些 wx:if 这样的属性以及 { { } } 这样的表达式 在网页的一般开发流程中，我们通常会通过 JS 操作 DOM (对应 HTML 的描述产生的树)，以引起界面的一些变化响应用户的行为。例如，用户点击某个按钮的时候，JS 会记录一些状态到 JS 变量里边，同时通过 DOM API 操控 DOM 的属性或者行为，进而引起界面一些变化。当项目越来越大的时候，你的代码会充斥着非常多的界面交互逻辑和程序的各种状态变量，显然这不是一个很好的开发模式，因此就有了 MVVM 的开发模式(例如 React, Vue)，提倡把渲染和逻辑分离。简单来说就是不要再让 JS 直接操控 DOM，JS只需要管理状态即可，然后再通过一种模板语法来描述状态和界面结构的关系即可。 小程序的框架也是用到了这个思路，如果你需要把一个 Hello World 的字符串显示在界面上。 WXML 是这么写 :</p></li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;text&gt;&lt;/text&gt;</div></pre></td></tr></table></figure><p>JS 只需要管理状态即可:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">this.setData(&#123; msg: &quot;Hello World&quot; &#125;)</div></pre></td></tr></table></figure></p><p>通过 { { } } 的语法把一个变量绑定到界面上，我们称为数据绑定。仅仅通过数据绑定还不够完整的描述状态和界面的关系，还需要 if/else, for等控制能力，在小程序里边，这些控制能力都用 wx: 开头的属性来表达。 更详细的文档可以参考 WXML</p><p>WXSS 具有CSS大部分特性，除此也做了一些扩充和修改。增加了尺寸单位 rpx，提供了全局样式和局部样式，此外仅支持 css 部分选择器</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;在创建了一个小程序项目之后，可能在这个项目里会看见不同类型的文件。这些文件分别是&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;.json 后缀的 JSON 配置文件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;.wxml 后缀的 WXML 模板文件&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;.wxss 
-      
-    
-    </summary>
-    
-      <category term="2018-02" scheme="http://yoursite.com/categories/2018-02/"/>
-    
-    
-      <category term="小程序" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>log010</title>
-    <link href="http://yoursite.com/2018/02/12/log010/"/>
-    <id>http://yoursite.com/2018/02/12/log010/</id>
-    <published>2018-02-11T16:50:39.000Z</published>
-    <updated>2018-02-12T09:00:14.846Z</updated>
-    
-    <content type="html"><![CDATA[<p>找不到顺手的图床插件，干脆自动动手写了一个。尽管用的他们的sdk，但好歹是自己给自己写的第一个东西,值得纪念。</p><p>帮同学解决了技术上面的小问题，还是挺开心的。</p><p>对于英语的执行力依然很差，需要提高！</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;找不到顺手的图床插件，干脆自动动手写了一个。尽管用的他们的sdk，但好歹是自己给自己写的第一个东西,值得纪念。&lt;/p&gt;
-&lt;p&gt;帮同学解决了技术上面的小问题，还是挺开心的。&lt;/p&gt;
-&lt;p&gt;对于英语的执行力依然很差，需要提高！&lt;/p&gt;
-
       
     
     </summary>
