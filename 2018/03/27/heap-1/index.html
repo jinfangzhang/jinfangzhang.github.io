@@ -123,7 +123,12 @@
 堆的定义堆总体思想其实就是树，其中二叉堆是一个较为经典的实现，当然在一个二叉树的基础上还要满足一些条件才可以被称之为一个堆：
 
 树中任何一个节点的">
-<meta property="og:updated_time" content="2018-03-28T03:42:41.426Z">
+<meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/FtLkd8QGI86QM-_jUE0QiJly8VRQ">
+<meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/FmMrwbNJIMQJFjgwDQ8lWX3sjI6O">
+<meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/FreC4JkRFIid7xCCx9WWOYC9M4cT">
+<meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/FrxZu9YDpjru8oQfyOyPYILBT43S">
+<meta property="og:image" content="http://p3o1bechg.bkt.clouddn.com/FlJdMS-fQ0OPVcvm0xUGYNfaf0pf">
+<meta property="og:updated_time" content="2018-03-28T03:48:26.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="堆">
 <meta name="twitter:description" content="为什么使用堆堆是一种特别的数据结构，由其衍生出来的应用有很多，比较典型的是叫做 优先队列 的应用。堆的一个很大的特点，就是其动态性，可以依靠简单的步骤来维持堆的性质。
@@ -133,6 +138,7 @@
 堆的定义堆总体思想其实就是树，其中二叉堆是一个较为经典的实现，当然在一个二叉树的基础上还要满足一些条件才可以被称之为一个堆：
 
 树中任何一个节点的">
+<meta name="twitter:image" content="http://p3o1bechg.bkt.clouddn.com/FtLkd8QGI86QM-_jUE0QiJly8VRQ">
 
 
 
@@ -392,11 +398,11 @@
 </li>
 </ol>
 <p>依照这样的定义实现的堆，会发现，根节点的元素是堆中所有元素最大的那一个。所以，这样的一个堆可以称为最大堆或者说大顶堆，相反也有最小堆和小顶堆之说。在下面我们全都采用大顶堆来进行描述。</p>
-<h2 id="堆的经典实现"><a href="#堆的经典实现" class="headerlink" title="堆的经典实现"></a><strong>堆的经典实现</strong></h2><p>![-][1]</p>
+<h2 id="堆的经典实现"><a href="#堆的经典实现" class="headerlink" title="堆的经典实现"></a><strong>堆的经典实现</strong></h2><p><img src="http://p3o1bechg.bkt.clouddn.com/FtLkd8QGI86QM-_jUE0QiJly8VRQ" alt="-"></p>
 <p>当看到上面这个堆的图时，很容易就可以联想到使用树来进行实现，但是，对于堆来说，还有一种较为经典的、使用数组来实现的方法。</p>
 <p>也正因为堆是一个完全树，依据其特性，才能够使用数组进行实现。</p>
 <p>数据依然是上图，如果我们从根节点开始标号，每一层，从左往右依次标号，最终标完之后，是这样的。</p>
-<p>![-][2]</p>
+<p><img src="http://p3o1bechg.bkt.clouddn.com/FmMrwbNJIMQJFjgwDQ8lWX3sjI6O" alt="-"></p>
 <p>上面的图有这样几条规则。      </p>
 <pre><code>1. parent(i)  = i / 2
 
@@ -404,7 +410,7 @@
 
 3. right child(i)= 2 * i + 1
 </code></pre><p>如果我们要按照起始节点为 0 开始标记的，规则就需要稍微进行变动一下。影响并不大，但从1开始标记的话，会更容易理解一些。</p>
-<p>![-][3]</p>
+<p><img src="http://p3o1bechg.bkt.clouddn.com/FreC4JkRFIid7xCCx9WWOYC9M4cT" alt="-"></p>
 <p>规则:</p>
 <pre><code>1. parent(i)  = (i - 1) / 2
 
@@ -415,7 +421,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//基本骨架</span></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Item&gt;</div><div class="line"><span class="keyword">class</span> MaxHeap</div><div class="line">&#123;</div><div class="line">  <span class="keyword">private</span>:</div><div class="line">    Item *data;</div><div class="line">    <span class="keyword">int</span> count;</div><div class="line">    <span class="keyword">int</span> capacity;</div><div class="line"></div><div class="line">  <span class="keyword">public</span>:</div><div class="line">    Heap(<span class="keyword">int</span> n)</div><div class="line">    &#123;</div><div class="line">        data = <span class="keyword">new</span> Item[n] count = <span class="number">0</span>;</div><div class="line">        capacity = n;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ~Heap()</div><div class="line">    &#123;</div><div class="line">        <span class="keyword">delete</span>[] data;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">bool</span> isEmpty&#123;</div><div class="line">        <span class="keyword">return</span> count == <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>因为堆需要时刻动态维护堆的定义，当添加一个元素在其数组末尾或取出根元素时，极有可能破坏了堆的定义，为此，衍生出了两种操作，shiftDown 和 shiftUp</p>
 <h2 id="shiftUp"><a href="#shiftUp" class="headerlink" title="shiftUp"></a><strong>shiftUp</strong></h2><p>当数组在尾部插入一个数据时，我们需要对那个元素做 shiftUp 操作，使整个堆的意义再次成立。</p>
-<p>![-][4]</p>
+<p><img src="http://p3o1bechg.bkt.clouddn.com/FrxZu9YDpjru8oQfyOyPYILBT43S" alt="-"></p>
 <p>图中我们插入了数值为52的元素。</p>
 <p>对于52来说，它需要不断的和其父节点比较，如果52更大则交换位置，之后继续比较直至不可以交换。到此时位置，堆的定义将继续维持。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">shiftUp</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123; </div><div class="line">    <span class="keyword">while</span>(data[i] &gt; data[i/<span class="number">2</span>] &amp;&amp; i &gt; <span class="number">1</span>)&#123;</div><div class="line">        swap(data[i],data[i/<span class="number">2</span>]);</div><div class="line">        i = i/<span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -436,13 +442,13 @@
 <p>因为就一个元素而言，他怎么也是一个堆，那么只需要堆其非叶子节点，从第一次非叶子节点，依次进行shiftDown操作，即可。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">MaxHeap(Item arr[], <span class="keyword">int</span> n)&#123;</div><div class="line">    data = <span class="keyword">new</span> Item[n+<span class="number">1</span>];</div><div class="line">    capacity = n;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n ; i ++ )</div><div class="line">        data[i+<span class="number">1</span>] = arr[i];</div><div class="line">    count = n;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = count/<span class="number">2</span> ; i &gt;= <span class="number">1</span> ; i -- )</div><div class="line">        shiftDown(i);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>于是乎排序算法调整为<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapSort2</span><span class="params">(T arr[], <span class="keyword">int</span> n)</span></span>&#123;</div><div class="line"></div><div class="line">    MaxHeap&lt;T&gt; maxheap = MaxHeap&lt;T&gt;(arr,n);</div><div class="line">    <span class="keyword">for</span>( <span class="keyword">int</span> i = n<span class="number">-1</span> ; i &gt;= <span class="number">0</span> ; i-- )</div><div class="line">        arr[i] = maxheap.extractMax();</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>结果比较:<br>![-][5]</p>
+<p>结果比较:<br><img src="http://p3o1bechg.bkt.clouddn.com/FlJdMS-fQ0OPVcvm0xUGYNfaf0pf" alt="-"></p>
 <p>虽然堆排序全方位落后与归并排序，但毕竟堆排序的强项在其动态性。</p>
 <h2 id="空间优化"><a href="#空间优化" class="headerlink" title="空间优化"></a><strong>空间优化</strong></h2><p>可以看到，上面算法无论怎么处理，都需要在堆中另行开辟$O(n)$级别的空间。但实际上只需要很小的一个调整，可以将算法的空间复杂度降为$O(1)$</p>
 <p>可以想象在一个由数组形成的堆当中，最左边的元素就是其根，换句话最左边的元素的就其所有数据的最大值。</p>
 <p>我们可以让最左侧的元素与数组中最后一个元素交换位置，并且收缩堆大小。此时整个数据就会被分为两块。一块可以称为堆区域，另一块可以称为排序区域。</p>
 <p>显然在简单做了一次交换之后，堆区域已经不能满足一个堆的定义。这个时候，只需要对最左侧的元素，执行依次shiftDown操作之后，对于堆区域而言，又满足了定义。</p>
-<p>之后，以此往复，当堆的大小为1的时候，也就是整个数组排序好的时候。</p>
+<p>之后，以此往复，当堆的大小为1的时候，也就是整个数组排序</p>
 
       
     </div>
