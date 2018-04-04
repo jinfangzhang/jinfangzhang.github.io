@@ -42,20 +42,6 @@
   </entry>
   
   <entry>
-    <title>log0000000</title>
-    <link href="http://yoursite.com/2018/03/23/log0000000/"/>
-    <id>http://yoursite.com/2018/03/23/log0000000/</id>
-    <published>2018-03-23T08:30:31.000Z</published>
-    <updated>2018-03-23T08:30:31.360Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
     <title>快速排序|二路快排、三路排序</title>
     <link href="http://yoursite.com/2018/03/11/quickSort-2/"/>
     <id>http://yoursite.com/2018/03/11/quickSort-2/</id>
@@ -540,6 +526,37 @@
     
     
       <category term="Log" scheme="http://yoursite.com/tags/Log/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小程序结构</title>
+    <link href="http://yoursite.com/2018/02/12/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/"/>
+    <id>http://yoursite.com/2018/02/12/小程序结构/</id>
+    <published>2018-02-12T09:02:42.000Z</published>
+    <updated>2018-04-03T03:40:56.806Z</updated>
+    
+    <content type="html"><![CDATA[<p>初稿 2018.02.12<br>修改 2018.04.03</p><hr><p>在创建了一个带模板的小程序项目之后，在项目里会看见不同类型的文件。这些文件分别是</p><ol><li><p>.json 后缀的 JSON 配置文件</p></li><li><p>.wxml 后缀的 WXML 模板文件</p></li><li><p>.wxss 后缀的 WXSS 样式文件</p></li><li><p>.js 后缀的 JS 脚本逻辑文件</p></li></ol><p>初看结构十分类似 HTML + CSS + JS 三剑客，进一步了解后他们的作用也大抵相同。在小程序总体结构上，分成两部分。一部分是全局文件，都是以<code>app</code>开头，承载整个小程序的全局信息,例如 <code>app.json</code>, <code>app.wxss</code>, <code>app.js</code>。另一部分是局部文件，具体到每个一个页面都拥有自己的一套配置信息，局部文件的优先级会大于全局文件。例如 <code>index.wxml</code>, <code>index.wxss</code>, <code>index.js</code>, <code>index.json</code></p><p>下面我们以这样一个目录结构来依次介绍</p><p><img src="http://p3o1bechg.bkt.clouddn.com/Fj5LUc4w_wTHXa7QCyMSGwcbivc1" alt="tree"></p><p>先忽略掉 typinggs 目录。</p><h2 id="JSON配置文件"><a href="#JSON配置文件" class="headerlink" title="JSON配置文件"></a><strong>JSON配置文件</strong></h2><p>从项目根目录，我们依次看到 app.json, project.config.json 和 index.json。</p><h3 id="project-config-json"><a href="#project-config-json" class="headerlink" title="project.config.json"></a><strong>project.config.json</strong></h3><p>project.config.json是对于微信开发者工具一些个性化配置。当你换了一台电脑或者重新安装工具时，你只要载入同一个项目的代码。开发者工具就会根据这些配置进行恢复。</p><h3 id="app-json"><a href="#app-json" class="headerlink" title="app.json"></a><strong>app.json</strong></h3><p>app.json 是对当前小程序的全局配置，必须要传入一个对象参数，空对象也可以。里面有几个配置项，分管不同的功能。</p><blockquote><p><strong>配置项有</strong>：</p><ul><li>pages    注册页面的路径</li><li>window   管理默认页面的窗口表现</li><li>tabBar   设置底部tab的表现</li><li>networkTimeout 设置网络超时时间</li><li>debug    设置是否开启debug模式</li></ul></blockquote><p>其中window项里面的配置多繁杂一点，但是都是对状态栏，导航栏、标题、窗口背景颜色的设置。下面是配置演示。</p><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"pages"</span>: [</div><div class="line">    <span class="string">"pages/index/index"</span>,</div><div class="line">    <span class="string">"pages/logs/index"</span></div><div class="line">  ],</div><div class="line">  <span class="attr">"window"</span>: &#123;</div><div class="line">    <span class="attr">"navigationBarTitleText"</span>: <span class="string">"Demo"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"tabBar"</span>: &#123;</div><div class="line">    <span class="attr">"list"</span>: [&#123;</div><div class="line">      <span class="attr">"pagePath"</span>: <span class="string">"pages/index/index"</span>,</div><div class="line">      <span class="attr">"text"</span>: <span class="string">"首页"</span></div><div class="line">    &#125;, &#123;</div><div class="line">      <span class="attr">"pagePath"</span>: <span class="string">"pages/logs/logs"</span>,</div><div class="line">      <span class="attr">"text"</span>: <span class="string">"日志"</span></div><div class="line">    &#125;]</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"networkTimeout"</span>: &#123;</div><div class="line">    <span class="attr">"request"</span>: <span class="number">10000</span>,</div><div class="line">    <span class="attr">"downloadFile"</span>: <span class="number">10000</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"debug"</span>: <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><h3 id="index-json"><a href="#index-json" class="headerlink" title="index.json"></a><strong>index.json</strong></h3><p>index.json 去设置一个页面的配置，当 app.json 配置了属性，而 index.json 没有配置就默认使用 app.json 的。当两者都配置了，则使用 index.json 的配置信息，同样都需要传入一个对象参数,空对象的样子如下：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;&#125;</div></pre></td></tr></table></figure></p><p>为了更加具有普遍性，我们把页面的配置文件，统称为 page.json。</p><p>page.json 其实只是对 app.json 中 window 配置项进行设置。与 app.json 不同的是，多了一个 disableScroll    属性。当其设置为 true 则页面整体不能上下滚动；只在 page.json 中有效，无法在 app.json 中设置该项。</p><p>page.json 的配置没有app.json 那么复杂,直接配置,配置演示如下:</p><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"navigationBarBackgroundColor"</span>: <span class="string">"#ffffff"</span>,</div><div class="line">  <span class="attr">"navigationBarTextStyle"</span>: <span class="string">"black"</span>,</div><div class="line">  <span class="attr">"navigationBarTitleText"</span>: <span class="string">"微信接口功能演示"</span>,</div><div class="line">  <span class="attr">"backgroundColor"</span>: <span class="string">"#eeeeee"</span>,</div><div class="line">  <span class="attr">"backgroundTextStyle"</span>: <span class="string">"light"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="WXML-WXSS-JS"><a href="#WXML-WXSS-JS" class="headerlink" title="WXML WXSS JS"></a><strong>WXML WXSS JS</strong></h2><p>它其实类似 HTML + CSS + JS 这个，不过他们之间都有一些细微的差距。</p><p>其实只需要知道，WXML是用来组织页面的结构的，WXSS是用来添加样式的，JS是对应页面的逻辑。</p><p>需要注意的是，对于一套页面来说，它必须有相同名称。举一个理解，要创建一个index页面，那么index.wxml 代表它的组织结构，index.wxss代表它的样式信息，index.js 代表它的逻辑信息。</p><p>微信小程序会自动通过命名来找到页面的相关配置文件。</p><p>对于 page.js 和 app.js 里面必须对应调用 page() 和 app() 来注册一个页面或者app。 通过传入的对象参数来对其进行控制。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;初稿 2018.02.12&lt;br&gt;修改 2018.04.03&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;在创建了一个带模板的小程序项目之后，在项目里会看见不同类型的文件。这些文件分别是&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;.json 后缀的 JSON 配置文件&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;
+      
+    
+    </summary>
+    
+      <category term="2018-02" scheme="http://yoursite.com/categories/2018-02/"/>
+    
+    
+      <category term="小程序" scheme="http://yoursite.com/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
     
   </entry>
   
